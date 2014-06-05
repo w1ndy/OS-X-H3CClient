@@ -7,17 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C9049F1119412E3D00746681 /* dot1x.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9049F0C19412E3D00746681 /* dot1x.cpp */; };
+		C9049F1219412E3D00746681 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9049F0F19412E3D00746681 /* md5.cpp */; };
+		C9049F1419412E8400746681 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9049F1319412E8400746681 /* libpcap.dylib */; };
 		C9CCC8481940FC5C008F3407 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CCC8471940FC5C008F3407 /* Cocoa.framework */; };
 		C9CCC8521940FC5C008F3407 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC8501940FC5C008F3407 /* InfoPlist.strings */; };
 		C9CCC8541940FC5C008F3407 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CCC8531940FC5C008F3407 /* main.m */; };
 		C9CCC8581940FC5C008F3407 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC8561940FC5C008F3407 /* Credits.rtf */; };
 		C9CCC85B1940FC5C008F3407 /* H3CClientAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CCC85A1940FC5C008F3407 /* H3CClientAppDelegate.m */; };
-		C9CCC85E1940FC5C008F3407 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC85C1940FC5C008F3407 /* MainMenu.xib */; };
 		C9CCC8601940FC5C008F3407 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC85F1940FC5C008F3407 /* Images.xcassets */; };
 		C9CCC8671940FC5C008F3407 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CCC8661940FC5C008F3407 /* XCTest.framework */; };
 		C9CCC8681940FC5C008F3407 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CCC8471940FC5C008F3407 /* Cocoa.framework */; };
 		C9CCC8701940FC5C008F3407 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC86E1940FC5C008F3407 /* InfoPlist.strings */; };
 		C9CCC8721940FC5C008F3407 /* OS_X_H3CClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CCC8711940FC5C008F3407 /* OS_X_H3CClientTests.m */; };
+		C9CCC88519410A13008F3407 /* H3CClientBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CCC88419410A13008F3407 /* H3CClientBackend.m */; };
+		C9CCC889194114C2008F3407 /* StatusMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CCC887194114C1008F3407 /* StatusMenuViewController.m */; };
+		C9CCC88A194114C2008F3407 /* StatusMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC888194114C1008F3407 /* StatusMenu.xib */; };
+		C9CCC88C19411B4F008F3407 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC88B19411B4F008F3407 /* Preferences.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +37,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C9049F0C19412E3D00746681 /* dot1x.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dot1x.cpp; sourceTree = "<group>"; };
+		C9049F0D19412E3D00746681 /* dot1x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dot1x.h; sourceTree = "<group>"; };
+		C9049F0E19412E3D00746681 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		C9049F0F19412E3D00746681 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
+		C9049F1019412E3D00746681 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		C9049F1319412E8400746681 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = usr/lib/libpcap.dylib; sourceTree = SDKROOT; };
 		C9CCC8441940FC5C008F3407 /* OS-X-H3CClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OS-X-H3CClient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9CCC8471940FC5C008F3407 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C9CCC84A1940FC5C008F3407 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -43,13 +55,18 @@
 		C9CCC8571940FC5C008F3407 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		C9CCC8591940FC5C008F3407 /* H3CClientAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = H3CClientAppDelegate.h; sourceTree = "<group>"; };
 		C9CCC85A1940FC5C008F3407 /* H3CClientAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = H3CClientAppDelegate.m; sourceTree = "<group>"; };
-		C9CCC85D1940FC5C008F3407 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C9CCC85F1940FC5C008F3407 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C9CCC8651940FC5C008F3407 /* OS-X-H3CClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OS-X-H3CClientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9CCC8661940FC5C008F3407 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C9CCC86D1940FC5C008F3407 /* OS-X-H3CClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OS-X-H3CClientTests-Info.plist"; sourceTree = "<group>"; };
 		C9CCC86F1940FC5C008F3407 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C9CCC8711940FC5C008F3407 /* OS_X_H3CClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OS_X_H3CClientTests.m; sourceTree = "<group>"; };
+		C9CCC88319410A13008F3407 /* H3CClientBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H3CClientBackend.h; sourceTree = "<group>"; };
+		C9CCC88419410A13008F3407 /* H3CClientBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H3CClientBackend.m; sourceTree = "<group>"; };
+		C9CCC886194114C1008F3407 /* StatusMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusMenuViewController.h; sourceTree = "<group>"; };
+		C9CCC887194114C1008F3407 /* StatusMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusMenuViewController.m; sourceTree = "<group>"; };
+		C9CCC888194114C1008F3407 /* StatusMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusMenu.xib; sourceTree = "<group>"; };
+		C9CCC88B19411B4F008F3407 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9049F1419412E8400746681 /* libpcap.dylib in Frameworks */,
 				C9CCC8481940FC5C008F3407 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +91,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9049F0B19412E1000746681 /* h3cclient */ = {
+			isa = PBXGroup;
+			children = (
+				C9049F0C19412E3D00746681 /* dot1x.cpp */,
+				C9049F0D19412E3D00746681 /* dot1x.h */,
+				C9049F0E19412E3D00746681 /* global.h */,
+				C9049F0F19412E3D00746681 /* md5.cpp */,
+				C9049F1019412E3D00746681 /* md5.h */,
+			);
+			name = h3cclient;
+			sourceTree = "<group>";
+		};
 		C9CCC83B1940FC5C008F3407 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +125,7 @@
 		C9CCC8461940FC5C008F3407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9049F1319412E8400746681 /* libpcap.dylib */,
 				C9CCC8471940FC5C008F3407 /* Cocoa.framework */,
 				C9CCC8661940FC5C008F3407 /* XCTest.framework */,
 				C9CCC8491940FC5C008F3407 /* Other Frameworks */,
@@ -115,11 +146,17 @@
 		C9CCC84D1940FC5C008F3407 /* OS-X-H3CClient */ = {
 			isa = PBXGroup;
 			children = (
+				C9049F0B19412E1000746681 /* h3cclient */,
+				C9CCC88B19411B4F008F3407 /* Preferences.xib */,
 				C9CCC8591940FC5C008F3407 /* H3CClientAppDelegate.h */,
 				C9CCC85A1940FC5C008F3407 /* H3CClientAppDelegate.m */,
-				C9CCC85C1940FC5C008F3407 /* MainMenu.xib */,
 				C9CCC85F1940FC5C008F3407 /* Images.xcassets */,
 				C9CCC84E1940FC5C008F3407 /* Supporting Files */,
+				C9CCC88319410A13008F3407 /* H3CClientBackend.h */,
+				C9CCC88419410A13008F3407 /* H3CClientBackend.m */,
+				C9CCC886194114C1008F3407 /* StatusMenuViewController.h */,
+				C9CCC887194114C1008F3407 /* StatusMenuViewController.m */,
+				C9CCC888194114C1008F3407 /* StatusMenu.xib */,
 			);
 			path = "OS-X-H3CClient";
 			sourceTree = "<group>";
@@ -234,7 +271,8 @@
 				C9CCC8521940FC5C008F3407 /* InfoPlist.strings in Resources */,
 				C9CCC8601940FC5C008F3407 /* Images.xcassets in Resources */,
 				C9CCC8581940FC5C008F3407 /* Credits.rtf in Resources */,
-				C9CCC85E1940FC5C008F3407 /* MainMenu.xib in Resources */,
+				C9CCC88A194114C2008F3407 /* StatusMenu.xib in Resources */,
+				C9CCC88C19411B4F008F3407 /* Preferences.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,8 +291,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9049F1219412E3D00746681 /* md5.cpp in Sources */,
+				C9049F1119412E3D00746681 /* dot1x.cpp in Sources */,
 				C9CCC85B1940FC5C008F3407 /* H3CClientAppDelegate.m in Sources */,
+				C9CCC889194114C2008F3407 /* StatusMenuViewController.m in Sources */,
 				C9CCC8541940FC5C008F3407 /* main.m in Sources */,
+				C9CCC88519410A13008F3407 /* H3CClientBackend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,14 +333,6 @@
 				C9CCC8571940FC5C008F3407 /* en */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		C9CCC85C1940FC5C008F3407 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9CCC85D1940FC5C008F3407 /* Base */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		C9CCC86E1940FC5C008F3407 /* InfoPlist.strings */ = {
@@ -467,6 +501,7 @@
 				C9CCC8771940FC5C008F3407 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C9CCC8781940FC5C008F3407 /* Build configuration list for PBXNativeTarget "OS-X-H3CClientTests" */ = {
 			isa = XCConfigurationList;
@@ -475,6 +510,7 @@
 				C9CCC87A1940FC5C008F3407 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
