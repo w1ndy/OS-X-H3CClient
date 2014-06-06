@@ -21,7 +21,8 @@
     self.backend = [[H3CClientBackend alloc] init];
     [self.backend addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
     
-    self.menuViewController = [[StatusMenuViewController alloc] initWithDelegate:self backend:self.backend];
+    self.menuViewController = [[StatusMenuViewController alloc] initWithBackend:self.backend];
+    self.menuViewController.delegate = self;
     
     if([self.backend.globalConfiguration boolForKey:@"autoconnect"]) {
         [self.backend connect];
@@ -129,7 +130,8 @@
     
     [self animatePreferencesWindowWithView:self.generalView];
     self.toolbarView.selectedItemIdentifier = @"General";
-    [self.window makeKeyAndOrderFront:nil];
+    [self.window makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:YES];
     if(self.backend.connectionState == Connecting || self.backend.connectionState == Disconnecting) {
         [self.progressView startAnimation:self];
     }

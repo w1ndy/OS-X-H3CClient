@@ -16,12 +16,11 @@
 
 @implementation StatusMenuViewController
 
-- (id)initWithDelegate:(id)delegate backend:(H3CClientBackend *)backend
+- (id)initWithBackend:(H3CClientBackend *)backend
 {
     self = [super initWithNibName:@"StatusMenu" bundle:nil];
     if (self) {
         // Initialization code here.
-        self.delegate = delegate;
         self.backend = backend;
         
         [self loadView];
@@ -62,7 +61,7 @@
 {
     if([keyPath isEqualToString:@"connectionState"]) {
         enum ConnectionState newState;
-        [(NSValue *)[change objectForKey:@"new"] getValue:&newState];
+        [change[@"new"] getValue:&newState];
         switch(newState) {
             case Disconnected:
                 [self.connectView setEnabled:YES];
@@ -74,11 +73,11 @@
                 break;
             case Connecting:
                 [self.connectView setEnabled:NO];
-                [self.connectView setTitle:@"Connecting"];
+                [self.connectView setTitle:@"Connecting…"];
                 break;
             case Disconnecting:
                 [self.connectView setEnabled:NO];
-                [self.connectView setTitle:@"Disconnecting"];
+                [self.connectView setTitle:@"Disconnecting…"];
                 break;
         }
     }

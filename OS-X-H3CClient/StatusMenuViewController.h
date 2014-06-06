@@ -10,24 +10,24 @@
 
 #import "H3CClientBackend.h"
 
-@interface StatusMenuViewController : NSViewController
 
-@property (nonatomic, weak) NSWindow *preferencesWindow;
-@property (nonatomic, weak) H3CClientBackend *backend;
+@protocol StatusMenuViewControllerDelegate
 
-@property (nonatomic) NSStatusItem *statusItem;
-@property (nonatomic) id delegate;
-
-@property (weak) IBOutlet NSMenu *statusMenu;
-@property (weak) IBOutlet NSMenuItem *connectView;
-
-- (id)initWithDelegate:(id)delegate backend:(H3CClientBackend *)backend;
+- (void)showPreferences;
 
 @end
 
 
-@interface NSObject(WithPreferences)
+@interface StatusMenuViewController : NSViewController
 
-- (void)showPreferences;
+@property (nonatomic, weak) H3CClientBackend *backend;
+
+@property (nonatomic) NSStatusItem *statusItem;
+@property (nonatomic) id <StatusMenuViewControllerDelegate> delegate;
+
+@property (weak) IBOutlet NSMenu *statusMenu;
+@property (weak) IBOutlet NSMenuItem *connectView;
+
+- (id)initWithBackend:(H3CClientBackend *)backend;
 
 @end

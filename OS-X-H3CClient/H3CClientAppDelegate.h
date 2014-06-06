@@ -11,7 +11,7 @@
 #import "H3CClientBackend.h"
 #import "StatusMenuViewController.h"
 
-@interface H3CClientAppDelegate : NSObject <NSApplicationDelegate>
+@interface H3CClientAppDelegate : NSObject <NSApplicationDelegate, StatusMenuViewControllerDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (nonatomic) H3CClientBackend *backend;
