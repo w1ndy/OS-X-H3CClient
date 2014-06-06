@@ -46,6 +46,7 @@
 		C9049F1319412E8400746681 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = usr/lib/libpcap.dylib; sourceTree = SDKROOT; };
 		C9BFB7BE1941C1CF00B97A78 /* H3CClientConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H3CClientConnector.h; sourceTree = "<group>"; };
 		C9BFB7BF1941C1CF00B97A78 /* H3CClientConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H3CClientConnector.m; sourceTree = "<group>"; };
+		C9BFB7C11941D5EA00B97A78 /* H3CClientProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = H3CClientProtocol.h; sourceTree = "<group>"; };
 		C9CCC8441940FC5C008F3407 /* OS-X-H3CClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OS-X-H3CClient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9CCC8471940FC5C008F3407 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C9CCC84A1940FC5C008F3407 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -162,6 +163,7 @@
 				C9CCC888194114C1008F3407 /* StatusMenu.xib */,
 				C9BFB7BE1941C1CF00B97A78 /* H3CClientConnector.h */,
 				C9BFB7BF1941C1CF00B97A78 /* H3CClientConnector.m */,
+				C9BFB7C11941D5EA00B97A78 /* H3CClientProtocol.h */,
 			);
 			path = "OS-X-H3CClient";
 			sourceTree = "<group>";

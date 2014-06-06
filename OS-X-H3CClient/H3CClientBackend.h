@@ -19,10 +19,11 @@ enum ConnectionState
 
 @interface H3CClientBackend : NSObject
 
-@property (nonatomic) enum ConnectionState connectionState;
+@property (atomic) enum ConnectionState connectionState;
 @property (nonatomic) NSDictionary *adapterList;
-@property (nonatomic) NSUserDefaults *globalConfiguration;
 @property (nonatomic) H3CClientConnector *connector;
+
+@property NSUserDefaults *globalConfiguration;
 
 - (id)init;
 - (void)connect;

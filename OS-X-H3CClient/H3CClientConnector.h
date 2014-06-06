@@ -8,11 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
+#import "H3CClientProtocol.h"
+
 @interface H3CClientConnector : NSObject
 
 - (id)init;
 
 - (BOOL)openAdapter:(NSString *)interfaceName;
 - (void)closeAdapter;
+
+- (BOOL)findServer;
+- (BOOL)keepOnlineWithId:(BYTE)pid userName:(NSString *)userName token:(BYTE *)token on:(HWADDR)serverAddress;
+- (BOOL)verifyUserName:(NSString *)userName withId:(BYTE)pid on:(HWADDR)serverAddress;
+- (BOOL)verifyPassword:(NSString *)password withId:(BYTE)pid userName:(NSString *)userName seed:(BYTE *)seed on:(HWADDR)serverAddress;
+- (BOOL)parseTokenFrame:(TokenFrame *)frame to:(BYTE *)token;
+- (void)logout:(HWADDR)serverAddress;
+
+- (BOOL)nextPacket:(PacketFrame **)ptr;
 
 @end

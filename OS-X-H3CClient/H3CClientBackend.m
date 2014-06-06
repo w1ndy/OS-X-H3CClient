@@ -24,20 +24,40 @@
     return self;
 }
 
+- (void)sendUserNotificationWithDescription:(NSString *)desc
+{
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = @"H3CClient";
+    notification.informativeText = desc;
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+
 - (void)connect
 {
     self.connectionState = Connecting;
     dispatch_async(dispatch_get_global_queue(0, 0), ^(){
         NSLog(@"connecting...");
-        if([self.connector openAdapter:@"en0"]) {
-            NSUserNotification *notification = [[NSUserNotification alloc] init];
-            notification.title = @"H3CClient";
-            notification.informativeText = @"Adapter successfully opened.";
-            notification.soundName = NSUserNotificationDefaultSoundName;
-            
-            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
-            [self.connector closeAdapter];
+        
+        NSString *userName = [self.globalConfiguration stringForKey:@"userName"];
+        NSString *password = [self.globalConfiguration stringForKey:@"password"];
+        NSString *adapterName = [self.globalConfiguration stringForKey:@"lastUsedInterface"];
+        
+        if(![self.connector openAdapter:adapterName]) {
+            [self sendUserNotificationWithDescription:@"Failed to open network adapter."];
+            self.connectionState = Disconnected;
+            return ;
         }
+        
+        if(![self.connector findServer]) {
+            [self sendUserNotificationWithDescription:@"Cannot find authentication server."];
+            self.connectionState = Disconnected;
+            return ;
+        }
+        
+        [self startDaemonWithUserName:userName password:password];
+        self.connectionState = Disconnected;
+        return ;
+        
     });
 }
 
@@ -57,6 +77,76 @@
             [adapters setObject:interface[@"Interface"][@"DeviceName"] forKey:interface[@"UserDefinedName"]];
     }
     return adapters;
+}
+
+- (void)startDaemonWithUserName:(NSString *)userName password:(NSString *)password
+{
+    PacketFrame *frame;
+    HWADDR srvaddr;
+    BOOL srvfound = NO;
+    BYTE token[32];
+    
+    while([self.connector nextPacket:&frame]) {
+        if(self.connectionState == Disconnecting) {
+            if(srvfound)
+                [self.connector logout:srvaddr];
+            [self.connector closeAdapter];
+            return;
+        }
+        switch(frame->code) {
+            case EAP_REQUEST:
+                switch(frame->eaptype) {
+                    case EAP_KEEPONLINE:
+                        NSLog(@"received EAP_REQUEST/EAP_KEEPONLINE");
+                        if(srvfound && ![self.connector keepOnlineWithId:frame->pid userName:userName token:token on:srvaddr]) {
+                            [self sendUserNotificationWithDescription:@"Failed to communicate with server."];
+                            self.connectionState = Disconnecting;
+                        }
+                        break;
+                    case EAP_IDENTIFY:
+                        NSLog(@"received EAP_REQUEST/EAP_IDENTIFY");
+                        if(!srvfound) {
+                            memcpy(&srvaddr, &(frame->ethernet.source), sizeof(HWADDR));
+                            srvfound = YES;
+                        }
+                        if(![self.connector verifyUserName:userName withId:frame->pid on:srvaddr]) {
+                            [self sendUserNotificationWithDescription:@"Failed to communicate with server."];
+                            self.connectionState = Disconnecting;
+                        }
+                        break;
+                    case EAP_MD5:
+                        NSLog(@"received EAP_REQUEST/EAP_MD5");
+                        if(srvfound && ![self.connector verifyPassword:password withId:frame->pid userName:userName seed:((PasswordFrame *)frame)->password on:srvaddr]) {
+                            [self sendUserNotificationWithDescription:@"Failed to communicate with server."];
+                            self.connectionState = Disconnecting;
+                        }
+                        break;
+                    default:
+                        NSLog(@"received EAP_REQUEST/UNKNOWN %d", frame->eaptype);
+                }
+                break;
+            case EAP_SUCCESS:
+                NSLog(@"received EAP_SUCCESS");
+                [self sendUserNotificationWithDescription:@"Authenticated successfully."];
+                self.connectionState = Connected;
+                break;
+            case EAP_FAILURE:
+                NSLog(@"received EAP_FAILURE");
+                [self sendUserNotificationWithDescription:@"Failed to authenticate."];
+                self.connectionState = Disconnecting;
+                break;
+            case EAP_OTHER:
+                NSLog(@"received EAP_OTHER");
+                if([self.connector parseTokenFrame:(TokenFrame *)frame to:token])
+                    break;
+                // Rest ignored.
+                break;
+            default:
+                NSLog(@"received UNKNOWN");
+        }
+    }
+    [self.connector closeAdapter];
+    return;
 }
 
 @end
