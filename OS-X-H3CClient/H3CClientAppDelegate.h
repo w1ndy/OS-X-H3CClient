@@ -24,5 +24,9 @@
 @property (weak) IBOutlet NSButton *applyView;
 @property (weak) IBOutlet NSProgressIndicator *progressView;
 @property (weak) IBOutlet NSButton *autoconnectView;
+@property (weak) IBOutlet NSToolbar *toolbarView;
+
+@property (weak) IBOutlet NSView *generalView;
+@property (weak) IBOutlet NSView *aboutView;
 
 @end

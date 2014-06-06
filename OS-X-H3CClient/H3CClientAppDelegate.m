@@ -28,6 +28,29 @@
     }
 }
 
+- (IBAction)onPreferencesGeneral:(id)sender
+{
+    [self animatePreferencesWindowWithView:self.generalView];
+    self.toolbarView.selectedItemIdentifier = @"General";
+}
+
+- (IBAction)onPreferencesAbout:(id)sender
+{
+    [self animatePreferencesWindowWithView:self.aboutView];
+    self.toolbarView.selectedItemIdentifier = @"About";
+}
+
+- (void)animatePreferencesWindowWithView:(NSView *)view
+{
+    NSWindow *window = self.window;
+    CGSize size = view.frame.size;
+    NSRect windowFrame = [window contentRectForFrameRect:window.frame];
+    NSRect newWindowFrame = [window frameRectForContentRect:
+                             NSMakeRect( NSMinX( windowFrame ), NSMaxY( windowFrame ) - size.height, size.width, size.height )];
+    self.window.contentView = view;
+    [self.window setFrame:newWindowFrame display:YES animate:YES];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if([keyPath isEqualToString:@"connectionState"]) {
@@ -104,7 +127,12 @@
         [self.interfaceView selectItemAtIndex:0];
     }
     
+    [self animatePreferencesWindowWithView:self.generalView];
+    self.toolbarView.selectedItemIdentifier = @"General";
     [self.window makeKeyAndOrderFront:nil];
+    if(self.backend.connectionState == Connecting || self.backend.connectionState == Disconnecting) {
+        [self.progressView startAnimation:self];
+    }
 }
 
 - (IBAction)onPreferencesApply:(id)sender
