@@ -29,7 +29,10 @@
         self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
         self.statusItem.menu = self.statusMenu;
         self.statusItem.highlightMode = YES;
-        self.statusItem.image = [NSImage imageNamed:NSImageNameRefreshFreestandingTemplate];
+        NSImageView *statusView = ((NSWindow *)[self.statusItem valueForKey:@"window"]).contentView;
+        statusView.imageScaling = NSScaleProportionally;
+        self.statusItem.image = [NSImage imageNamed:@"AppIcon"];
+        //self.statusItem.image.scalesWhenResized = YES;
         /*StatusItemView *statusImageView = [StatusItemView new];
          self.statusMenu.delegate = statusImageView;
          statusImageView.menu = self.statusMenu;
