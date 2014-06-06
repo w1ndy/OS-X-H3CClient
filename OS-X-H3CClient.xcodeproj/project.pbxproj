@@ -10,6 +10,7 @@
 		C9049F1119412E3D00746681 /* dot1x.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9049F0C19412E3D00746681 /* dot1x.cpp */; };
 		C9049F1219412E3D00746681 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9049F0F19412E3D00746681 /* md5.cpp */; };
 		C9049F1419412E8400746681 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9049F1319412E8400746681 /* libpcap.dylib */; };
+		C9BFB7C01941C1CF00B97A78 /* H3CClientConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BFB7BF1941C1CF00B97A78 /* H3CClientConnector.m */; };
 		C9CCC8481940FC5C008F3407 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CCC8471940FC5C008F3407 /* Cocoa.framework */; };
 		C9CCC8521940FC5C008F3407 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC8501940FC5C008F3407 /* InfoPlist.strings */; };
 		C9CCC8541940FC5C008F3407 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CCC8531940FC5C008F3407 /* main.m */; };
@@ -43,6 +44,8 @@
 		C9049F0F19412E3D00746681 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
 		C9049F1019412E3D00746681 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		C9049F1319412E8400746681 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = usr/lib/libpcap.dylib; sourceTree = SDKROOT; };
+		C9BFB7BE1941C1CF00B97A78 /* H3CClientConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H3CClientConnector.h; sourceTree = "<group>"; };
+		C9BFB7BF1941C1CF00B97A78 /* H3CClientConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H3CClientConnector.m; sourceTree = "<group>"; };
 		C9CCC8441940FC5C008F3407 /* OS-X-H3CClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OS-X-H3CClient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9CCC8471940FC5C008F3407 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C9CCC84A1940FC5C008F3407 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -157,6 +160,8 @@
 				C9CCC886194114C1008F3407 /* StatusMenuViewController.h */,
 				C9CCC887194114C1008F3407 /* StatusMenuViewController.m */,
 				C9CCC888194114C1008F3407 /* StatusMenu.xib */,
+				C9BFB7BE1941C1CF00B97A78 /* H3CClientConnector.h */,
+				C9BFB7BF1941C1CF00B97A78 /* H3CClientConnector.m */,
 			);
 			path = "OS-X-H3CClient";
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9BFB7C01941C1CF00B97A78 /* H3CClientConnector.m in Sources */,
 				C9049F1219412E3D00746681 /* md5.cpp in Sources */,
 				C9049F1119412E3D00746681 /* dot1x.cpp in Sources */,
 				C9CCC85B1940FC5C008F3407 /* H3CClientAppDelegate.m in Sources */,

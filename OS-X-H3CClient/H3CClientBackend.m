@@ -19,6 +19,7 @@
         self.connectionState = Disconnected;
         self.globalConfiguration = [NSUserDefaults standardUserDefaults];
         self.adapterList = [self getAdapterList];
+        self.connector = [[H3CClientConnector alloc] init];
     }
     return self;
 }
@@ -26,6 +27,18 @@
 - (void)connect
 {
     self.connectionState = Connecting;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^(){
+        NSLog(@"connecting...");
+        if([self.connector openAdapter:@"en0"]) {
+            NSUserNotification *notification = [[NSUserNotification alloc] init];
+            notification.title = @"H3CClient";
+            notification.informativeText = @"Adapter successfully opened.";
+            notification.soundName = NSUserNotificationDefaultSoundName;
+            
+            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+            [self.connector closeAdapter];
+        }
+    });
 }
 
 - (void)disconnect

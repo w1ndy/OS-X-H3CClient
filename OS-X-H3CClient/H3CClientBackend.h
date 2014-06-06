@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "H3CClientConnector.h"
 
 enum ConnectionState
 {
@@ -21,6 +22,7 @@ enum ConnectionState
 @property (nonatomic) enum ConnectionState connectionState;
 @property (nonatomic) NSDictionary *adapterList;
 @property (nonatomic) NSUserDefaults *globalConfiguration;
+@property (nonatomic) H3CClientConnector *connector;
 
 - (id)init;
 - (void)connect;
