@@ -48,8 +48,8 @@
     NSRect windowFrame = [window contentRectForFrameRect:window.frame];
     NSRect newWindowFrame = [window frameRectForContentRect:
                              NSMakeRect( NSMinX( windowFrame ), NSMaxY( windowFrame ) - size.height, size.width, size.height )];
-    self.window.contentView = view;
-    [self.window setFrame:newWindowFrame display:YES animate:YES];
+    window.contentView = view;
+    [window setFrame:newWindowFrame display:YES animate:YES];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

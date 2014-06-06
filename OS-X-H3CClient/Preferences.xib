@@ -106,16 +106,10 @@
                 </secureTextField>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s89-3s-gZN">
                     <rect key="frame" x="98" y="55" width="266" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Cy4-0X-Qld" id="Gxu-nn-fMj">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Gxu-nn-fMj">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
-                        <menu key="menu" title="OtherViews" id="jTO-I8-Dqc">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="Cy4-0X-Qld"/>
-                                <menuItem title="Item 2" id="cfC-ot-Vh8"/>
-                                <menuItem title="Item 3" id="dgb-Ru-GL1"/>
-                            </items>
-                        </menu>
+                        <menu key="menu" title="OtherViews" id="jTO-I8-Dqc"/>
                     </popUpButtonCell>
                 </popUpButton>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ntX-fL-4SE">
