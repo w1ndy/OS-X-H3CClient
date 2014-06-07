@@ -87,12 +87,18 @@ const HWADDR MulticastHardwareAddress = {
                                 100,	// read timeout
                                 errbuf)))	// error buffer
 	{
-        NSLog(@"pcap error: %s", errbuf);
+        NSLog(@"pcap_open_live() error: %s", errbuf);
 	    return NO;
 	}
     
+    if (pcap_setnonblock(device, 1, errbuf) == -1) {
+        NSLog(@"pcap_setnonblock() error: %s", errbuf);
+        pcap_close(device);
+        return NO;
+    }
+    
 	//set filter to receive frame of 802.1X only
-	sprintf(pcap_filter, "ether dst %x:%x:%x:%x:%x:%x and ether proto 0x888e", hwaddr.value[0], hwaddr.value[1], hwaddr.value[2], hwaddr.value[3], hwaddr.value[4], hwaddr.value[5]);
+	sprintf(pcap_filter, "ether dst %02X:%02X:%02X:%02X:%02X:%02X and ether proto 0x888e", hwaddr.value[0], hwaddr.value[1], hwaddr.value[2], hwaddr.value[3], hwaddr.value[4], hwaddr.value[5]);
     NSLog(@"setting packet filter %s...", pcap_filter);
     
 	if (pcap_compile(device, &pcap_fp, pcap_filter, 0, netmask) == -1) {
@@ -120,20 +126,19 @@ const HWADDR MulticastHardwareAddress = {
 
 - (BOOL)findServer
 {
-    BYTE buf[100] = {0};
-    DiscoveryFrame *frame = (DiscoveryFrame *)buf;
+    DiscoveryFrame frame;
     
     if(!device) {
         NSLog(@"no adapter found.");
         return NO;
     }
     
-    //memset(&frame, 0, sizeof(frame));
-    [self makeEthernetFrame:(EthernetFrame *)frame destination:MulticastHardwareAddress];
-    frame->version = PACKET_VERSION;
-    frame->type = EAPOL_START;
+    memset(&frame, 0, sizeof(frame));
+    [self makeEthernetFrame:(EthernetFrame *)&frame destination:MulticastHardwareAddress];
+    frame.header.version = PACKET_VERSION;
+    frame.header.type = EAPOL_START;
     
-    //NSLog(@"sending discovery packet %d...", sizeof(DiscoveryFrame));
+    NSLog(@"sending discovery packet...");
     if(pcap_sendpacket(device, (BYTE *)&frame, 60) != 0) {
         NSLog(@"failed to send packet: %s", strerror(errno));
         return NO;
@@ -153,11 +158,11 @@ const HWADDR MulticastHardwareAddress = {
     
     memset(&frame, 0, sizeof(frame));
     [self makeEthernetFrame:(EthernetFrame *)&frame destination:serverAddress];
-    frame.version = PACKET_VERSION;
-    frame.type = EAPOL_LOGOUT;
+    frame.header.version = PACKET_VERSION;
+    frame.header.type = EAPOL_LOGOUT;
     
     NSLog(@"sending logout packet...");
-    if(pcap_sendpacket(device, (BYTE *)&frame, sizeof(LogoutFrame))) {
+    if(pcap_sendpacket(device, (BYTE *)&frame, 60) != 0) {
         NSLog(@"failed to send packet: %s", strerror(errno));
     }
 }
@@ -182,9 +187,9 @@ const HWADDR MulticastHardwareAddress = {
     frame.header.pid = pid;
     frame.header.eaptype = EAP_KEEPONLINE;
     frame.useproxy = 0;
-    frame.pred = TOKEN_PREDECESSOR;
+    frame.pred = htons(TOKEN_PREDECESSOR);
     memcpy(&(frame.token), token, 32);
-    frame.succ = TOKEN_SUCCESSOR;
+    frame.succ = htons(TOKEN_SUCCESSOR);
     memcpy(frame.username, [userName UTF8String], length);
     
     NSLog(@"sending heartbeat packet...");
@@ -200,7 +205,7 @@ const HWADDR MulticastHardwareAddress = {
     UsernameFrame frame;
     size_t length = [userName length];
     length = (length > MAX_LENGTH) ? MAX_LENGTH : length;
-    size_t pktsize = sizeof(UsernameFrame) - MAX_LENGTH + length + 1;
+    size_t pktsize = length + 0x0b;
     
     if(!device) {
         NSLog(@"no adapter found.");
@@ -213,12 +218,17 @@ const HWADDR MulticastHardwareAddress = {
     frame.header.len1 = frame.header.len2 = htons(pktsize);
     frame.header.code = EAP_RESPONSE;
     frame.header.pid = pid;
-    frame.header.eaptype = EAP_IDENTIFY; 
-    frame.padding = USERNAME_PADDING;
+    frame.header.eaptype = EAP_IDENTIFY;
+    frame.padding = htons(USERNAME_PADDING);
     memcpy(frame.username, [userName UTF8String], length);
     
+    for(int i = 0; i < pktsize; i++) {
+        if(i % 10 == 0) puts("");
+        printf("%02X ", ((BYTE*)&frame)[i]);
+    }
+    
     NSLog(@"verifying username...");
-    if(pcap_sendpacket(device, (BYTE *)&frame, (int)pktsize) != 0) {
+    if(pcap_sendpacket(device, (BYTE *)&frame, 60) != 0) {
         NSLog(@"failed to send packet: %s", strerror(errno));
         return NO;
     }
@@ -242,7 +252,7 @@ const HWADDR MulticastHardwareAddress = {
     PasswordFrame frame;
     size_t length = [userName length];
     length = (length > MAX_LENGTH) ? MAX_LENGTH : length;
-    size_t pktsize = sizeof(PasswordFrame) - MAX_LENGTH + length + 1;
+    size_t pktsize = length + 0x16;
     
     if(!device) {
         NSLog(@"no adapter found.");
@@ -260,8 +270,12 @@ const HWADDR MulticastHardwareAddress = {
     [self hashPassword:password withId:pid seed:seed to:frame.password];
     memcpy(frame.username, [userName UTF8String], length);
     
+    for(int i = 0; i < 60; i++) {
+        if(i % 10 == 0) puts("");
+        printf("%02X ", ((BYTE*)&frame)[i]);
+    }
     NSLog(@"verifying password...");
-    if(pcap_sendpacket(device, (BYTE *)&frame, (int)pktsize) != 0) {
+    if(pcap_sendpacket(device, (BYTE *)&frame, 60) != 0) {
         NSLog(@"failed to send packet: %s", strerror(errno));
         return NO;
     }
@@ -346,7 +360,7 @@ const HWADDR MulticastHardwareAddress = {
     return NO;
 }
 
-- (BOOL)nextPacket:(PacketFrame **)ptr
+- (BOOL)nextPacket:(const PacketFrame **)ptr
 {
 	struct pcap_pkthdr *header;
 	const BYTE *data;
@@ -362,17 +376,18 @@ const HWADDR MulticastHardwareAddress = {
     int fd = pcap_get_selectable_fd(device);
     FD_ZERO(&fds);
     FD_SET(fd, &fds);
-    tv.tv_sec = 30;
+    tv.tv_sec = 90;
+    tv.tv_usec = 0;
     
     NSLog(@"fd: %d", fd);
-    /*r = select(2, &fds, nil, nil, &tv);
+    r = select(fd + 1, &fds, nil, nil, &tv);
     if(r == 0) {
         NSLog(@"read timeout, disconnecting...");
         return NO;
     } else if(r < 0) {
         NSLog(@"select() failed: %s", strerror(errno));
         return NO;
-    }*/
+    }
     
     while((r = pcap_next_ex(device, &header, &data)) == 0) {
         NSLog(@"timeout");
@@ -385,7 +400,7 @@ const HWADDR MulticastHardwareAddress = {
         return NO;
     }
     
-    *ptr = (PacketFrame *)data;
+    *ptr = (const PacketFrame *)data;
     return YES;
 }
 
@@ -393,7 +408,7 @@ const HWADDR MulticastHardwareAddress = {
 {
     memcpy(&(frame->dest), &dest, sizeof(HWADDR));
     memcpy(&(frame->source), &hwaddr, sizeof(HWADDR));
-    frame->type = ETHERNET_TYPE;
+    frame->type = htons(ETHERNET_TYPE);
 }
 
 @end

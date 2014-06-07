@@ -13,9 +13,10 @@
 #define    TOKEN_SUCCESSOR     0x1504
 
 #define    USERNAME_PADDING    0x1504
-#define    PASSWORD_PADDING    0x04
+#define    PASSWORD_PADDING    0x10
 
 #define    MAX_LENGTH          64
+#define    MAX_BUFSIZE         256
 
 //    EAP_HEAD  CODE
 #define    EAP_REQUEST         0x01
@@ -42,7 +43,7 @@ typedef unsigned short  USHORT;
 typedef struct
 {
     BYTE value[6];
-}
+} __attribute__((packed))
 HWADDR;
 
 typedef struct
@@ -50,7 +51,7 @@ typedef struct
     HWADDR  dest;
     HWADDR  source;
     USHORT  type;
-}
+} __attribute__((packed))
 EthernetFrame;
 
 
@@ -67,16 +68,22 @@ typedef struct
     USHORT  len2;
     
     BYTE    eaptype;
-}
-PacketFrame, DiscoveryFrame, LogoutFrame;
+} __attribute__((packed))
+PacketFrame;
 
+typedef struct
+{
+    PacketFrame header;
+    BYTE padding[60];
+} __attribute__((packed))
+DiscoveryFrame, LogoutFrame;
 
 typedef struct
 {
     PacketFrame header;
     
     BYTE version[50];
-}
+} __attribute__((packed))
 VersionFrame;
 
 
@@ -87,7 +94,7 @@ typedef struct
     USHORT padding;
     BYTE ipaddr[4];
     BYTE username[MAX_LENGTH + 1];
-}
+} __attribute__((packed))
 UsernameFrame;
 
 
@@ -98,7 +105,7 @@ typedef struct
     BYTE padding;
     BYTE password[16];
     BYTE username[MAX_LENGTH + 1];
-}
+} __attribute__((packed))
 PasswordFrame;
 
 
@@ -114,7 +121,7 @@ typedef struct
     //BYTE reserved2[2]; //0x15 0x04
     BYTE ipaddr[4];
     BYTE username[MAX_LENGTH + 1];
-}
+} __attribute__((packed))
 HeartbeatFrame;
 
 
@@ -124,5 +131,5 @@ typedef struct
     
     BYTE identifier[4]; //0x23 0x44 0x23 0x31
     BYTE token[32];
-}
+} __attribute__((packed))
 TokenFrame;

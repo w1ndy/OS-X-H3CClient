@@ -81,7 +81,7 @@
 
 - (void)startDaemonWithUserName:(NSString *)userName password:(NSString *)password
 {
-    PacketFrame *frame;
+    const PacketFrame *frame;
     HWADDR srvaddr;
     BOOL srvfound = NO;
     BYTE token[32];
