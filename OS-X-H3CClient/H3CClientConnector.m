@@ -23,7 +23,9 @@
 #import <errno.h>
 #import <ifaddrs.h>
 
+#import <CoreFoundation/CoreFoundation.h>
 #import <CommonCrypto/CommonDigest.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 
 pcap_t *device;
 HWADDR hwaddr;
@@ -222,11 +224,6 @@ const HWADDR MulticastHardwareAddress = {
     frame.padding = htons(USERNAME_PADDING);
     memcpy(frame.username, [userName UTF8String], length);
     
-    for(int i = 0; i < pktsize; i++) {
-        if(i % 10 == 0) puts("");
-        printf("%02X ", ((BYTE*)&frame)[i]);
-    }
-    
     NSLog(@"verifying username...");
     if(pcap_sendpacket(device, (BYTE *)&frame, 60) != 0) {
         NSLog(@"failed to send packet: %s", strerror(errno));
@@ -270,10 +267,6 @@ const HWADDR MulticastHardwareAddress = {
     [self hashPassword:password withId:pid seed:seed to:frame.password];
     memcpy(frame.username, [userName UTF8String], length);
     
-    for(int i = 0; i < 60; i++) {
-        if(i % 10 == 0) puts("");
-        printf("%02X ", ((BYTE*)&frame)[i]);
-    }
     NSLog(@"verifying password...");
     if(pcap_sendpacket(device, (BYTE *)&frame, 60) != 0) {
         NSLog(@"failed to send packet: %s", strerror(errno));
@@ -360,7 +353,7 @@ const HWADDR MulticastHardwareAddress = {
     return NO;
 }
 
-- (BOOL)nextPacket:(const PacketFrame **)ptr
+- (BOOL)nextPacket:(const PacketFrame **)ptr withTimeout:(int)second
 {
 	struct pcap_pkthdr *header;
 	const BYTE *data;
@@ -376,31 +369,33 @@ const HWADDR MulticastHardwareAddress = {
     int fd = pcap_get_selectable_fd(device);
     FD_ZERO(&fds);
     FD_SET(fd, &fds);
-    tv.tv_sec = 90;
+    tv.tv_sec = second;
     tv.tv_usec = 0;
     
-    NSLog(@"fd: %d", fd);
+    while((r = pcap_next_ex(device, &header, &data)) != 0) {
+        if(r == -1) {
+            NSLog(@"pcap_next_ex() failed: %s", strerror(errno));
+            return NO;
+        } else if(r == -2) {
+            NSLog(@"breaking loop...");
+            return NO;
+        }
+        
+        *ptr = (const PacketFrame *)data;
+        return YES;
+    }
+    
+    usleep(200);
     r = select(fd + 1, &fds, nil, nil, &tv);
     if(r == 0) {
-        NSLog(@"read timeout, disconnecting...");
+        NSLog(@"select timeout");
         return NO;
     } else if(r < 0) {
         NSLog(@"select() failed: %s", strerror(errno));
         return NO;
     }
     
-    while((r = pcap_next_ex(device, &header, &data)) == 0) {
-        NSLog(@"timeout");
-        sleep(5);
-    }
-    if(r == 0) {
-        NSLog(@"oh fuck my life");
-    } else if(r < 0) {
-        NSLog(@"pcap_next_ex() failed: %s", strerror(errno));
-        return NO;
-    }
-    
-    *ptr = (const PacketFrame *)data;
+    *ptr = nil;
     return YES;
 }
 
@@ -411,4 +406,18 @@ const HWADDR MulticastHardwareAddress = {
     frame->type = htons(ETHERNET_TYPE);
 }
 
+- (void)updateIP
+{
+    NSLog(@"updating ip address...");
+    NSArray *interfaces = (__bridge_transfer NSArray *) SCNetworkInterfaceCopyAll();
+    for (id interface_ in interfaces) {
+        SCNetworkInterfaceRef interface = (__bridge SCNetworkInterfaceRef) interface_;
+        SCNetworkInterfaceForceConfigurationRefresh(interface);
+    }
+}
+
+- (void)breakLoop
+{
+    pcap_breakloop(device);
+}
 @end

@@ -64,6 +64,7 @@
 - (void)disconnect
 {
     self.connectionState = Disconnecting;
+    [self.connector breakLoop];
 }
 
 - (NSDictionary *)getAdapterList
@@ -86,13 +87,8 @@
     BOOL srvfound = NO;
     BYTE token[32];
     
-    while([self.connector nextPacket:&frame]) {
-        if(self.connectionState == Disconnecting) {
-            if(srvfound)
-                [self.connector logout:srvaddr];
-            [self.connector closeAdapter];
-            return;
-        }
+    while([self.connector nextPacket:&frame withTimeout:60]) {
+        if(frame == nil) continue;
         switch(frame->code) {
             case EAP_REQUEST:
                 switch(frame->eaptype) {
@@ -128,6 +124,7 @@
             case EAP_SUCCESS:
                 NSLog(@"received EAP_SUCCESS");
                 [self sendUserNotificationWithDescription:@"Authenticated successfully."];
+                [self.connector updateIP];
                 self.connectionState = Connected;
                 break;
             case EAP_FAILURE:
@@ -144,6 +141,10 @@
             default:
                 NSLog(@"received UNKNOWN");
         }
+    }
+    if(self.connectionState == Disconnecting) {
+        if(srvfound)
+            [self.connector logout:srvaddr];
     }
     [self.connector closeAdapter];
     return;

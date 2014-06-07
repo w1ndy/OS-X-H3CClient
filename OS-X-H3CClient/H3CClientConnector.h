@@ -24,6 +24,8 @@
 - (BOOL)parseTokenFrame:(TokenFrame *)frame to:(BYTE *)token;
 - (void)logout:(HWADDR)serverAddress;
 
-- (BOOL)nextPacket:(const PacketFrame **)ptr;
+- (BOOL)nextPacket:(const PacketFrame **)ptr withTimeout:(int)second;
+- (void)updateIP;
+- (void)breakLoop;
 
 @end
