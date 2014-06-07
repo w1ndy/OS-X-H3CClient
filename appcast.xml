@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
-		<title>OS-X-H3CClient's Changelog</title>
+		<title>H3CClientX's Changelog</title>
 		<link>http://5ki3s0x1c9.github.io/OS-X-H3CClient/appcast.xml</link>
 		<description>Most recent changes with links to updates.</description>
 		<language>en</language>
