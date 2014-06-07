@@ -11,7 +11,7 @@
 				http://5ki3s0x1c9.github.io/OS-X-H3CClient/
 			</sparkle:releaseNotesLink>
 			<pubDate>Sun, Jun 8, 2014</pubDate>
-			<enclosure url="http://address-to-update" sparkle:version="0.9.0" length="0" type="application/octet-stream" sparkle:dsaSignature="sign" />
+			<enclosure url="http://address-to-update" sparkle:version="0.9.0" length="845855" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCchGrH9XaBK0aZCItXccWn6aPfQQIUGtvgJJvrBMjyxFD04dMKNdHkZOQ=" />
 		</item>
 	</channel>
 </rss>
