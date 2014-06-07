@@ -102,8 +102,4 @@
     [self.delegate showPreferences];
 }
 
-- (IBAction)onExit:(id)sender {
-    [NSApp terminate: nil];
-}
-
 @end

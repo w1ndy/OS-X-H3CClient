@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Sparkle/Sparkle.h>
 
 #import "H3CClientBackend.h"
 #import "StatusMenuViewController.h"
@@ -28,5 +29,7 @@
 
 @property (weak) IBOutlet NSView *generalView;
 @property (weak) IBOutlet NSView *aboutView;
+
+@property (weak) IBOutlet SUUpdater *updaterView;
 
 @end
