@@ -31,5 +31,6 @@
 @property (weak) IBOutlet NSView *aboutView;
 
 @property (weak) IBOutlet SUUpdater *updaterView;
+@property (weak) IBOutlet NSTextField *applicationDescView;
 
 @end

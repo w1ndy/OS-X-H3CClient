@@ -32,6 +32,7 @@
         NSImageView *statusView = ((NSWindow *)[self.statusItem valueForKey:@"window"]).contentView;
         statusView.imageScaling = NSImageScaleProportionallyDown;
         self.statusItem.image = [NSImage imageNamed:@"AppIcon"];
+        self.statusItem.alternateImage = [NSImage imageNamed:@"AlternateAppIcon"];
         //self.statusItem.image.scalesWhenResized = YES;
         /*StatusItemView *statusImageView = [StatusItemView new];
          self.statusMenu.delegate = statusImageView;

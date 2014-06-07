@@ -15,6 +15,7 @@
         <customObject id="Voe-Tx-rLC" customClass="H3CClientAppDelegate">
             <connections>
                 <outlet property="aboutView" destination="cSg-91-MqT" id="CLI-CT-yyl"/>
+                <outlet property="applicationDescView" destination="7P0-2Z-3Ad" id="8xR-Fw-GpG"/>
                 <outlet property="applyView" destination="ntX-fL-4SE" id="Mz4-9z-mh3"/>
                 <outlet property="autoconnectView" destination="Tc9-sX-tgN" id="vwx-da-Wv4"/>
                 <outlet property="generalView" destination="uQ4-xY-UbW" id="2T8-dE-ggS"/>
@@ -144,10 +145,10 @@
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lCb-a7-Ifg">
                     <rect key="frame" x="126" y="131" width="128" height="128"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSNetwork" id="VtH-2V-vvk"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="AppIcon@128" id="VtH-2V-vvk"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7P0-2Z-3Ad">
-                    <rect key="frame" x="97" y="106" width="187" height="17"/>
+                    <rect key="frame" x="97" y="98" width="187" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="H3CClient v1.0.0 (Build 0x1)" id="8ck-ma-QB2">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -155,7 +156,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qaw-AH-TR5">
-                    <rect key="frame" x="81" y="81" width="219" height="17"/>
+                    <rect key="frame" x="81" y="73" width="219" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="An OS-X-Compatible 802.1x Client" id="61Z-os-vfQ">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -177,8 +178,8 @@
         <customObject id="Dyw-sC-glx" customClass="SUUpdater"/>
     </objects>
     <resources>
+        <image name="AppIcon@128" width="5.2009029388427734" height="5.2009029388427734"/>
         <image name="NSInfo" width="32" height="32"/>
-        <image name="NSNetwork" width="32" height="32"/>
         <image name="NSPreferencesGeneral" width="32" height="32"/>
     </resources>
 </document>

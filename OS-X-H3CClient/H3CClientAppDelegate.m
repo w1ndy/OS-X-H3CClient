@@ -27,6 +27,8 @@
     if([self.backend.globalConfiguration boolForKey:@"autoconnect"]) {
         [self.backend connect];
     }
+    
+    self.applicationDescView.stringValue = [NSString stringWithFormat:@"H3CClient v%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 }
 
 - (IBAction)onPreferencesGeneral:(id)sender
