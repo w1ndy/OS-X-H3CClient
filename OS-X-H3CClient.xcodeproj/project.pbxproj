@@ -13,6 +13,7 @@
 		C928B5651943732400C74B90 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C928B5641943732400C74B90 /* Sparkle.framework */; };
 		C928B568194374E200C74B90 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = C928B567194374E200C74B90 /* dsa_pub.pem */; };
 		C928B56D19437FC800C74B90 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C928B5641943732400C74B90 /* Sparkle.framework */; };
+		C9A4651619439ACC00B63E16 /* org.wireshark.ChmodBPF.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9A4651519439ACC00B63E16 /* org.wireshark.ChmodBPF.plist */; };
 		C9BFB7C01941C1CF00B97A78 /* H3CClientConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BFB7BF1941C1CF00B97A78 /* H3CClientConnector.m */; };
 		C9CCC8481940FC5C008F3407 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CCC8471940FC5C008F3407 /* Cocoa.framework */; };
 		C9CCC8521940FC5C008F3407 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9CCC8501940FC5C008F3407 /* InfoPlist.strings */; };
@@ -59,6 +60,7 @@
 		C9049F1319412E8400746681 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = usr/lib/libpcap.dylib; sourceTree = SDKROOT; };
 		C928B5641943732400C74B90 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		C928B567194374E200C74B90 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../dsa_pub.pem; sourceTree = "<group>"; };
+		C9A4651519439ACC00B63E16 /* org.wireshark.ChmodBPF.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = org.wireshark.ChmodBPF.plist; sourceTree = "<group>"; };
 		C9BFB7BE1941C1CF00B97A78 /* H3CClientConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H3CClientConnector.h; sourceTree = "<group>"; };
 		C9BFB7BF1941C1CF00B97A78 /* H3CClientConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H3CClientConnector.m; sourceTree = "<group>"; };
 		C9BFB7C11941D5EA00B97A78 /* H3CClientProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = H3CClientProtocol.h; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				C928B567194374E200C74B90 /* dsa_pub.pem */,
+				C9A4651519439ACC00B63E16 /* org.wireshark.ChmodBPF.plist */,
 				C9CCC84F1940FC5C008F3407 /* OS-X-H3CClient-Info.plist */,
 				C9CCC8501940FC5C008F3407 /* InfoPlist.strings */,
 				C9CCC8531940FC5C008F3407 /* main.m */,
@@ -272,6 +275,7 @@
 				C928B568194374E200C74B90 /* dsa_pub.pem in Resources */,
 				C9CCC8521940FC5C008F3407 /* InfoPlist.strings in Resources */,
 				C9CCC8601940FC5C008F3407 /* Images.xcassets in Resources */,
+				C9A4651619439ACC00B63E16 /* org.wireshark.ChmodBPF.plist in Resources */,
 				C9CCC8581940FC5C008F3407 /* Credits.rtf in Resources */,
 				C9CCC88A194114C2008F3407 /* StatusMenu.xib in Resources */,
 				C9CCC88C19411B4F008F3407 /* Preferences.xib in Resources */,
