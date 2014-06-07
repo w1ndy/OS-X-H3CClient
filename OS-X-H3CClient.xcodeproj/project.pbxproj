@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9049F1119412E3D00746681 /* dot1x.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9049F0C19412E3D00746681 /* dot1x.cpp */; };
-		C9049F1219412E3D00746681 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9049F0F19412E3D00746681 /* md5.cpp */; };
 		C9049F1419412E8400746681 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9049F1319412E8400746681 /* libpcap.dylib */; };
 		C928B5651943732400C74B90 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C928B5641943732400C74B90 /* Sparkle.framework */; };
 		C928B568194374E200C74B90 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = C928B567194374E200C74B90 /* dsa_pub.pem */; };
@@ -52,11 +50,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C9049F0C19412E3D00746681 /* dot1x.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dot1x.cpp; sourceTree = "<group>"; };
-		C9049F0D19412E3D00746681 /* dot1x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dot1x.h; sourceTree = "<group>"; };
-		C9049F0E19412E3D00746681 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
-		C9049F0F19412E3D00746681 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
-		C9049F1019412E3D00746681 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		C9049F1319412E8400746681 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = usr/lib/libpcap.dylib; sourceTree = SDKROOT; };
 		C928B5641943732400C74B90 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		C928B567194374E200C74B90 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../dsa_pub.pem; sourceTree = "<group>"; };
@@ -108,18 +101,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C9049F0B19412E1000746681 /* h3cclient */ = {
-			isa = PBXGroup;
-			children = (
-				C9049F0C19412E3D00746681 /* dot1x.cpp */,
-				C9049F0D19412E3D00746681 /* dot1x.h */,
-				C9049F0E19412E3D00746681 /* global.h */,
-				C9049F0F19412E3D00746681 /* md5.cpp */,
-				C9049F1019412E3D00746681 /* md5.h */,
-			);
-			name = h3cclient;
-			sourceTree = "<group>";
-		};
 		C9CCC83B1940FC5C008F3407 = {
 			isa = PBXGroup;
 			children = (
@@ -162,7 +143,6 @@
 		C9CCC84D1940FC5C008F3407 /* OS-X-H3CClient */ = {
 			isa = PBXGroup;
 			children = (
-				C9049F0B19412E1000746681 /* h3cclient */,
 				C9CCC88B19411B4F008F3407 /* Preferences.xib */,
 				C9CCC8591940FC5C008F3407 /* H3CClientAppDelegate.h */,
 				C9CCC85A1940FC5C008F3407 /* H3CClientAppDelegate.m */,
@@ -297,8 +277,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9BFB7C01941C1CF00B97A78 /* H3CClientConnector.m in Sources */,
-				C9049F1219412E3D00746681 /* md5.cpp in Sources */,
-				C9049F1119412E3D00746681 /* dot1x.cpp in Sources */,
 				C9CCC85B1940FC5C008F3407 /* H3CClientAppDelegate.m in Sources */,
 				C9CCC889194114C2008F3407 /* StatusMenuViewController.m in Sources */,
 				C9CCC8541940FC5C008F3407 /* main.m in Sources */,
