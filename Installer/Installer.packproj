@@ -423,24 +423,7 @@
 							<key>Additional Resources</key>
 							<dict>
 								<key>International</key>
-								<array>
-									<dict>
-										<key>Path</key>
-										<string>org.wireshark.ChmodBPF.plist</string>
-										<key>Path Type</key>
-										<integer>2</integer>
-										<key>Status</key>
-										<true/>
-									</dict>
-									<dict>
-										<key>Path</key>
-										<string>postinstall.sh</string>
-										<key>Path Type</key>
-										<integer>2</integer>
-										<key>Status</key>
-										<true/>
-									</dict>
-								</array>
+								<array/>
 							</dict>
 							<key>Installation Scripts</key>
 							<dict>
