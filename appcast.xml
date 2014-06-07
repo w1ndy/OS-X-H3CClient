@@ -11,7 +11,7 @@
 				https://github.com/5Ki3s0x1C9/OS-X-H3CClient/releases/tag/v0.9.0
 			</sparkle:releaseNotesLink>
 			<pubDate>Sun, Jun 8, 2014</pubDate>
-			<enclosure url="https://dl.dropboxusercontent.com/s/gjrka8a7q4kmd9n/H3CClient.0.9.0.zip" sparkle:version="0.9.1" length="845855" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCchGrH9XaBK0aZCItXccWn6aPfQQIUGtvgJJvrBMjyxFD04dMKNdHkZOQ=" />
+			<enclosure url="https://dl.dropbox.com/s/gjrka8a7q4kmd9n/H3CClient.0.9.0.zip" sparkle:version="0.9.0" length="835135" type="application/octet-stream" sparkle:dsaSignature="MCwCFEizIiutLHFQW8At+ov23mF9UqbrAhRYbd2uDAV+AaEuGZz2L1mFNPHnJA==" />
 		</item>
 	</channel>
 </rss>
