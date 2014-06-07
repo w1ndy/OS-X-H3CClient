@@ -28,7 +28,7 @@
         [self.backend connect];
     }
     
-    self.applicationDescView.stringValue = [NSString stringWithFormat:@"H3CClient v%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    self.applicationDescView.stringValue = [NSString stringWithFormat:@"H3CClientX v%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 }
 
 - (IBAction)onPreferencesGeneral:(id)sender
