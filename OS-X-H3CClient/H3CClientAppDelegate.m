@@ -7,6 +7,7 @@
 //
 
 #import "H3CClientAppDelegate.h"
+#import "H3CClientProfileStorage.h"
 
 @implementation H3CClientAppDelegate
 
@@ -29,18 +30,48 @@
     }
     
     self.applicationDescView.stringValue = [NSString stringWithFormat:@"H3CClientX v%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    
+    self.stderrPipe = [NSPipe pipe];
+    self.stderrPipeReadHandle = [self.stderrPipe fileHandleForReading];
+    dup2([[self.stderrPipe fileHandleForWriting] fileDescriptor], fileno(stderr));
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleStderrNotification:) name: NSFileHandleReadCompletionNotification object: self.stderrPipeReadHandle];
+    [self.stderrPipeReadHandle readInBackgroundAndNotify];
+}
+
+- (void)handleStderrNotification:(id)notification
+{
+    [self.stderrPipeReadHandle readInBackgroundAndNotify];
+    NSString *str = [[NSString alloc] initWithData: [[notification userInfo] objectForKey: NSFileHandleNotificationDataItem] encoding: NSUTF8StringEncoding];
+    self.logView.string = [self.logView.string stringByAppendingString:str];
+    printf("%s", [str UTF8String]);
 }
 
 - (IBAction)onPreferencesGeneral:(id)sender
 {
     [self animatePreferencesWindowWithView:self.generalView];
     self.toolbarView.selectedItemIdentifier = @"General";
+    NSLog(@"tab switch");
+}
+- (IBAction)onPreferencesAccounts:(id)sender
+{
+    [self animatePreferencesWindowWithView:self.accountsView];
+    self.toolbarView.selectedItemIdentifier = @"Accounts";
+    NSLog(@"tab switch");
+}
+
+- (IBAction)onPreferencesAdvanced:(id)sender {
+    [self animatePreferencesWindowWithView:self.advancedView];
+    self.toolbarView.selectedItemIdentifier = @"Advanced";
+    [self.logView scrollToEndOfDocument:self];
+    NSLog(@"tab switch");
 }
 
 - (IBAction)onPreferencesAbout:(id)sender
 {
     [self animatePreferencesWindowWithView:self.aboutView];
     self.toolbarView.selectedItemIdentifier = @"About";
+    NSLog(@"tab switch");
 }
 
 - (void)animatePreferencesWindowWithView:(NSView *)view
@@ -111,6 +142,7 @@
         [self.interfaceView addItemsWithTitles:[[self.backend.adapterList allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
         if(last_interface == nil) {
             [self.interfaceView selectItemAtIndex:0];
+            [self.backend.globalConfiguration setObject:self.backend.adapterList[[self.interfaceView titleOfSelectedItem]] forKey:@"lastUsedInterface"];
         } else {
             BOOL found = false;
             for(id key in [self.backend.adapterList allKeys]) {
@@ -141,6 +173,22 @@
 
 - (IBAction)onPreferencesApply:(id)sender
 {
+    NSAlert *alert = [[NSAlert alloc] init];
+    
+    if([[self.usernameView stringValue] isEqualToString:@""]) {
+        [alert setMessageText:@"Username is required."];
+        [alert setIcon:[NSImage imageNamed:NSImageNameInfo]];
+        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp){}];
+        return ;
+    }
+    
+    if([[self.passwordView stringValue] isEqualToString:@""]) {
+        [alert setMessageText:@"Password is required."];
+        [alert setIcon:[NSImage imageNamed:NSImageNameInfo]];
+        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp){}];
+        return ;
+    }
+    
     [self.backend.globalConfiguration setObject:[self.usernameView stringValue] forKey:@"userName"];
     [self.backend.globalConfiguration setObject:[self.passwordView stringValue] forKey:@"password"];
     [self.backend.globalConfiguration setObject:self.backend.adapterList[[self.interfaceView titleOfSelectedItem]] forKey:@"lastUsedInterface"];
@@ -160,6 +208,10 @@
     } else {
         [self.backend.globalConfiguration setBool:NO forKey:@"autoconnect"];
     }
+}
+
+- (IBAction)onSelectProfile:(id)sender
+{
 }
 
 @end

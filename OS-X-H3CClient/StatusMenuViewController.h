@@ -25,8 +25,8 @@
 @property (nonatomic) NSStatusItem *statusItem;
 @property (nonatomic) id <StatusMenuViewControllerDelegate> delegate;
 
-@property (weak) IBOutlet NSMenu *statusMenu;
-@property (weak) IBOutlet NSMenuItem *connectView;
+@property (nonatomic, weak) IBOutlet NSMenu *statusMenu;
+@property (nonatomic, weak) IBOutlet NSMenuItem *connectView;
 
 - (id)initWithBackend:(H3CClientBackend *)backend;
 

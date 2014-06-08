@@ -14,23 +14,33 @@
 
 @interface H3CClientAppDelegate : NSObject <NSApplicationDelegate, StatusMenuViewControllerDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
+@property (nonatomic, weak) IBOutlet NSWindow *window;
 @property (nonatomic) H3CClientBackend *backend;
 @property (nonatomic) StatusMenuViewController *menuViewController;
 @property (nonatomic) BOOL willReconnect;
 
-@property (weak) IBOutlet NSTextField *usernameView;
-@property (weak) IBOutlet NSSecureTextField *passwordView;
-@property (weak) IBOutlet NSPopUpButton *interfaceView;
-@property (weak) IBOutlet NSButton *applyView;
-@property (weak) IBOutlet NSProgressIndicator *progressView;
-@property (weak) IBOutlet NSButton *autoconnectView;
-@property (weak) IBOutlet NSToolbar *toolbarView;
+@property (nonatomic) NSPipe *stdoutPipe;
+@property (nonatomic) NSFileHandle *stdoutPipeReadHandle;
+@property (nonatomic) NSPipe *stderrPipe;
+@property (nonatomic) NSFileHandle *stderrPipeReadHandle;
 
-@property (weak) IBOutlet NSView *generalView;
-@property (weak) IBOutlet NSView *aboutView;
+@property (nonatomic, weak) IBOutlet NSTextField *usernameView;
+@property (nonatomic, weak) IBOutlet NSSecureTextField *passwordView;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *interfaceView;
+@property (nonatomic, weak) IBOutlet NSButton *applyView;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *progressView;
+@property (nonatomic, weak) IBOutlet NSButton *autoconnectView;
+@property (nonatomic, weak) IBOutlet NSToolbar *toolbarView;
 
-@property (weak) IBOutlet SUUpdater *updaterView;
-@property (weak) IBOutlet NSTextField *applicationDescView;
+@property (nonatomic, weak) IBOutlet NSView *generalView;
+@property (nonatomic, weak) IBOutlet NSView *advancedView;
+@property (nonatomic, weak) IBOutlet NSView *aboutView;
+@property (nonatomic, weak) IBOutlet NSView *accountsView;
+
+@property (nonatomic, weak) IBOutlet SUUpdater *updaterView;
+@property (nonatomic, weak) IBOutlet NSTextField *applicationDescView;
+@property (nonatomic) IBOutlet NSTextView *logView;
+//@property (weak) IBOutlet NSScrollView *profilesView;
+@property (weak) IBOutlet NSTableView *profilesView;
 
 @end

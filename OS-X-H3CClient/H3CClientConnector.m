@@ -47,6 +47,11 @@ const HWADDR MulticastHardwareAddress = {
 
 - (BOOL)openAdapter:(NSString *)interfaceName
 {
+    if(interfaceName == nil) {
+        NSLog(@"no interface chosen.");
+        return NO;
+    }
+    
     if(device)
         [self closeAdapter];
     

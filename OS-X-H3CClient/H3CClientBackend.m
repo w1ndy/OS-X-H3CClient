@@ -42,6 +42,12 @@
         NSString *password = [self.globalConfiguration stringForKey:@"password"];
         NSString *adapterName = [self.globalConfiguration stringForKey:@"lastUsedInterface"];
         
+        if(userName == nil || [userName isEqualToString:@""] || password == nil || [password isEqualToString:@""]) {
+            [self sendUserNotificationWithDescription:@"Please configure an account first."];
+            self.connectionState = Disconnected;
+            return ;
+        }
+        
         if(![self.connector openAdapter:adapterName]) {
             [self sendUserNotificationWithDescription:@"Failed to open network adapter."];
             self.connectionState = Disconnected;

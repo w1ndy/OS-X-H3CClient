@@ -33,30 +33,6 @@
         statusView.imageScaling = NSImageScaleProportionallyDown;
         self.statusItem.image = [NSImage imageNamed:@"AppIcon"];
         self.statusItem.alternateImage = [NSImage imageNamed:@"AlternateAppIcon"];
-        //self.statusItem.image.scalesWhenResized = YES;
-        /*StatusItemView *statusImageView = [StatusItemView new];
-         self.statusMenu.delegate = statusImageView;
-         statusImageView.menu = self.statusMenu;
-         statusImageView.statusItem = self.statusItem;
-         statusImageView.image = [NSImage imageNamed:NSImageNameRefreshFreestandingTemplate];
-        CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-        animation.fromValue = @(0.0f);
-        animation.toValue = @(-2 * M_PI);
-        animation.duration = 1.0f;
-        animation.repeatCount = INFINITY;
-        NSImageView *spinningView = [NSImageView new];
-        spinningView.image = [NSImage imageNamed:NSImageNameRefreshFreestandingTemplate];
-        spinningView.wantsLayer = YES;
-        [spinningView.layer addAnimation:animation forKey:@"SpinAnimation"];
-        NSImageView *statusView = ((NSWindow *)[self.statusItem valueForKey:@"window"]).contentView;
-        NSLog(@"%@", statusView);
-        //statusView.image = nil;
-        spinningView.frame = statusView.frame;
-        spinningView.layer.anchorPoint = CGPointMake(0.5, 0.5);
-        //[statusView addSubview:spinningView];
-        //
-        //self.statusItem.view = statusImageView;*/
     }
     return self;
 }
