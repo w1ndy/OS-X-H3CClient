@@ -12,13 +12,16 @@
 
 @implementation H3CClientBackend
 
+NSDictionary *_adapterList;
+
 - (id)init
 {
     self = [super init];
     if(self) {
+        _adapterList = nil;
         self.connectionState = Disconnected;
         self.globalConfiguration = [NSUserDefaults standardUserDefaults];
-        self.adapterList = [self getAdapterList];
+        //self.adapterList = [self getAdapterList];
         self.connector = [[H3CClientConnector alloc] init];
     }
     return self;
@@ -154,6 +157,14 @@
     }
     [self.connector closeAdapter];
     return;
+}
+
+- (NSDictionary *)adapterList
+{
+    if(_adapterList == nil) {
+        _adapterList = [self getAdapterList];
+    }
+    return _adapterList;
 }
 
 @end

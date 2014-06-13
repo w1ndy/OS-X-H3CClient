@@ -24,7 +24,6 @@
                 <outlet property="interfaceView" destination="s89-3s-gZN" id="NHv-9f-rrZ"/>
                 <outlet property="logView" destination="ecJ-8q-1HG" id="0fg-Xe-HyJ"/>
                 <outlet property="passwordView" destination="EiD-ex-OkQ" id="hcE-gq-RAP"/>
-                <outlet property="profilesView" destination="0cH-aG-zV4" id="Fkl-iO-EPk"/>
                 <outlet property="progressView" destination="RFm-xf-9VY" id="GEc-Ob-rnb"/>
                 <outlet property="toolbarView" destination="zrz-SP-dRk" id="Pwd-Ve-hQh"/>
                 <outlet property="updaterView" destination="Dyw-sC-glx" id="QC9-S2-PWd"/>
@@ -33,48 +32,6 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" unifiedTitleAndToolbar="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="381" height="170"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="746"/>
-            <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="381" height="170"/>
-                <autoresizingMask key="autoresizingMask"/>
-            </view>
-            <toolbar key="toolbar" implicitIdentifier="C81BAAD9-CD62-41FA-AB6E-A86041D5EBCE" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="zrz-SP-dRk">
-                <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="X8a-LT-sAs"/>
-                    <toolbarItem implicitItemIdentifier="94F6B333-1D41-4041-AEFB-7AB5613A65C2" explicitItemIdentifier="General" label="General" paletteLabel="General" tag="-1" image="NSPreferencesGeneral" autovalidates="NO" selectable="YES" id="JcH-ib-MR9">
-                        <connections>
-                            <action selector="onPreferencesGeneral:" target="Voe-Tx-rLC" id="Cf7-ga-ME5"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="7510F708-0107-404D-BD54-64434A7C5EB5" explicitItemIdentifier="About" label="About" paletteLabel="About" tag="-1" image="NSInfo" autovalidates="NO" selectable="YES" id="xot-7e-pFz">
-                        <connections>
-                            <action selector="onPreferencesAbout:" target="Voe-Tx-rLC" id="dMy-zT-Xnu"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="80BF62F7-BAC5-45FC-93BD-737B052742D8" explicitItemIdentifier="Advanced" label="Advanced" paletteLabel="Advanced" tag="-1" image="NSAdvanced" selectable="YES" id="0E6-mo-X3z">
-                        <connections>
-                            <action selector="onPreferencesAdvanced:" target="Voe-Tx-rLC" id="Bgd-jC-aL6"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="B176BB7D-29EC-491F-AA09-9594D526AD85" label="Accounts" paletteLabel="Accounts" tag="-1" image="NSUserGroup" selectable="YES" id="sEr-pe-uKz">
-                        <connections>
-                            <action selector="onPreferencesAccounts:" target="Voe-Tx-rLC" id="bdh-sI-5Hf"/>
-                        </connections>
-                    </toolbarItem>
-                </allowedToolbarItems>
-                <defaultToolbarItems>
-                    <toolbarItem reference="JcH-ib-MR9"/>
-                    <toolbarItem reference="sEr-pe-uKz"/>
-                    <toolbarItem reference="0E6-mo-X3z"/>
-                    <toolbarItem reference="X8a-LT-sAs"/>
-                    <toolbarItem reference="xot-7e-pFz"/>
-                </defaultToolbarItems>
-            </toolbar>
-        </window>
         <view id="uQ4-xY-UbW">
             <rect key="frame" x="0.0" y="0.0" width="381" height="170"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -216,17 +173,17 @@
                                 <rect key="frame" x="7" y="15" width="333" height="329"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" id="dL1-MW-Cbg">
-                                    <rect key="frame" x="1" y="1" width="316" height="327"/>
+                                    <rect key="frame" x="1" y="1" width="331" height="327"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" importsGraphics="NO" richText="NO" findStyle="panel" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="ecJ-8q-1HG">
-                                            <rect key="frame" x="0.0" y="0.0" width="316" height="327"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="331" height="327"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="316" height="327"/>
+                                            <size key="minSize" width="331" height="327"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                             <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="316" height="327"/>
+                                            <size key="minSize" width="331" height="327"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                         </textView>
                                     </subviews>
@@ -237,7 +194,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="iOK-yc-deU">
-                                    <rect key="frame" x="317" y="1" width="15" height="327"/>
+                                    <rect key="frame" x="316" y="1" width="16" height="327"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -285,7 +242,7 @@
                         </segments>
                     </segmentedCell>
                     <connections>
-                        <action selector="selectSegmentControl:" target="b0y-qN-RM4" id="0ev-hT-8ey"/>
+                        <action selector="selectSegmentControl:" target="HLw-8N-NuV" id="EWy-G1-fh0"/>
                     </connections>
                 </segmentedControl>
                 <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Maa-wB-zXE">
@@ -295,7 +252,7 @@
                         <rect key="frame" x="1" y="17" width="140" height="240"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="cth-ak-kBD" id="0cH-aG-zV4">
+                            <tableView identifier="H3CClientProfileViewController" focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="cth-ak-kBD" id="0cH-aG-zV4">
                                 <rect key="frame" x="0.0" y="0.0" width="140" height="240"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -317,8 +274,10 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <outlet property="dataSource" destination="b0y-qN-RM4" id="J7l-iC-qNi"/>
-                                    <outlet property="delegate" destination="b0y-qN-RM4" id="F3z-Al-0nt"/>
+                                    <binding destination="mkI-CV-BQS" name="content" keyPath="arrangedObjects.name" id="1Xv-1y-Xj1"/>
+                                    <binding destination="mkI-CV-BQS" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="1Xv-1y-Xj1" id="ub2-6o-zBN"/>
+                                    <outlet property="dataSource" destination="HLw-8N-NuV" id="mDn-7K-3RT"/>
+                                    <outlet property="delegate" destination="HLw-8N-NuV" id="hWj-6W-z4B"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -351,6 +310,13 @@
                                     <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                 </allowedInputSourceLocales>
                             </secureTextFieldCell>
+                            <connections>
+                                <binding destination="mkI-CV-BQS" name="value" keyPath="selection.password" id="0KL-PA-TzB">
+                                    <dictionary key="options">
+                                        <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
                         </secureTextField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="khK-TO-Jx5">
                             <rect key="frame" x="7" y="238" width="76" height="17"/>
@@ -373,6 +339,9 @@
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" id="028-jf-d0m"/>
                             </popUpButtonCell>
+                            <connections>
+                                <binding destination="mkI-CV-BQS" name="selectedObject" keyPath="selection.interface" id="urt-id-AaX"/>
+                            </connections>
                         </popUpButton>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vmf-xP-Tr8">
                             <rect key="frame" x="7" y="165" width="76" height="17"/>
@@ -403,6 +372,13 @@
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
+                            <connections>
+                                <binding destination="mkI-CV-BQS" name="value" keyPath="selection.username" id="Jqj-Sh-Vq9">
+                                    <dictionary key="options">
+                                        <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
                         </textField>
                     </subviews>
                     <constraints>
@@ -425,7 +401,7 @@
                         <constraint firstItem="TuO-xA-nhv" firstAttribute="top" secondItem="8FA-LP-XW5" secondAttribute="bottom" constant="10" symbolic="YES" id="yLc-Ii-pIF"/>
                     </constraints>
                     <connections>
-                        <binding destination="oBF-Qd-cv8" name="hidden" keyPath="arrangedObjects.@count" id="Jkg-nf-rUE">
+                        <binding destination="mkI-CV-BQS" name="hidden" keyPath="selection.@count" id="29N-Is-z7z">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
@@ -446,30 +422,20 @@
                 <constraint firstItem="Maa-wB-zXE" firstAttribute="top" secondItem="zs8-Zg-HPC" secondAttribute="top" id="qLz-Wg-t9p"/>
             </constraints>
         </view>
-        <customObject id="b0y-qN-RM4" customClass="H3CClientProfileStorage">
-            <connections>
-                <outlet property="customSheet" destination="qrQ-dl-ytn" id="PDp-Zf-qas"/>
-                <outlet property="preferencesWindow" destination="QvC-M9-y7g" id="vUU-Tr-8Vb"/>
-                <outlet property="profileEditingView" destination="MPQ-kb-IXj" id="2LF-t3-acB"/>
-                <outlet property="profileNameView" destination="FIP-zW-4jS" id="FW1-wP-hfb"/>
-                <outlet property="profilesArrayController" destination="oBF-Qd-cv8" id="YZE-O0-BPy"/>
-                <outlet property="tableView" destination="0cH-aG-zV4" id="OFV-sv-TU8"/>
-            </connections>
-        </customObject>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="qrQ-dl-ytn">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="239" y="317" width="340" height="112"/>
+            <rect key="contentRect" x="239" y="317" width="340" height="117"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1366" height="746"/>
             <view key="contentView" id="QYD-QV-nyO">
-                <rect key="frame" x="0.0" y="0.0" width="340" height="112"/>
+                <rect key="frame" x="0.0" y="0.0" width="340" height="117"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dux-Dg-csq">
                         <rect key="frame" x="234" y="13" width="92" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="1Hz-n9-jwU"/>
+                            <constraint firstAttribute="width" constant="80" id="Azt-CE-EJc"/>
                         </constraints>
                         <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eJR-SF-vmg">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -479,15 +445,15 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="willAddNewProfile:" target="b0y-qN-RM4" id="kQ2-ab-6Vn"/>
-                            <binding destination="b0y-qN-RM4" name="enabled" keyPath="self.profileName.length" id="CFP-gi-Z9i"/>
+                            <action selector="willAddNewProfile:" target="HLw-8N-NuV" id="nki-Zz-hJu"/>
+                            <binding destination="HLw-8N-NuV" name="enabled" keyPath="self.profileName.length" id="lTD-AQ-vL8"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Atc-Tu-1Et">
                         <rect key="frame" x="142" y="13" width="92" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="ihB-TY-VWO"/>
+                            <constraint firstAttribute="width" constant="80" id="Bsp-U3-2vU"/>
                         </constraints>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0gZ-P4-BoN">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -497,11 +463,11 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="closeSheet:" target="b0y-qN-RM4" id="qad-29-x8a"/>
+                            <action selector="closeSheet:" target="HLw-8N-NuV" id="54C-1f-try"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wjy-DV-g69">
-                        <rect key="frame" x="18" y="75" width="89" height="17"/>
+                        <rect key="frame" x="18" y="70" width="89" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Profile Name:" id="0Hf-KJ-R1N">
                             <font key="font" metaFont="system"/>
@@ -510,7 +476,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OMd-U9-anT">
-                        <rect key="frame" x="113" y="70" width="207" height="22"/>
+                        <rect key="frame" x="113" y="68" width="207" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="FIP-zW-4jS">
                             <font key="font" metaFont="system"/>
@@ -518,7 +484,7 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="b0y-qN-RM4" name="value" keyPath="self.profileName" id="OY8-jt-GE0">
+                            <binding destination="HLw-8N-NuV" name="value" keyPath="self.profileName" id="Gmv-kI-KyX">
                                 <dictionary key="options">
                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                 </dictionary>
@@ -527,29 +493,80 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="OMd-U9-anT" secondAttribute="trailing" constant="20" symbolic="YES" id="D5S-q2-ed7"/>
-                    <constraint firstItem="wjy-DV-g69" firstAttribute="top" secondItem="QYD-QV-nyO" secondAttribute="top" constant="20" symbolic="YES" id="KPF-ku-Ggf"/>
-                    <constraint firstItem="wjy-DV-g69" firstAttribute="top" secondItem="OMd-U9-anT" secondAttribute="top" id="KkV-sj-KPr"/>
-                    <constraint firstItem="Dux-Dg-csq" firstAttribute="leading" secondItem="Atc-Tu-1Et" secondAttribute="trailing" constant="12" symbolic="YES" id="Qfi-qA-2q1"/>
-                    <constraint firstItem="wjy-DV-g69" firstAttribute="leading" secondItem="QYD-QV-nyO" secondAttribute="leading" constant="20" symbolic="YES" id="RPb-bG-zUo"/>
-                    <constraint firstAttribute="bottom" secondItem="Atc-Tu-1Et" secondAttribute="bottom" constant="20" symbolic="YES" id="eGd-QB-Yq1"/>
-                    <constraint firstItem="OMd-U9-anT" firstAttribute="leading" secondItem="wjy-DV-g69" secondAttribute="trailing" constant="8" symbolic="YES" id="gqq-3M-zeP"/>
-                    <constraint firstItem="OMd-U9-anT" firstAttribute="trailing" secondItem="Dux-Dg-csq" secondAttribute="trailing" id="kHH-Fk-P0D"/>
-                    <constraint firstItem="Dux-Dg-csq" firstAttribute="leading" secondItem="OMd-U9-anT" secondAttribute="trailing" constant="-80" id="sVf-mw-KZ3"/>
-                    <constraint firstItem="Atc-Tu-1Et" firstAttribute="baseline" secondItem="Dux-Dg-csq" secondAttribute="baseline" id="ze9-eF-ifJ"/>
+                    <constraint firstItem="OMd-U9-anT" firstAttribute="leading" secondItem="wjy-DV-g69" secondAttribute="trailing" constant="8" symbolic="YES" id="2xj-1c-ZPD"/>
+                    <constraint firstItem="wjy-DV-g69" firstAttribute="leading" secondItem="QYD-QV-nyO" secondAttribute="leading" constant="20" symbolic="YES" id="3Gj-Ju-yE9"/>
+                    <constraint firstItem="OMd-U9-anT" firstAttribute="baseline" secondItem="wjy-DV-g69" secondAttribute="baseline" id="OsQ-zw-aMX"/>
+                    <constraint firstAttribute="bottom" secondItem="Atc-Tu-1Et" secondAttribute="bottom" constant="20" symbolic="YES" id="RPP-9G-985"/>
+                    <constraint firstItem="Atc-Tu-1Et" firstAttribute="baseline" secondItem="Dux-Dg-csq" secondAttribute="baseline" id="Ryj-DI-je5"/>
+                    <constraint firstItem="Dux-Dg-csq" firstAttribute="trailing" secondItem="OMd-U9-anT" secondAttribute="trailing" id="WEP-1h-q8U"/>
+                    <constraint firstAttribute="trailing" secondItem="OMd-U9-anT" secondAttribute="trailing" constant="20" symbolic="YES" id="iB0-xT-wCW"/>
+                    <constraint firstItem="Atc-Tu-1Et" firstAttribute="top" secondItem="OMd-U9-anT" secondAttribute="bottom" constant="27" id="uhL-Ks-zyj"/>
+                    <constraint firstItem="Dux-Dg-csq" firstAttribute="leading" secondItem="Atc-Tu-1Et" secondAttribute="trailing" constant="12" symbolic="YES" id="zuI-Qe-Mbo"/>
                 </constraints>
             </view>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="f1e-CB-gYH"/>
-        <arrayController id="oBF-Qd-cv8">
+        <arrayController id="mkI-CV-BQS">
             <connections>
-                <binding destination="b0y-qN-RM4" name="contentArray" keyPath="self.profiles" id="MVH-GR-O1R">
+                <binding destination="f1e-CB-gYH" name="contentArray" keyPath="values.profiles" id="Vfj-O5-Azm">
                     <dictionary key="options">
-                        <bool key="NSAlwaysPresentsApplicationModalAlerts" value="YES"/>
+                        <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
                     </dictionary>
                 </binding>
             </connections>
         </arrayController>
+        <viewController id="HLw-8N-NuV" customClass="H3CClientProfileViewController">
+            <connections>
+                <outlet property="customSheetWindow" destination="qrQ-dl-ytn" id="Ccb-32-ktf"/>
+                <outlet property="preferencesWindow" destination="QvC-M9-y7g" id="sRR-xE-s3O"/>
+                <outlet property="profileArrayController" destination="mkI-CV-BQS" id="d2o-Dc-Auh"/>
+                <outlet property="profileEditingView" destination="MPQ-kb-IXj" id="gnD-ye-UIV"/>
+                <outlet property="profileListView" destination="0cH-aG-zV4" id="PR3-es-NHE"/>
+                <outlet property="view" destination="zs8-Zg-HPC" id="Gp4-HP-VmV"/>
+            </connections>
+        </viewController>
+        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" unifiedTitleAndToolbar="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="335" y="390" width="381" height="170"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="746"/>
+            <view key="contentView" id="EiT-Mj-1SZ">
+                <rect key="frame" x="0.0" y="0.0" width="381" height="170"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="C81BAAD9-CD62-41FA-AB6E-A86041D5EBCE" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="zrz-SP-dRk">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="X8a-LT-sAs"/>
+                    <toolbarItem implicitItemIdentifier="94F6B333-1D41-4041-AEFB-7AB5613A65C2" explicitItemIdentifier="General" label="General" paletteLabel="General" tag="-1" image="NSPreferencesGeneral" autovalidates="NO" selectable="YES" id="JcH-ib-MR9">
+                        <connections>
+                            <action selector="onPreferencesGeneral:" target="Voe-Tx-rLC" id="Cf7-ga-ME5"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="7510F708-0107-404D-BD54-64434A7C5EB5" explicitItemIdentifier="About" label="About" paletteLabel="About" tag="-1" image="NSInfo" autovalidates="NO" selectable="YES" id="xot-7e-pFz">
+                        <connections>
+                            <action selector="onPreferencesAbout:" target="Voe-Tx-rLC" id="dMy-zT-Xnu"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="80BF62F7-BAC5-45FC-93BD-737B052742D8" explicitItemIdentifier="Advanced" label="Advanced" paletteLabel="Advanced" tag="-1" image="NSAdvanced" selectable="YES" id="0E6-mo-X3z">
+                        <connections>
+                            <action selector="onPreferencesAdvanced:" target="Voe-Tx-rLC" id="Bgd-jC-aL6"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="B176BB7D-29EC-491F-AA09-9594D526AD85" label="Accounts" paletteLabel="Accounts" tag="-1" image="NSUserGroup" selectable="YES" id="sEr-pe-uKz">
+                        <connections>
+                            <action selector="onPreferencesAccounts:" target="Voe-Tx-rLC" id="bdh-sI-5Hf"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="JcH-ib-MR9"/>
+                    <toolbarItem reference="sEr-pe-uKz"/>
+                    <toolbarItem reference="0E6-mo-X3z"/>
+                    <toolbarItem reference="X8a-LT-sAs"/>
+                    <toolbarItem reference="xot-7e-pFz"/>
+                </defaultToolbarItems>
+            </toolbar>
+        </window>
     </objects>
     <resources>
         <image name="AppIcon@128" width="5.2009029388427734" height="5.2009029388427734"/>

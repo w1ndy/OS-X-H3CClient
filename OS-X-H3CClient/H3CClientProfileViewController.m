@@ -6,68 +6,63 @@
 //  Copyright (c) 2014 Shandong University. All rights reserved.
 //
 
-#import "H3CClientProfileStorage.h"
+#import "H3CClientProfileViewController.h"
 #import "H3CClientAppDelegate.h"
 
-@implementation H3CClientProfileStorage
+@implementation H3CClientProfileViewController
 
 - (id)init
 {
     self = [super init];
     if(self) {
         self.config = [NSUserDefaults standardUserDefaults];
-        NSArray *arr = [self.config arrayForKey:@"profiles"];
-        if(arr == nil) {
+        /*NSArray *arr = [self.config arrayForKey:@"profiles"];
+        if(!arr) {
             self.profiles = [NSMutableArray new];
         } else {
             self.profiles = [arr mutableCopy];
-        }
+        }*/
     }
     return self;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return self.profiles.count;
+    //NSLog(@"data fetched: %lu", self.profiles.count);
+    return ((NSArray *)self.profileArrayController.arrangedObjects).count;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    return self.profiles[row][@"name"];
+    return self.profileArrayController.arrangedObjects[row][@"name"];
 }
 
 - (void)tableViewSelectionDidChange:(id)notification
 {
-    //self.profileEditingView.hidden = NO;
 }
 
 - (void)addNewProfile
 {
-    [self.preferencesWindow beginSheet:self.customSheet completionHandler:nil];
-    //[[NSApp delegate] beginSheet:self.customSheet completionHandler:nil];
-    //[NSApp beginSheet:self.customSheet completionHandler:^(NSModalResponse returnCode) {}];
-    /**/
+    NSLog(@"%@", self.profileArrayController.arrangedObjects);
+    [self.preferencesWindow beginSheet:self.customSheetWindow completionHandler:nil];
 }
 
 - (void)removeSelectedProfile
 {
     NSAlert *alert = [NSAlert new];
     
-    NSInteger selected = self.tableView.selectedRow;
+    NSInteger selected = self.profileListView.selectedRow;
     if(selected == -1) return ;
-    alert.messageText = [NSString stringWithFormat: @"Are you sure to remove profile %@", self.profiles[selected][@"name"]];
+    alert.messageText = [NSString stringWithFormat: @"Are you sure to remove profile %@", self.profileArrayController.arrangedObjects[selected][@"name"]];
     alert.informativeText = @"Removed profile will be unrecoverable.";
     [alert setAlertStyle:NSWarningAlertStyle];
     [alert addButtonWithTitle:@"Remove"];
     [alert addButtonWithTitle:@"Cancel"];
     [alert beginSheetModalForWindow:self.preferencesWindow completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSAlertFirstButtonReturn) {
-            [self.profilesArrayController removeObjectAtArrangedObjectIndex:selected];
-            //[self willChangeValueForKey:@"profiles"];
-            //[self.profiles removeObjectAtIndex:selected];
-            //[self didChangeValueForKey:@"profiles"];
-            [self.tableView reloadData];
-            [self.config setObject:self.profiles forKey:@"profiles"];
+            [self.profileArrayController removeObjectAtArrangedObjectIndex:selected];
+            [self.profileListView reloadData];
+            //[self.config setObject:self.profileArrayController.arrangedObjects forKey:@"profiles"];
         }
     }];
 }
@@ -88,25 +83,24 @@
 
 - (IBAction)willAddNewProfile:(NSButton *)sender
 {
+    NSLog(@"%@", self.profileName);
     NSMutableDictionary *dict = [NSMutableDictionary new];
     dict[@"name"] = self.profileName;
     dict[@"username"] = @"";
     dict[@"password"] = @"";
     dict[@"interface"] = @"";
-    [self.profilesArrayController addObject:dict];
-    //[self willChangeValueForKey:@"profiles"];
-    //[self.profiles addObject:dict];
-    //[self didChangeValueForKey:@"profiles"];
-    [self.tableView reloadData];
-    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:(self.profiles.count - 1)] byExtendingSelection:NO];
-    [self.config setObject:self.profiles forKey:@"profiles"];
+    
+    [self.profileArrayController addObject:dict];
+    [self.profileListView reloadData];
+    [self.profileListView selectRowIndexes:[NSIndexSet indexSetWithIndex:(((NSArray *)self.profileArrayController.arrangedObjects).count - 1)] byExtendingSelection:NO];
+    //[self.config setObject:self.profileArrayController.arrangedObjects forKey:@"profiles"];
     [self closeSheet:sender];
 }
 
 - (IBAction)closeSheet:(NSButton *)sender
 {
     self.profileName = @"";
-    [self.preferencesWindow endSheet:self.customSheet];
+    [self.preferencesWindow endSheet:self.customSheetWindow];
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "H3CClientAppDelegate.h"
-#import "H3CClientProfileStorage.h"
 
 @implementation H3CClientAppDelegate
 
@@ -49,28 +48,29 @@
 
 - (IBAction)onPreferencesGeneral:(id)sender
 {
+    if(self.window.contentView == self.generalView) return ;
     [self animatePreferencesWindowWithView:self.generalView];
-    self.toolbarView.selectedItemIdentifier = @"General";
     NSLog(@"tab switch");
 }
 - (IBAction)onPreferencesAccounts:(id)sender
 {
+    if(self.window.contentView == self.accountsView) return ;
     [self animatePreferencesWindowWithView:self.accountsView];
-    self.toolbarView.selectedItemIdentifier = @"Accounts";
     NSLog(@"tab switch");
 }
 
-- (IBAction)onPreferencesAdvanced:(id)sender {
+- (IBAction)onPreferencesAdvanced:(id)sender
+{
+    if(self.window.contentView == self.advancedView) return ;
     [self animatePreferencesWindowWithView:self.advancedView];
-    self.toolbarView.selectedItemIdentifier = @"Advanced";
     [self.logView scrollToEndOfDocument:self];
     NSLog(@"tab switch");
 }
 
 - (IBAction)onPreferencesAbout:(id)sender
 {
+    if(self.window.contentView == self.aboutView) return ;
     [self animatePreferencesWindowWithView:self.aboutView];
-    self.toolbarView.selectedItemIdentifier = @"About";
     NSLog(@"tab switch");
 }
 
@@ -81,7 +81,12 @@
     NSRect windowFrame = [window contentRectForFrameRect:window.frame];
     NSRect newWindowFrame = [window frameRectForContentRect:
                              NSMakeRect( NSMinX( windowFrame ), NSMaxY( windowFrame ) - size.height, size.width, size.height )];
+    //((NSView *)window.contentView).wantsLayer = YES;
+    ((NSView *)window.contentView).animator.alphaValue = 0;
+    view.wantsLayer = YES;
+    view.alphaValue = 0;
     window.contentView = view;
+    view.animator.alphaValue = 1;
     [window setFrame:newWindowFrame display:YES animate:YES];
 }
 

@@ -9,16 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "H3CClientBackend.h"
 
-@interface H3CClientProfileStorage : NSObject <NSTableViewDataSource, NSTableViewDelegate>
+@interface H3CClientProfileViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 
-@property (nonatomic) NSMutableArray *profiles;
-@property (nonatomic, weak) IBOutlet NSTableView *tableView;
 @property (nonatomic, weak) NSUserDefaults *config;
-@property (nonatomic, weak) IBOutlet NSWindow *customSheet;
-@property (nonatomic, weak) IBOutlet NSWindow *preferencesWindow;
 @property (nonatomic) NSString *profileName;
+
+@property (nonatomic, weak) IBOutlet NSTableView *profileListView;
 @property (nonatomic, weak) IBOutlet NSView *profileEditingView;
-@property (nonatomic, weak) IBOutlet NSArrayController *profilesArrayController;
+@property (nonatomic, weak) IBOutlet NSArrayController *profileArrayController;
+
+@property (nonatomic, weak) IBOutlet NSWindow *customSheetWindow;
+@property (nonatomic, weak) IBOutlet NSWindow *preferencesWindow;
 
 - (id)init;
 
