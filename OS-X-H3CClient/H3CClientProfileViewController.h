@@ -11,17 +11,22 @@
 
 @interface H3CClientProfileViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 
+@property (nonatomic) H3CClientBackend *backend;
 @property (nonatomic, weak) NSUserDefaults *config;
-@property (nonatomic) NSString *profileName;
+@property (nonatomic) NSMutableArray *profileArray;
+@property (nonatomic) NSString *creatingProfileName;
+@property (nonatomic) BOOL hasDuplication;
+@property (nonatomic) BOOL isProfileEdited;
 
 @property (nonatomic, weak) IBOutlet NSTableView *profileListView;
 @property (nonatomic, weak) IBOutlet NSView *profileEditingView;
-@property (nonatomic, weak) IBOutlet NSArrayController *profileArrayController;
 
 @property (nonatomic, weak) IBOutlet NSWindow *customSheetWindow;
 @property (nonatomic, weak) IBOutlet NSWindow *preferencesWindow;
 
-- (id)init;
+@property (nonatomic, weak) IBOutlet NSTextField *usernameField;
+@property (nonatomic, weak) IBOutlet NSSecureTextField *passwordField;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *interfaceField;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView;
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;

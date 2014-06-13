@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
 	<key>SUFeedURL</key>
 	<string>http://5ki3s0x1c9.github.io/OS-X-H3CClient/appcast.xml</string>
 	<key>SUPublicDSAKeyFile</key>

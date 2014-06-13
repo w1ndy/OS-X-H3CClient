@@ -173,17 +173,17 @@
                                 <rect key="frame" x="7" y="15" width="333" height="329"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" id="dL1-MW-Cbg">
-                                    <rect key="frame" x="1" y="1" width="331" height="327"/>
+                                    <rect key="frame" x="1" y="1" width="316" height="327"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" importsGraphics="NO" richText="NO" findStyle="panel" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="ecJ-8q-1HG">
-                                            <rect key="frame" x="0.0" y="0.0" width="331" height="327"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="316" height="327"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="331" height="327"/>
+                                            <size key="minSize" width="316" height="327"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                             <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="331" height="327"/>
+                                            <size key="minSize" width="316" height="327"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                         </textView>
                                     </subviews>
@@ -194,7 +194,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="iOK-yc-deU">
-                                    <rect key="frame" x="316" y="1" width="16" height="327"/>
+                                    <rect key="frame" x="317" y="1" width="15" height="327"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -242,7 +242,7 @@
                         </segments>
                     </segmentedCell>
                     <connections>
-                        <action selector="selectSegmentControl:" target="HLw-8N-NuV" id="EWy-G1-fh0"/>
+                        <action selector="selectSegmentControl:" target="p1D-yq-alb" id="1T7-Gk-WxF"/>
                     </connections>
                 </segmentedControl>
                 <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Maa-wB-zXE">
@@ -273,12 +273,6 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                 </tableColumns>
-                                <connections>
-                                    <binding destination="mkI-CV-BQS" name="content" keyPath="arrangedObjects.name" id="1Xv-1y-Xj1"/>
-                                    <binding destination="mkI-CV-BQS" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="1Xv-1y-Xj1" id="ub2-6o-zBN"/>
-                                    <outlet property="dataSource" destination="HLw-8N-NuV" id="mDn-7K-3RT"/>
-                                    <outlet property="delegate" destination="HLw-8N-NuV" id="hWj-6W-z4B"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -311,11 +305,7 @@
                                 </allowedInputSourceLocales>
                             </secureTextFieldCell>
                             <connections>
-                                <binding destination="mkI-CV-BQS" name="value" keyPath="selection.password" id="0KL-PA-TzB">
-                                    <dictionary key="options">
-                                        <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                    </dictionary>
-                                </binding>
+                                <action selector="saveProfile:" target="p1D-yq-alb" id="RCh-zK-09W"/>
                             </connections>
                         </secureTextField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="khK-TO-Jx5">
@@ -340,7 +330,7 @@
                                 <menu key="menu" title="OtherViews" id="028-jf-d0m"/>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="mkI-CV-BQS" name="selectedObject" keyPath="selection.interface" id="urt-id-AaX"/>
+                                <action selector="saveProfile:" target="p1D-yq-alb" id="bo2-EX-Hid"/>
                             </connections>
                         </popUpButton>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vmf-xP-Tr8">
@@ -373,11 +363,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="mkI-CV-BQS" name="value" keyPath="selection.username" id="Jqj-Sh-Vq9">
-                                    <dictionary key="options">
-                                        <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                    </dictionary>
-                                </binding>
+                                <action selector="saveProfile:" target="p1D-yq-alb" id="DAV-9O-t7b"/>
                             </connections>
                         </textField>
                     </subviews>
@@ -400,13 +386,6 @@
                         <constraint firstItem="lS2-H0-cbz" firstAttribute="baseline" secondItem="TuO-xA-nhv" secondAttribute="baseline" id="wZ5-4X-dux"/>
                         <constraint firstItem="TuO-xA-nhv" firstAttribute="top" secondItem="8FA-LP-XW5" secondAttribute="bottom" constant="10" symbolic="YES" id="yLc-Ii-pIF"/>
                     </constraints>
-                    <connections>
-                        <binding destination="mkI-CV-BQS" name="hidden" keyPath="selection.@count" id="29N-Is-z7z">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
                 </customView>
             </subviews>
             <constraints>
@@ -445,8 +424,16 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="willAddNewProfile:" target="HLw-8N-NuV" id="nki-Zz-hJu"/>
-                            <binding destination="HLw-8N-NuV" name="enabled" keyPath="self.profileName.length" id="lTD-AQ-vL8"/>
+                            <action selector="willAddNewProfile:" target="p1D-yq-alb" id="L1g-s4-cIM"/>
+                            <binding destination="p1D-yq-alb" name="enabled2" keyPath="self.hasDuplication" previousBinding="JTI-Ft-usd" id="f96-TP-X94">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
+                                </dictionary>
+                            </binding>
+                            <binding destination="p1D-yq-alb" name="enabled" keyPath="self.creatingProfileName.length" id="JTI-Ft-usd"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Atc-Tu-1Et">
@@ -463,7 +450,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="closeSheet:" target="HLw-8N-NuV" id="54C-1f-try"/>
+                            <action selector="closeSheet:" target="p1D-yq-alb" id="HxH-QL-NtY"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wjy-DV-g69">
@@ -484,7 +471,7 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="HLw-8N-NuV" name="value" keyPath="self.profileName" id="Gmv-kI-KyX">
+                            <binding destination="p1D-yq-alb" name="value" keyPath="self.creatingProfileName" id="kKs-Yd-tDW">
                                 <dictionary key="options">
                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                 </dictionary>
@@ -505,26 +492,6 @@ Gw
                 </constraints>
             </view>
         </window>
-        <userDefaultsController representsSharedInstance="YES" id="f1e-CB-gYH"/>
-        <arrayController id="mkI-CV-BQS">
-            <connections>
-                <binding destination="f1e-CB-gYH" name="contentArray" keyPath="values.profiles" id="Vfj-O5-Azm">
-                    <dictionary key="options">
-                        <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
-                    </dictionary>
-                </binding>
-            </connections>
-        </arrayController>
-        <viewController id="HLw-8N-NuV" customClass="H3CClientProfileViewController">
-            <connections>
-                <outlet property="customSheetWindow" destination="qrQ-dl-ytn" id="Ccb-32-ktf"/>
-                <outlet property="preferencesWindow" destination="QvC-M9-y7g" id="sRR-xE-s3O"/>
-                <outlet property="profileArrayController" destination="mkI-CV-BQS" id="d2o-Dc-Auh"/>
-                <outlet property="profileEditingView" destination="MPQ-kb-IXj" id="gnD-ye-UIV"/>
-                <outlet property="profileListView" destination="0cH-aG-zV4" id="PR3-es-NHE"/>
-                <outlet property="view" destination="zs8-Zg-HPC" id="Gp4-HP-VmV"/>
-            </connections>
-        </viewController>
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" unifiedTitleAndToolbar="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -567,6 +534,19 @@ Gw
                 </defaultToolbarItems>
             </toolbar>
         </window>
+        <viewController id="p1D-yq-alb" customClass="H3CClientProfileViewController">
+            <connections>
+                <outlet property="customSheetWindow" destination="qrQ-dl-ytn" id="kxo-4T-4Ye"/>
+                <outlet property="interfaceField" destination="WyR-0f-QVz" id="8Sv-pX-CtD"/>
+                <outlet property="passwordField" destination="TuO-xA-nhv" id="fkw-tF-mm7"/>
+                <outlet property="preferencesWindow" destination="QvC-M9-y7g" id="7yK-Sm-jYf"/>
+                <outlet property="profileEditingView" destination="MPQ-kb-IXj" id="zHz-xw-lY3"/>
+                <outlet property="profileListView" destination="0cH-aG-zV4" id="Dni-pt-FTA"/>
+                <outlet property="usernameField" destination="8FA-LP-XW5" id="XHu-OJ-t3G"/>
+                <outlet property="view" destination="zs8-Zg-HPC" id="iZf-Bx-Vor"/>
+            </connections>
+        </viewController>
+        <userDefaultsController representsSharedInstance="YES" id="L6l-kd-bdF"/>
     </objects>
     <resources>
         <image name="AppIcon@128" width="5.2009029388427734" height="5.2009029388427734"/>
