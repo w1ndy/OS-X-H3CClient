@@ -22,11 +22,15 @@ enum ConnectionState
 @property (atomic) enum ConnectionState connectionState;
 @property (nonatomic) NSDictionary *adapterList;
 @property (nonatomic) H3CClientConnector *connector;
-
-@property NSUserDefaults *globalConfiguration;
+@property (nonatomic) NSString *userName;
+@property (nonatomic) NSUserDefaults *globalConfiguration;
+@property (nonatomic) long int timeConnected;
 
 - (id)init;
+- (void)sendUserNotificationWithDescription:(NSString *)desc;
 - (void)connect;
 - (void)disconnect;
+- (NSString*)getUserName;
+- (NSString*)getIPAddress;
 
 @end

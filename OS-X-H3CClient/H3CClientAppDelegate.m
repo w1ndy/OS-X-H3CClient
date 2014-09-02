@@ -13,17 +13,15 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-    self.willReconnect = NO;
-    
-    [self.progressView stopAnimation:nil];
-    [self.applyView setEnabled:YES];
-    
     self.backend = [[H3CClientBackend alloc] init];
     [self.backend addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
     
     self.menuViewController = [[StatusMenuViewController alloc] initWithBackend:self.backend];
     self.menuViewController.delegate = self;
     
+    if([(NSArray *)[self.backend.globalConfiguration objectForKey:@"profiles"] count] == 0) {
+        [self.backend.globalConfiguration setInteger:-1 forKey:@"default"];
+    }
     if([self.backend.globalConfiguration boolForKey:@"autoconnect"]) {
         [self.backend connect];
     }
@@ -50,13 +48,11 @@
 {
     if(self.window.contentView == self.generalView) return ;
     [self animatePreferencesWindowWithView:self.generalView];
-    NSLog(@"tab switch");
 }
 - (IBAction)onPreferencesAccounts:(id)sender
 {
     if(self.window.contentView == self.accountsView) return ;
     [self animatePreferencesWindowWithView:self.accountsView];
-    NSLog(@"tab switch");
 }
 
 - (IBAction)onPreferencesAdvanced:(id)sender
@@ -64,14 +60,12 @@
     if(self.window.contentView == self.advancedView) return ;
     [self animatePreferencesWindowWithView:self.advancedView];
     [self.logView scrollToEndOfDocument:self];
-    NSLog(@"tab switch");
 }
 
 - (IBAction)onPreferencesAbout:(id)sender
 {
     if(self.window.contentView == self.aboutView) return ;
     [self animatePreferencesWindowWithView:self.aboutView];
-    NSLog(@"tab switch");
 }
 
 - (void)animatePreferencesWindowWithView:(NSView *)view
@@ -93,130 +87,78 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if([keyPath isEqualToString:@"connectionState"]) {
-        enum ConnectionState newState;
-        [(NSValue *)[change objectForKey:@"new"] getValue:&newState];
-        switch(newState) {
-            case Disconnected:
-                [self.progressView stopAnimation:nil];
-                [self.applyView setEnabled:YES];
-                if(self.willReconnect) {
-                    self.willReconnect = NO;
-                   [self.backend connect];
-                }
-                break;
-            case Connected:
-                [self.progressView stopAnimation:nil];
-                [self.applyView setEnabled:YES];
-                break;
-            case Connecting:
-                [self.progressView startAnimation:nil];
-                [self.applyView setEnabled:NO];
-                break;
-            case Disconnecting:
-                [self.progressView startAnimation:nil];
-                [self.applyView setEnabled:NO];
-                break;
-        }
+        [self updateStatusPane];
+    }
+}
+
+- (void)updateStatusPane
+{
+    switch (self.backend.connectionState) {
+        case Disconnected:
+            self.connectedStatus.stringValue = @"No";
+            break;
+        case Connected:
+            self.connectedStatus.stringValue = @"Yes";
+            break;
+        case Disconnecting:
+            self.connectedStatus.stringValue = @"Disconnecting";
+            break;
+        case Connecting:
+            self.connectedStatus.stringValue = @"Connecting";
+    }
+    self.usernameStatus.stringValue = [self.backend getUserName];
+    self.ipaddrStatus.stringValue = [self.backend getIPAddress];
+}
+
+- (void)updateConnectedTime:(id)timer
+{
+    NSLog(@"updating timer");
+    if(!self.window.visible) {
+        [timer stop:timer];
+        return ;
+    }
+    if(self.backend.connectionState == Connected) {
+        long d = time(NULL) - self.backend.timeConnected;
+        self.durationStatus.stringValue = [NSString stringWithFormat:@"%02ld:%02ld:%02ld:%02ld",(long)(d / 86400),(long)(d / 3600 % 24),(long)(d / 60 % 60),(long)(d % 60)];
     }
 }
 
 - (void)showPreferences
 {
-    NSString *username = [self.backend.globalConfiguration stringForKey:@"userName"];
-    NSString *password = [self.backend.globalConfiguration stringForKey:@"password"];
-    NSString *last_interface = [self.backend.globalConfiguration stringForKey:@"lastUsedInterface"];
     BOOL isAutoConnect = [self.backend.globalConfiguration boolForKey:@"autoconnect"];
     
-    if(username)
-        [self.usernameView setStringValue:username];
+    [self updateStatusPane];
+    [NSTimer timerWithTimeInterval:1 target:self selector:@selector(updateConnectedTime:) userInfo:nil repeats:YES];
+    if([self.backend.globalConfiguration boolForKey:@"reconnect"])
+        self.reconnectView.state = NSOnState;
     else
-        [self.usernameView setStringValue:@""];
-    
-    if(password)
-        [self.passwordView setStringValue:password];
-    else
-        [self.passwordView setStringValue:@""];
+        self.reconnectView.state = NSOffState;
     
     if(isAutoConnect)
         self.autoconnectView.state = NSOnState;
     else
         self.autoconnectView.state = NSOffState;
     
-    [self.interfaceView removeAllItems];
-    if([self.backend.adapterList count]) {
-        [self.interfaceView addItemsWithTitles:[[self.backend.adapterList allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
-        if(last_interface == nil) {
-            [self.interfaceView selectItemAtIndex:0];
-            [self.backend.globalConfiguration setObject:self.backend.adapterList[[self.interfaceView titleOfSelectedItem]] forKey:@"lastUsedInterface"];
-        } else {
-            BOOL found = false;
-            for(id key in [self.backend.adapterList allKeys]) {
-                if([self.backend.adapterList[key] isEqual:last_interface]) {
-                    [self.interfaceView selectItemWithTitle:key];
-                    found = true;
-                    break;
-                }
-            }
-            if(!found)
-                [self.interfaceView selectItemAtIndex:0];
-        }
-    } else {
-        [self.interfaceView setEnabled:NO];
-        [self.applyView setEnabled:NO];
-        [self.interfaceView addItemWithTitle:@"No interface found"];
-        [self.interfaceView selectItemAtIndex:0];
-    }
-    
     [self animatePreferencesWindowWithView:self.generalView];
     self.toolbarView.selectedItemIdentifier = @"General";
     [self.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
-    if(self.backend.connectionState == Connecting || self.backend.connectionState == Disconnecting) {
-        [self.progressView startAnimation:self];
-    }
-}
-
-- (IBAction)onPreferencesApply:(id)sender
-{
-    NSAlert *alert = [[NSAlert alloc] init];
-    
-    if([[self.usernameView stringValue] isEqualToString:@""]) {
-        [alert setMessageText:@"Username is required."];
-        [alert setIcon:[NSImage imageNamed:NSImageNameInfo]];
-        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp){}];
-        return ;
-    }
-    
-    if([[self.passwordView stringValue] isEqualToString:@""]) {
-        [alert setMessageText:@"Password is required."];
-        [alert setIcon:[NSImage imageNamed:NSImageNameInfo]];
-        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp){}];
-        return ;
-    }
-    
-    [self.backend.globalConfiguration setObject:[self.usernameView stringValue] forKey:@"userName"];
-    [self.backend.globalConfiguration setObject:[self.passwordView stringValue] forKey:@"password"];
-    [self.backend.globalConfiguration setObject:self.backend.adapterList[[self.interfaceView titleOfSelectedItem]] forKey:@"lastUsedInterface"];
-    
-    if(self.backend.connectionState == Disconnected) {
-        [self.backend connect];
-    } else {
-        self.willReconnect = YES;
-        [self.backend disconnect];
-    }
 }
 
 - (IBAction)toggleAutoConnect:(id)sender {
-    NSButton *checkbox = sender;
-    if([checkbox state] == NSOnState) {
+    if([self.autoconnectView state] == NSOnState) {
         [self.backend.globalConfiguration setBool:YES forKey:@"autoconnect"];
     } else {
         [self.backend.globalConfiguration setBool:NO forKey:@"autoconnect"];
     }
 }
-
-- (IBAction)onSelectProfile:(id)sender
-{
+- (IBAction)toggleReconnect:(id)sender {
+    if([self.reconnectView state] == NSOnState) {
+        [self.backend.globalConfiguration setBool:YES forKey:@"reconnect"];
+    } else {
+        [self.backend.globalConfiguration setBool:NO forKey:@"reconnect"];
+    }
 }
+
 
 @end

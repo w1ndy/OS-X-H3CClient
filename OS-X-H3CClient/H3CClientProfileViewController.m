@@ -36,7 +36,6 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    NSLog(@"data fetched: %lu", self.profileArray.count);
     if(self.profileArray.count == 0)
         self.profileEditingView.hidden = YES;
     else
@@ -52,10 +51,15 @@
 - (void)tableViewSelectionDidChange:(id)notification
 {
     long int row = self.profileListView.selectedRow;
-    if(row != -1) {
+    if(row >= 0 && row < [self.profileArray count]) {
         self.profileEditingView.hidden = NO;
         self.usernameField.stringValue = self.profileArray[row][@"username"];
         self.passwordField.stringValue = self.profileArray[row][@"password"];
+        if(row == [self.config integerForKey:@"default"]) {
+            self.defaultField.state = NSOnState;
+        } else {
+            self.defaultField.state = NSOffState;
+        }
         if([self.interfaceField isEnabled]) {
             if([self.profileArray[row][@"interface"] isEqualToString:@""]) {
                 [self.profileArray[row] setValue:[self.backend.adapterList allKeys][0] forKey:@"interface"];
@@ -80,6 +84,7 @@
 
 - (void)addNewProfile
 {
+    [self saveProfile:nil];
     [self.preferencesWindow beginSheet:self.customSheetWindow completionHandler:nil];
 }
 
@@ -96,10 +101,20 @@
     [alert addButtonWithTitle:@"Cancel"];
     [alert beginSheetModalForWindow:self.preferencesWindow completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSAlertFirstButtonReturn) {
+            long int def = [self.config integerForKey:@"default"];
             if(selected == 0) {
-                if(self.profileArray.count != 1)
+                if(self.profileArray.count != 1) {
                     [self.profileListView selectRowIndexes:[NSIndexSet indexSetWithIndex:selected + 1] byExtendingSelection:NO];
+                    [self.config setInteger:(def - 1) forKey:@"default"];
+                } else {
+                    [self.config setInteger:-1 forKey:@"default"];
+                }
             } else {
+                if(selected == def) {
+                    [self.config setInteger:-1 forKey:@"default"];
+                } else if(selected < def) {
+                    [self.config setInteger:(def - 1) forKey:@"default"];
+                }
                 [self.profileListView selectRowIndexes:[NSIndexSet indexSetWithIndex:selected - 1] byExtendingSelection:NO];
             }
             [self.profileArray removeObjectAtIndex:selected];
@@ -146,10 +161,23 @@
 
 - (IBAction)saveProfile:(id)sender {
     long int row = [self.profileListView selectedRow];
+    if(row < 0) return ;
     self.profileArray[row][@"username"] = self.usernameField.stringValue;
     self.profileArray[row][@"password"] = self.passwordField.stringValue;
     self.profileArray[row][@"interface"] = self.backend.adapterList[[self.interfaceField.selectedItem title]];
     [self.config setObject:self.profileArray forKey:@"profiles"];
+}
+
+- (IBAction)makeDefaultProfile:(id)sender {
+    long int row = self.profileListView.selectedRow;
+    switch(self.defaultField.state) {
+        case NSOnState:
+            [self.config setInteger:row forKey:@"default"];
+            break;
+        case NSOffState:
+            [self.config setInteger:-1 forKey:@"default"];
+            break;
+    }
 }
 
 - (BOOL)hasDuplication

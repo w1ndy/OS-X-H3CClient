@@ -27,6 +27,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField *usernameField;
 @property (nonatomic, weak) IBOutlet NSSecureTextField *passwordField;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *interfaceField;
+@property (nonatomic, weak) IBOutlet NSButton *defaultField;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView;
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;

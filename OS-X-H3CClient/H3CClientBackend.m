@@ -30,7 +30,7 @@ NSDictionary *_adapterList;
 - (void)sendUserNotificationWithDescription:(NSString *)desc
 {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
-    notification.title = @"H3CClient";
+    notification.title = @"H3CClientX";
     notification.informativeText = desc;
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
@@ -41,16 +41,27 @@ NSDictionary *_adapterList;
     dispatch_async(dispatch_get_global_queue(0, 0), ^(){
         NSLog(@"connecting...");
         
-        NSString *userName = [self.globalConfiguration stringForKey:@"userName"];
-        NSString *password = [self.globalConfiguration stringForKey:@"password"];
-        NSString *adapterName = [self.globalConfiguration stringForKey:@"lastUsedInterface"];
-        
+        NSArray *profiles = [self.globalConfiguration objectForKey:@"profiles"];
+        if([profiles count] == 0) {
+            [self sendUserNotificationWithDescription:@"Please add a profile before connecting."];
+            return ;
+        }
+        long int selected = [self.globalConfiguration integerForKey:@"default"];
+        if(selected == -1) {
+            [self sendUserNotificationWithDescription:@"No default profile set."];
+            return ;
+        }
+        NSDictionary *dict = [profiles objectAtIndex:selected];
+        NSString *userName = dict[@"username"];
+        NSString *password = dict[@"password"];
+        NSString *adapterName = dict[@"interface"];
         if(userName == nil || [userName isEqualToString:@""] || password == nil || [password isEqualToString:@""]) {
-            [self sendUserNotificationWithDescription:@"Please configure an account first."];
+            [self sendUserNotificationWithDescription:@"Username and password are required."];
             self.connectionState = Disconnected;
             return ;
         }
         
+        self.userName = userName;
         if(![self.connector openAdapter:adapterName]) {
             [self sendUserNotificationWithDescription:@"Failed to open network adapter."];
             self.connectionState = Disconnected;
@@ -63,6 +74,7 @@ NSDictionary *_adapterList;
             return ;
         }
         
+        self.timeConnected = time(NULL);
         [self startDaemonWithUserName:userName password:password];
         self.connectionState = Disconnected;
         return ;
@@ -165,6 +177,26 @@ NSDictionary *_adapterList;
         _adapterList = [self getAdapterList];
     }
     return _adapterList;
+}
+
+- (NSString*)getUserName
+{
+    if(self.connectionState == Connected) {
+        return self.userName;
+    } else {
+        return @"N/A";
+    }
+}
+
+- (NSString*)getIPAddress
+{
+    if(self.connectionState == Connected) {
+        for(int i = 0; i < [[[NSHost currentHost] addresses] count]; i++) {
+            if([[[[NSHost currentHost] addresses] objectAtIndex:i] containsString:@":"]) continue;
+            else return [[[NSHost currentHost] addresses] objectAtIndex:i];
+        }
+    }
+    return @"No IPv4 address";
 }
 
 @end

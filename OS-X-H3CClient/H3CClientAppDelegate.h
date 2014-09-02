@@ -16,20 +16,20 @@
 @property (nonatomic, weak) IBOutlet NSWindow *window;
 @property (nonatomic) H3CClientBackend *backend;
 @property (nonatomic) StatusMenuViewController *menuViewController;
-@property (nonatomic) BOOL willReconnect;
 
 @property (nonatomic) NSPipe *stdoutPipe;
 @property (nonatomic) NSFileHandle *stdoutPipeReadHandle;
 @property (nonatomic) NSPipe *stderrPipe;
 @property (nonatomic) NSFileHandle *stderrPipeReadHandle;
 
-@property (nonatomic, weak) IBOutlet NSTextField *usernameView;
-@property (nonatomic, weak) IBOutlet NSSecureTextField *passwordView;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *interfaceView;
-@property (nonatomic, weak) IBOutlet NSButton *applyView;
-@property (nonatomic, weak) IBOutlet NSProgressIndicator *progressView;
 @property (nonatomic, weak) IBOutlet NSButton *autoconnectView;
+@property (nonatomic, weak) IBOutlet NSButton *reconnectView;
 @property (nonatomic, weak) IBOutlet NSToolbar *toolbarView;
+
+@property (nonatomic, weak) IBOutlet NSTextField *connectedStatus;
+@property (nonatomic, weak) IBOutlet NSTextField *usernameStatus;
+@property (nonatomic, weak) IBOutlet NSTextField *ipaddrStatus;
+@property (nonatomic, weak) IBOutlet NSTextField *durationStatus;
 
 @property (nonatomic, weak) IBOutlet NSView *generalView;
 @property (nonatomic, weak) IBOutlet NSView *advancedView;
@@ -38,7 +38,5 @@
 
 @property (nonatomic, weak) IBOutlet NSTextField *applicationDescView;
 @property (nonatomic) IBOutlet NSTextView *logView;
-//@property (weak) IBOutlet NSScrollView *profilesView;
-@property (weak) IBOutlet NSTableView *profilesView;
 
 @end
