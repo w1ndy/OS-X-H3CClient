@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C9049F1419412E8400746681 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9049F1319412E8400746681 /* libpcap.dylib */; };
-		C928B5651943732400C74B90 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C928B5641943732400C74B90 /* Sparkle.framework */; };
-		C928B568194374E200C74B90 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = C928B567194374E200C74B90 /* dsa_pub.pem */; };
-		C928B56D19437FC800C74B90 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C928B5641943732400C74B90 /* Sparkle.framework */; };
 		C98E47E2194464C3004A70BE /* H3CClientProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C98E47E1194464C3004A70BE /* H3CClientProfileViewController.m */; };
 		C9A4651619439ACC00B63E16 /* org.wireshark.ChmodBPF.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9A4651519439ACC00B63E16 /* org.wireshark.ChmodBPF.plist */; };
 		C9BFB7C01941C1CF00B97A78 /* H3CClientConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BFB7BF1941C1CF00B97A78 /* H3CClientConnector.m */; };
@@ -33,7 +30,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C928B56D19437FC800C74B90 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +37,6 @@
 
 /* Begin PBXFileReference section */
 		C9049F1319412E8400746681 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = usr/lib/libpcap.dylib; sourceTree = SDKROOT; };
-		C928B5641943732400C74B90 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		C928B567194374E200C74B90 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../dsa_pub.pem; sourceTree = "<group>"; };
 		C98E47E0194464C3004A70BE /* H3CClientProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H3CClientProfileViewController.h; sourceTree = "<group>"; };
 		C98E47E1194464C3004A70BE /* H3CClientProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H3CClientProfileViewController.m; sourceTree = "<group>"; };
 		C9A4651519439ACC00B63E16 /* org.wireshark.ChmodBPF.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = org.wireshark.ChmodBPF.plist; sourceTree = "<group>"; };
@@ -76,7 +70,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9049F1419412E8400746681 /* libpcap.dylib in Frameworks */,
-				C928B5651943732400C74B90 /* Sparkle.framework in Frameworks */,
 				C9CCC8481940FC5C008F3407 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,7 +97,6 @@
 		C9CCC8461940FC5C008F3407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C928B5641943732400C74B90 /* Sparkle.framework */,
 				C9049F1319412E8400746681 /* libpcap.dylib */,
 				C9CCC8471940FC5C008F3407 /* Cocoa.framework */,
 				C9CCC8491940FC5C008F3407 /* Other Frameworks */,
@@ -147,7 +139,6 @@
 		C9CCC84E1940FC5C008F3407 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C928B567194374E200C74B90 /* dsa_pub.pem */,
 				C9A4651519439ACC00B63E16 /* org.wireshark.ChmodBPF.plist */,
 				C9CCC84F1940FC5C008F3407 /* H3CClientX-Info.plist */,
 				C9CCC8501940FC5C008F3407 /* InfoPlist.strings */,
@@ -186,7 +177,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = H3CClient;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Shandong University";
 			};
 			buildConfigurationList = C9CCC83F1940FC5C008F3407 /* Build configuration list for PBXProject "H3CClientX" */;
@@ -212,7 +203,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C928B568194374E200C74B90 /* dsa_pub.pem in Resources */,
 				C9CCC8521940FC5C008F3407 /* InfoPlist.strings in Resources */,
 				C9CCC8601940FC5C008F3407 /* Images.xcassets in Resources */,
 				C9A4651619439ACC00B63E16 /* org.wireshark.ChmodBPF.plist in Resources */,
@@ -292,7 +282,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -325,7 +315,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				SDKROOT = macosx;
 			};
 			name = Release;

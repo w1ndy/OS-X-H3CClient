@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Sparkle/Sparkle.h>
 
 #import "H3CClientBackend.h"
 #import "StatusMenuViewController.h"
@@ -37,7 +36,6 @@
 @property (nonatomic, weak) IBOutlet NSView *aboutView;
 @property (nonatomic, weak) IBOutlet NSView *accountsView;
 
-@property (nonatomic, weak) IBOutlet SUUpdater *updaterView;
 @property (nonatomic, weak) IBOutlet NSTextField *applicationDescView;
 @property (nonatomic) IBOutlet NSTextView *logView;
 //@property (weak) IBOutlet NSScrollView *profilesView;

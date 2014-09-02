@@ -10,10 +10,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface StatusMenuViewController ()
-
-@end
-
 @implementation StatusMenuViewController
 
 - (id)initWithBackend:(H3CClientBackend *)backend
@@ -26,13 +22,15 @@
         [self loadView];
         [self.backend addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
         
-        self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+        self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
         self.statusItem.menu = self.statusMenu;
         self.statusItem.highlightMode = YES;
-        NSImageView *statusView = ((NSWindow *)[self.statusItem valueForKey:@"window"]).contentView;
-        statusView.imageScaling = NSImageScaleProportionallyDown;
-        self.statusItem.image = [NSImage imageNamed:@"AppIcon"];
-        self.statusItem.alternateImage = [NSImage imageNamed:@"AlternateAppIcon"];
+        //self.statusItem.title = @"H3CClientX";
+        //NSImageView *statusView = ((NSWindow *)[self.statusItem valueForKey:@"window"]).contentView;
+        //statusView.imageScaling = NSImageScaleProportionallyDown;
+        //[image setTemplate:YES];
+        [self.statusItem setImage:[NSImage imageNamed:NSImageNameStatusNone]];
+        //self.statusItem.alternateImage = [NSImage imageNamed:@"AlternateAppIcon"];
     }
     return self;
 }
@@ -46,10 +44,12 @@
             case Disconnected:
                 [self.connectView setEnabled:YES];
                 [self.connectView setTitle:@"Connect"];
+                self.statusItem.image = [NSImage imageNamed:NSImageNameStatusNone];
                 break;
             case Connected:
                 [self.connectView setEnabled:YES];
                 [self.connectView setTitle:@"Disconnect"];
+                self.statusItem.image = [NSImage imageNamed:NSImageNameStatusAvailable];
                 break;
             case Connecting:
                 [self.connectView setEnabled:NO];
