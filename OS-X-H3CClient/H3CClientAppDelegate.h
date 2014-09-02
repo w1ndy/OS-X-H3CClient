@@ -15,6 +15,7 @@
 
 @property (nonatomic, weak) IBOutlet NSWindow *window;
 @property (nonatomic) H3CClientBackend *backend;
+@property (nonatomic) NSTimer *timer;
 @property (nonatomic) StatusMenuViewController *menuViewController;
 
 @property (nonatomic) NSPipe *stdoutPipe;

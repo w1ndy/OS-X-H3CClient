@@ -13,6 +13,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    self.timer = nil;
     self.backend = [[H3CClientBackend alloc] init];
     [self.backend addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
     
@@ -110,16 +111,25 @@
     self.ipaddrStatus.stringValue = [self.backend getIPAddress];
 }
 
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    if(self.timer != nil) return ;
+    self.timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(updateConnectedTime:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)applicationDidResignActive:(NSNotification *)notification
+{
+    if(self.timer == nil) return ;
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
 - (void)updateConnectedTime:(id)timer
 {
-    NSLog(@"updating timer");
-    if(!self.window.visible) {
-        [timer stop:timer];
-        return ;
-    }
     if(self.backend.connectionState == Connected) {
         long d = time(NULL) - self.backend.timeConnected;
-        self.durationStatus.stringValue = [NSString stringWithFormat:@"%02ld:%02ld:%02ld:%02ld",(long)(d / 86400),(long)(d / 3600 % 24),(long)(d / 60 % 60),(long)(d % 60)];
+        self.durationStatus.stringValue = [NSString stringWithFormat:@"%ld d %ld h %ld m %ld s",(long)(d / 86400),(long)(d / 3600 % 24),(long)(d / 60 % 60),(long)(d % 60)];
     }
 }
 
@@ -128,7 +138,6 @@
     BOOL isAutoConnect = [self.backend.globalConfiguration boolForKey:@"autoconnect"];
     
     [self updateStatusPane];
-    [NSTimer timerWithTimeInterval:1 target:self selector:@selector(updateConnectedTime:) userInfo:nil repeats:YES];
     if([self.backend.globalConfiguration boolForKey:@"reconnect"])
         self.reconnectView.state = NSOnState;
     else

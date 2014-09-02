@@ -24,7 +24,9 @@ enum ConnectionState
 @property (nonatomic) H3CClientConnector *connector;
 @property (nonatomic) NSString *userName;
 @property (nonatomic) NSUserDefaults *globalConfiguration;
+
 @property (nonatomic) long int timeConnected;
+@property (nonatomic) BOOL manualDisconnect;
 
 - (id)init;
 - (void)sendUserNotificationWithDescription:(NSString *)desc;

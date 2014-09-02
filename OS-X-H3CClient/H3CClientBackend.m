@@ -23,6 +23,7 @@ NSDictionary *_adapterList;
         self.globalConfiguration = [NSUserDefaults standardUserDefaults];
         //self.adapterList = [self getAdapterList];
         self.connector = [[H3CClientConnector alloc] init];
+        self.manualDisconnect = NO;
     }
     return self;
 }
@@ -75,7 +76,25 @@ NSDictionary *_adapterList;
         }
         
         self.timeConnected = time(NULL);
-        [self startDaemonWithUserName:userName password:password];
+        while(![self startDaemonWithUserName:userName password:password]) {
+            if(![self.globalConfiguration boolForKey:@"reconnect"]) {
+                [self sendUserNotificationWithDescription:@"Connection was interrupted."];
+            } else {
+                [self sendUserNotificationWithDescription:@"Connection was interrupted, reconnecting..."];
+                self.connectionState = Connecting;
+                
+                if(![self.connector openAdapter:adapterName]) {
+                    [self sendUserNotificationWithDescription:@"Failed to open network adapter."];
+                    break;
+                }
+                
+                if(![self.connector findServer]) {
+                    [self sendUserNotificationWithDescription:@"Cannot find authentication server."];
+                    break;
+                }
+            }
+        }
+        self.manualDisconnect = NO;
         self.connectionState = Disconnected;
         return ;
         
@@ -84,6 +103,7 @@ NSDictionary *_adapterList;
 
 - (void)disconnect
 {
+    self.manualDisconnect = YES;
     self.connectionState = Disconnecting;
     [self.connector breakLoop];
 }
@@ -101,7 +121,7 @@ NSDictionary *_adapterList;
     return adapters;
 }
 
-- (void)startDaemonWithUserName:(NSString *)userName password:(NSString *)password
+- (BOOL)startDaemonWithUserName:(NSString *)userName password:(NSString *)password
 {
     const PacketFrame *frame;
     HWADDR srvaddr;
@@ -162,13 +182,15 @@ NSDictionary *_adapterList;
             default:
                 NSLog(@"received UNKNOWN");
         }
+        if(self.connectionState == Disconnecting)
+            break;
     }
     if(self.connectionState == Disconnecting) {
         if(srvfound)
             [self.connector logout:srvaddr];
     }
     [self.connector closeAdapter];
-    return;
+    return self.manualDisconnect;
 }
 
 - (NSDictionary *)adapterList
