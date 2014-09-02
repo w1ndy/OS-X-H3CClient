@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="101000" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="H3CClientAppDelegate">
             <connections>
                 <outlet property="aboutView" destination="cSg-91-MqT" id="CLI-CT-yyl"/>
@@ -31,14 +31,15 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="Zxs-5p-73z" customClass="LaunchAtLoginController"/>
         <view id="uQ4-xY-UbW">
-            <rect key="frame" x="0.0" y="0.0" width="381" height="236"/>
+            <rect key="frame" x="0.0" y="0.0" width="381" height="252"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Tc9-sX-tgN">
-                    <rect key="frame" x="18" y="200" width="244" height="18"/>
+                    <rect key="frame" x="18" y="196" width="244" height="18"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="240" id="e7T-Mc-m47"/>
+                        <constraint firstAttribute="width" constant="240" id="q0b-6s-5Nl"/>
                     </constraints>
                     <buttonCell key="cell" type="check" title="Automatically connect at startup" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="oIe-jx-RoW">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -49,7 +50,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="GCo-4m-U2o">
-                    <rect key="frame" x="18" y="180" width="181" height="18"/>
+                    <rect key="frame" x="18" y="176" width="181" height="18"/>
                     <buttonCell key="cell" type="check" title="Reconnect when dropped" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ReO-Td-mxO">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -58,8 +59,18 @@
                         <action selector="toggleReconnect:" target="Voe-Tx-rLC" id="GA3-PU-EcI"/>
                     </connections>
                 </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="XXJ-a5-mZB">
+                    <rect key="frame" x="18" y="216" width="117" height="18"/>
+                    <buttonCell key="cell" type="check" title="Launch at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="pLM-FW-bPg">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="Zxs-5p-73z" name="value" keyPath="launchAtLogin" id="gtd-iM-X3r"/>
+                    </connections>
+                </button>
                 <box autoresizesSubviews="NO" title="Connection Status:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="nlo-rx-Ph1">
-                    <rect key="frame" x="17" y="24" width="347" height="143"/>
+                    <rect key="frame" x="17" y="16" width="347" height="143"/>
                     <view key="contentView">
                         <rect key="frame" x="1" y="1" width="345" height="127"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -131,42 +142,44 @@
                         </subviews>
                     </view>
                     <constraints>
-                        <constraint firstItem="Tw9-Jj-TQf" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="1c9-0a-xlh"/>
+                        <constraint firstItem="Tw9-Jj-TQf" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="24R-k0-2p6"/>
                         <constraint firstItem="6KS-yD-Ube" firstAttribute="leading" secondItem="Mhv-Da-aBQ" secondAttribute="leading" id="3v6-CW-6uB"/>
-                        <constraint firstAttribute="bottom" secondItem="OXg-1h-Vej" secondAttribute="bottom" constant="20" id="5P7-RV-x8a"/>
+                        <constraint firstItem="GZP-xU-IJ0" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="5ms-Rz-jfD"/>
                         <constraint firstItem="GZP-xU-IJ0" firstAttribute="baseline" secondItem="Mhv-Da-aBQ" secondAttribute="baseline" id="87J-5s-rpQ"/>
                         <constraint firstItem="Mhv-Da-aBQ" firstAttribute="leading" secondItem="WCK-3C-Nus" secondAttribute="leading" id="9v7-pa-cTE"/>
-                        <constraint firstItem="wHx-eD-GUl" firstAttribute="top" secondItem="nlo-rx-Ph1" secondAttribute="top" constant="27" id="A8N-Qz-RYe"/>
                         <constraint firstItem="Tw9-Jj-TQf" firstAttribute="top" secondItem="wHx-eD-GUl" secondAttribute="bottom" constant="8" symbolic="YES" id="BDJ-VK-DAR"/>
+                        <constraint firstItem="Mhv-Da-aBQ" firstAttribute="centerX" secondItem="nlo-rx-Ph1" secondAttribute="centerX" id="DM8-Go-FHO"/>
                         <constraint firstItem="OXg-1h-Vej" firstAttribute="top" secondItem="GZP-xU-IJ0" secondAttribute="bottom" constant="8" symbolic="YES" id="ITK-KU-wPh"/>
+                        <constraint firstItem="wHx-eD-GUl" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="JZU-vh-vFu"/>
                         <constraint firstItem="u00-T8-R7g" firstAttribute="baseline" secondItem="Tw9-Jj-TQf" secondAttribute="baseline" id="Nhp-Ji-9ES"/>
-                        <constraint firstItem="GZP-xU-IJ0" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="X7u-xr-q0i"/>
                         <constraint firstItem="u00-T8-R7g" firstAttribute="leading" secondItem="Tw9-Jj-TQf" secondAttribute="trailing" constant="54" id="YPm-Jw-0Km"/>
                         <constraint firstItem="Mhv-Da-aBQ" firstAttribute="leading" secondItem="GZP-xU-IJ0" secondAttribute="trailing" constant="39" id="Yjb-I1-ET0"/>
                         <constraint firstItem="GZP-xU-IJ0" firstAttribute="leading" secondItem="OXg-1h-Vej" secondAttribute="leading" id="amJ-TT-8Zj"/>
+                        <constraint firstAttribute="bottom" secondItem="OXg-1h-Vej" secondAttribute="bottom" constant="20" id="dAL-x8-Khw"/>
                         <constraint firstItem="GZP-xU-IJ0" firstAttribute="leading" secondItem="Tw9-Jj-TQf" secondAttribute="leading" id="ddv-oN-5TC"/>
                         <constraint firstItem="OXg-1h-Vej" firstAttribute="baseline" secondItem="WCK-3C-Nus" secondAttribute="baseline" id="doe-qL-hRC"/>
+                        <constraint firstItem="OXg-1h-Vej" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="eY3-yU-otZ"/>
                         <constraint firstItem="wHx-eD-GUl" firstAttribute="leading" secondItem="Tw9-Jj-TQf" secondAttribute="leading" id="hY1-Fy-kgf"/>
                         <constraint firstItem="GZP-xU-IJ0" firstAttribute="top" secondItem="Tw9-Jj-TQf" secondAttribute="bottom" constant="8" symbolic="YES" id="iv0-yg-qJE"/>
                         <constraint firstItem="wHx-eD-GUl" firstAttribute="baseline" secondItem="6KS-yD-Ube" secondAttribute="baseline" id="kDA-HR-iTw"/>
-                        <constraint firstItem="OXg-1h-Vej" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="nr2-aA-kQ1"/>
-                        <constraint firstItem="wHx-eD-GUl" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="ppj-tm-51O"/>
-                        <constraint firstItem="Mhv-Da-aBQ" firstAttribute="centerX" secondItem="nlo-rx-Ph1" secondAttribute="centerX" id="zbd-3S-dGM"/>
+                        <constraint firstItem="wHx-eD-GUl" firstAttribute="top" secondItem="nlo-rx-Ph1" secondAttribute="top" constant="27" id="lkh-mX-ldD"/>
                     </constraints>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </box>
             </subviews>
             <constraints>
-                <constraint firstItem="Tc9-sX-tgN" firstAttribute="leading" secondItem="GCo-4m-U2o" secondAttribute="leading" id="6E2-et-9tF"/>
-                <constraint firstItem="Tc9-sX-tgN" firstAttribute="top" secondItem="uQ4-xY-UbW" secondAttribute="top" constant="20" symbolic="YES" id="CL6-n9-HFe"/>
-                <constraint firstItem="nlo-rx-Ph1" firstAttribute="top" secondItem="GCo-4m-U2o" secondAttribute="bottom" constant="15" id="Hod-lX-rmM"/>
-                <constraint firstItem="GCo-4m-U2o" firstAttribute="top" secondItem="Tc9-sX-tgN" secondAttribute="bottom" constant="6" symbolic="YES" id="MiH-rc-FAI"/>
-                <constraint firstItem="Tc9-sX-tgN" firstAttribute="leading" secondItem="uQ4-xY-UbW" secondAttribute="leading" constant="20" symbolic="YES" id="Sld-zy-yRZ"/>
-                <constraint firstItem="nlo-rx-Ph1" firstAttribute="leading" secondItem="GCo-4m-U2o" secondAttribute="leading" id="aqn-ZM-cy5"/>
-                <constraint firstAttribute="trailing" secondItem="nlo-rx-Ph1" secondAttribute="trailing" constant="20" symbolic="YES" id="sUj-KV-wqv"/>
+                <constraint firstItem="GCo-4m-U2o" firstAttribute="leading" secondItem="Tc9-sX-tgN" secondAttribute="leading" id="0a4-wT-X3V"/>
+                <constraint firstItem="GCo-4m-U2o" firstAttribute="top" secondItem="Tc9-sX-tgN" secondAttribute="bottom" constant="6" symbolic="YES" id="NuU-cT-iq1"/>
+                <constraint firstItem="Tc9-sX-tgN" firstAttribute="top" secondItem="XXJ-a5-mZB" secondAttribute="bottom" constant="6" symbolic="YES" id="RAP-OT-VPv"/>
+                <constraint firstAttribute="bottom" secondItem="nlo-rx-Ph1" secondAttribute="bottom" constant="20" symbolic="YES" id="dZR-Rm-UCN"/>
+                <constraint firstItem="Tc9-sX-tgN" firstAttribute="leading" secondItem="XXJ-a5-mZB" secondAttribute="leading" id="fyg-PH-C0P"/>
+                <constraint firstItem="nlo-rx-Ph1" firstAttribute="leading" secondItem="GCo-4m-U2o" secondAttribute="leading" id="nWc-hH-ocU"/>
+                <constraint firstAttribute="trailing" secondItem="nlo-rx-Ph1" secondAttribute="trailing" constant="20" symbolic="YES" id="nza-Ol-ceZ"/>
+                <constraint firstItem="XXJ-a5-mZB" firstAttribute="top" secondItem="uQ4-xY-UbW" secondAttribute="top" constant="20" symbolic="YES" id="r9r-0y-bmy"/>
+                <constraint firstItem="XXJ-a5-mZB" firstAttribute="leading" secondItem="uQ4-xY-UbW" secondAttribute="leading" constant="20" symbolic="YES" id="tcA-Ff-9Cg"/>
             </constraints>
-            <point key="canvasLocation" x="396.5" y="280"/>
+            <point key="canvasLocation" x="396.5" y="288"/>
         </view>
         <view id="cSg-91-MqT">
             <rect key="frame" x="0.0" y="0.0" width="381" height="297"/>
@@ -202,17 +215,17 @@
             </subviews>
         </view>
         <view id="Xte-3j-tJ2">
-            <rect key="frame" x="0.0" y="0.0" width="381" height="398"/>
+            <rect key="frame" x="0.0" y="0.0" width="451" height="398"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <box autoresizesSubviews="NO" title="Authentication Logs" borderType="none" titlePosition="belowTop" translatesAutoresizingMaskIntoConstraints="NO" id="6zK-HL-e1j">
-                    <rect key="frame" x="17" y="16" width="347" height="364"/>
+                    <rect key="frame" x="17" y="16" width="417" height="364"/>
                     <view key="contentView">
-                        <rect key="frame" x="0.0" y="0.0" width="347" height="348"/>
+                        <rect key="frame" x="0.0" y="0.0" width="417" height="348"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8D2-ty-JtT">
-                                <rect key="frame" x="7" y="15" width="333" height="329"/>
+                                <rect key="frame" x="7" y="15" width="403" height="329"/>
                                 <clipView key="contentView" id="dL1-MW-Cbg">
                                     <rect key="frame" x="1" y="1" width="316" height="327"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -221,10 +234,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="316" height="327"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="316" height="327"/>
+                                            <size key="minSize" width="386" height="327"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                             <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="316" height="327"/>
+                                            <size key="minSize" width="386" height="327"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                         </textView>
                                     </subviews>
@@ -257,6 +270,7 @@
                 <constraint firstAttribute="trailing" secondItem="6zK-HL-e1j" secondAttribute="trailing" constant="20" symbolic="YES" id="oQT-cq-gYb"/>
                 <constraint firstItem="6zK-HL-e1j" firstAttribute="top" secondItem="Xte-3j-tJ2" secondAttribute="top" constant="20" symbolic="YES" id="ruh-k4-VpR"/>
             </constraints>
+            <point key="canvasLocation" x="-464.5" y="458"/>
         </view>
         <view id="zs8-Zg-HPC">
             <rect key="frame" x="0.0" y="0.0" width="381" height="278"/>

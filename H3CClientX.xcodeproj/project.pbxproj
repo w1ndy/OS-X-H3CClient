@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41CBC08219B675AD000471E2 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CBC08119B675AD000471E2 /* LaunchAtLoginController.m */; };
+		41CBC08619B67AAC000471E2 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CBC08519B67AAC000471E2 /* CoreServices.framework */; };
+		41CBC08719B67CA5000471E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CCC84C1940FC5C008F3407 /* Foundation.framework */; };
+		41CBC08919B67CF1000471E2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CBC08819B67CF1000471E2 /* ApplicationServices.framework */; };
 		C9049F1419412E8400746681 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C9049F1319412E8400746681 /* libpcap.dylib */; };
 		C98E47E2194464C3004A70BE /* H3CClientProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C98E47E1194464C3004A70BE /* H3CClientProfileViewController.m */; };
 		C9A4651619439ACC00B63E16 /* org.wireshark.ChmodBPF.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9A4651519439ACC00B63E16 /* org.wireshark.ChmodBPF.plist */; };
@@ -36,6 +40,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		41CBC08019B675AD000471E2 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LaunchAtLoginController.h; path = ../LaunchAtLoginController.h; sourceTree = "<group>"; };
+		41CBC08119B675AD000471E2 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LaunchAtLoginController.m; path = ../LaunchAtLoginController.m; sourceTree = "<group>"; };
+		41CBC08519B67AAC000471E2 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		41CBC08819B67CF1000471E2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		C9049F1319412E8400746681 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = usr/lib/libpcap.dylib; sourceTree = SDKROOT; };
 		C98E47E0194464C3004A70BE /* H3CClientProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H3CClientProfileViewController.h; sourceTree = "<group>"; };
 		C98E47E1194464C3004A70BE /* H3CClientProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H3CClientProfileViewController.m; sourceTree = "<group>"; };
@@ -69,6 +77,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41CBC08919B67CF1000471E2 /* ApplicationServices.framework in Frameworks */,
+				41CBC08719B67CA5000471E2 /* Foundation.framework in Frameworks */,
+				41CBC08619B67AAC000471E2 /* CoreServices.framework in Frameworks */,
 				C9049F1419412E8400746681 /* libpcap.dylib in Frameworks */,
 				C9CCC8481940FC5C008F3407 /* Cocoa.framework in Frameworks */,
 			);
@@ -97,6 +108,8 @@
 		C9CCC8461940FC5C008F3407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41CBC08819B67CF1000471E2 /* ApplicationServices.framework */,
+				41CBC08519B67AAC000471E2 /* CoreServices.framework */,
 				C9049F1319412E8400746681 /* libpcap.dylib */,
 				C9CCC8471940FC5C008F3407 /* Cocoa.framework */,
 				C9CCC8491940FC5C008F3407 /* Other Frameworks */,
@@ -117,6 +130,8 @@
 		C9CCC84D1940FC5C008F3407 /* OS-X-H3CClient */ = {
 			isa = PBXGroup;
 			children = (
+				41CBC08019B675AD000471E2 /* LaunchAtLoginController.h */,
+				41CBC08119B675AD000471E2 /* LaunchAtLoginController.m */,
 				C9CCC88B19411B4F008F3407 /* Preferences.xib */,
 				C9CCC8591940FC5C008F3407 /* H3CClientAppDelegate.h */,
 				C9CCC85A1940FC5C008F3407 /* H3CClientAppDelegate.m */,
@@ -224,6 +239,7 @@
 				C9CCC889194114C2008F3407 /* StatusMenuViewController.m in Sources */,
 				C9CCC8541940FC5C008F3407 /* main.m in Sources */,
 				C9CCC88519410A13008F3407 /* H3CClientBackend.m in Sources */,
+				41CBC08219B675AD000471E2 /* LaunchAtLoginController.m in Sources */,
 				C98E47E2194464C3004A70BE /* H3CClientProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
