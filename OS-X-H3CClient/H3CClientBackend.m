@@ -49,18 +49,22 @@ NSDictionary *_adapterList;
 
 - (void)connect
 {
+    long int selected = [self.globalConfiguration integerForKey:@"default"];
+    if(selected == -1) {
+        [self sendUserNotificationWithDescription:@"No default profile set."];
+        return ;
+    }
+    [self connectUsingProfile:selected];
+}
+
+- (void)connectUsingProfile:(NSInteger)selected
+{
     self.connectionState = Connecting;
     dispatch_async(dispatch_get_global_queue(0, 0), ^(){
         NSLog(@"connecting...");
-        
         NSArray *profiles = [self.globalConfiguration objectForKey:@"profiles"];
         if([profiles count] == 0) {
             [self sendUserNotificationWithDescription:@"Please add a profile before connecting."];
-            return ;
-        }
-        long int selected = [self.globalConfiguration integerForKey:@"default"];
-        if(selected == -1) {
-            [self sendUserNotificationWithDescription:@"No default profile set."];
             return ;
         }
         NSDictionary *dict = [profiles objectAtIndex:selected];

@@ -35,9 +35,6 @@
                             </menuItem>
                         </items>
                     </menu>
-                    <connections>
-                        <action selector="onConnectUsing:" target="-2" id="Kem-qJ-uIV"/>
-                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="4fT-Yn-gGm"/>
                 <menuItem title="Preferences…" id="IAf-Zg-DSc">

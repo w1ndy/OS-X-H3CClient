@@ -77,11 +77,26 @@
     [self.delegate showPreferences];
 }
 
-- (IBAction)onConnectUsing:(id)sender {
-    NSLog(@"connect using triggered");
+- (void)onConnectUsing:(id)sender {
+    NSArray *profiles = [[H3CClientBackend defaultBackend].globalConfiguration arrayForKey:@"profiles"];
+    for(int i = 0; i < [profiles count]; i++) {
+        NSDictionary *dict = [profiles objectAtIndex:i];
+        if([dict[@"name"] isEqualToString:((NSMenuItem*)sender).title]) {
+            [[H3CClientBackend defaultBackend] connectUsingProfile:i];
+            break;
+        }
+    }
 }
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {
+    menu.autoenablesItems = NO;
+    NSMenuItem *item = [menu itemWithTitle:@"Connect using"];
+    if([H3CClientBackend defaultBackend].connectionState != Disconnected) {
+        [item setEnabled:NO];
+        [item setSubmenu:nil];
+        return ;
+    }
+    [item setEnabled:YES];
     NSMenu *submenu = [[NSMenu alloc] init];
     submenu.autoenablesItems = NO;
     NSArray *profiles = [[H3CClientBackend defaultBackend].globalConfiguration arrayForKey:@"profiles"];
@@ -93,9 +108,11 @@
     } else {
         for(int i = 0; i < profiles.count; i++) {
             NSDictionary *dict = [profiles objectAtIndex:i];
-            [submenu addItemWithTitle:dict[@"name"] action:@selector(onConnectUsing:) keyEquivalent:@""];
+            NSMenuItem *subitem = [submenu addItemWithTitle:dict[@"name"] action:@selector(onConnectUsing:) keyEquivalent:@""];
+            [subitem setTarget:self];
+            [subitem setRepresentedObject:subitem];
         }
     }
-    [menu setSubmenu:submenu forItem:[menu itemWithTitle:@"Connect using"]];
+    [menu setSubmenu:submenu forItem:item];
 }
 @end

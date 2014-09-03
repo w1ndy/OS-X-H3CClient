@@ -31,6 +31,7 @@ enum ConnectionState
 - (id)init;
 - (void)sendUserNotificationWithDescription:(NSString *)desc;
 - (void)connect;
+- (void)connectUsingProfile:(NSInteger)selected;
 - (void)disconnect;
 - (NSString*)getUserName;
 - (NSString*)getIPAddress;
