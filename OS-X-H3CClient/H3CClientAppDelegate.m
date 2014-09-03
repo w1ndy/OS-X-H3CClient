@@ -14,17 +14,16 @@
 {
     // Insert code here to initialize your application
     self.timer = nil;
-    self.backend = [[H3CClientBackend alloc] init];
-    [self.backend addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
+    [[H3CClientBackend defaultBackend] addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
     
-    self.menuViewController = [[StatusMenuViewController alloc] initWithBackend:self.backend];
+    self.menuViewController = [[StatusMenuViewController alloc] init];
     self.menuViewController.delegate = self;
     
-    if([(NSArray *)[self.backend.globalConfiguration objectForKey:@"profiles"] count] == 0) {
-        [self.backend.globalConfiguration setInteger:-1 forKey:@"default"];
+    if([(NSArray *)[[H3CClientBackend defaultBackend].globalConfiguration objectForKey:@"profiles"] count] == 0) {
+        [[H3CClientBackend defaultBackend].globalConfiguration setInteger:-1 forKey:@"default"];
     }
-    if([self.backend.globalConfiguration boolForKey:@"autoconnect"]) {
-        [self.backend connect];
+    if([[H3CClientBackend defaultBackend].globalConfiguration boolForKey:@"autoconnect"]) {
+        [[H3CClientBackend defaultBackend] connect];
     }
     
     self.applicationDescView.stringValue = [NSString stringWithFormat:@"H3CClientX v%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
@@ -94,7 +93,7 @@
 
 - (void)updateStatusPane
 {
-    switch (self.backend.connectionState) {
+    switch ([H3CClientBackend defaultBackend].connectionState) {
         case Disconnected:
             self.connectedStatus.stringValue = @"No";
             break;
@@ -107,8 +106,8 @@
         case Connecting:
             self.connectedStatus.stringValue = @"Connecting";
     }
-    self.usernameStatus.stringValue = [self.backend getUserName];
-    self.ipaddrStatus.stringValue = [self.backend getIPAddress];
+    self.usernameStatus.stringValue = [[H3CClientBackend defaultBackend] getUserName];
+    self.ipaddrStatus.stringValue = [[H3CClientBackend defaultBackend] getIPAddress];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
@@ -127,18 +126,18 @@
 
 - (void)updateConnectedTime:(id)timer
 {
-    if(self.backend.connectionState == Connected) {
-        long d = time(NULL) - self.backend.timeConnected;
+    if([H3CClientBackend defaultBackend].connectionState == Connected) {
+        long d = time(NULL) - [H3CClientBackend defaultBackend].timeConnected;
         self.durationStatus.stringValue = [NSString stringWithFormat:@"%ld d %ld h %ld m %ld s",(long)(d / 86400),(long)(d / 3600 % 24),(long)(d / 60 % 60),(long)(d % 60)];
     }
 }
 
 - (void)showPreferences
 {
-    BOOL isAutoConnect = [self.backend.globalConfiguration boolForKey:@"autoconnect"];
+    BOOL isAutoConnect = [[H3CClientBackend defaultBackend].globalConfiguration boolForKey:@"autoconnect"];
     
     [self updateStatusPane];
-    if([self.backend.globalConfiguration boolForKey:@"reconnect"])
+    if([[H3CClientBackend defaultBackend].globalConfiguration boolForKey:@"reconnect"])
         self.reconnectView.state = NSOnState;
     else
         self.reconnectView.state = NSOffState;
@@ -156,16 +155,16 @@
 
 - (IBAction)toggleAutoConnect:(id)sender {
     if([self.autoconnectView state] == NSOnState) {
-        [self.backend.globalConfiguration setBool:YES forKey:@"autoconnect"];
+        [[H3CClientBackend defaultBackend].globalConfiguration setBool:YES forKey:@"autoconnect"];
     } else {
-        [self.backend.globalConfiguration setBool:NO forKey:@"autoconnect"];
+        [[H3CClientBackend defaultBackend].globalConfiguration setBool:NO forKey:@"autoconnect"];
     }
 }
 - (IBAction)toggleReconnect:(id)sender {
     if([self.reconnectView state] == NSOnState) {
-        [self.backend.globalConfiguration setBool:YES forKey:@"reconnect"];
+        [[H3CClientBackend defaultBackend].globalConfiguration setBool:YES forKey:@"reconnect"];
     } else {
-        [self.backend.globalConfiguration setBool:NO forKey:@"reconnect"];
+        [[H3CClientBackend defaultBackend].globalConfiguration setBool:NO forKey:@"reconnect"];
     }
 }
 

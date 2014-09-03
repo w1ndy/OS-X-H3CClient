@@ -13,7 +13,6 @@
 
 - (void)awakeFromNib
 {
-    self.backend = [H3CClientBackend new];
     self.profileListView.dataSource = self;
     self.profileListView.delegate = self;
     self.config = [NSUserDefaults standardUserDefaults];
@@ -25,8 +24,8 @@
     } else
         self.profileArray = [NSMutableArray new];
     [self.profileListView reloadData];
-    if(self.backend.adapterList.count > 0)
-        [self.interfaceField addItemsWithTitles:[self.backend.adapterList allKeys]];
+    if([H3CClientBackend defaultBackend].adapterList.count > 0)
+        [self.interfaceField addItemsWithTitles:[[H3CClientBackend defaultBackend].adapterList allKeys]];
     else {
         [self.interfaceField setEnabled:NO];
         [self.interfaceField addItemWithTitle:@"No Interface Available"];
@@ -62,19 +61,19 @@
         }
         if([self.interfaceField isEnabled]) {
             if([self.profileArray[row][@"interface"] isEqualToString:@""]) {
-                [self.profileArray[row] setValue:[self.backend.adapterList allKeys][0] forKey:@"interface"];
+                [self.profileArray[row] setValue:[[H3CClientBackend defaultBackend].adapterList allKeys][0] forKey:@"interface"];
                 [self.config setObject:self.profileArray forKey:@"profiles"];
             }
             BOOL found = NO;
-            for(id key in [self.backend.adapterList allKeys]) {
-                if([self.backend.adapterList[key] isEqualToString:self.profileArray[row][@"interface"]]) {
+            for(id key in [[H3CClientBackend defaultBackend].adapterList allKeys]) {
+                if([[H3CClientBackend defaultBackend].adapterList[key] isEqualToString:self.profileArray[row][@"interface"]]) {
                     [self.interfaceField selectItemWithTitle:key];
                     found = YES;
                     break;
                 }
             }
             if(!found) {
-                [self.profileArray[row] setValue:[self.backend.adapterList allKeys][0] forKey:@"interface"];
+                [self.profileArray[row] setValue:[[H3CClientBackend defaultBackend].adapterList allKeys][0] forKey:@"interface"];
                 [self.config setObject:self.profileArray forKey:@"profiles"];
                 [self.interfaceField selectItemAtIndex:0];
             }
@@ -144,7 +143,7 @@
     dict[@"name"] = self.creatingProfileName;
     dict[@"username"] = @"";
     dict[@"password"] = @"";
-    dict[@"interface"] = [self.interfaceField isEnabled] ? [self.backend.adapterList allKeys][0] : @"";
+    dict[@"interface"] = [self.interfaceField isEnabled] ? [[H3CClientBackend defaultBackend].adapterList allKeys][0] : @"";
     
     [self.profileArray addObject:dict];
     [self.config setObject:self.profileArray forKey:@"profiles"];
@@ -164,7 +163,7 @@
     if(row < 0) return ;
     self.profileArray[row][@"username"] = self.usernameField.stringValue;
     self.profileArray[row][@"password"] = self.passwordField.stringValue;
-    self.profileArray[row][@"interface"] = self.backend.adapterList[[self.interfaceField.selectedItem title]];
+    self.profileArray[row][@"interface"] = [H3CClientBackend defaultBackend].adapterList[[self.interfaceField.selectedItem title]];
     [self.config setObject:self.profileArray forKey:@"profiles"];
 }
 

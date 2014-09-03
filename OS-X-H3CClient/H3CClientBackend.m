@@ -14,10 +14,17 @@
 
 NSDictionary *_adapterList;
 
-- (id)init
-{
-    self = [super init];
-    if(self) {
++ (H3CClientBackend*)defaultBackend {
+    static H3CClientBackend *backend;
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        backend = [[H3CClientBackend alloc] init];
+    });
+    return backend;
+}
+
+- (id)init {
+    if(self = [super init]) {
         _adapterList = nil;
         self.connectionState = Disconnected;
         self.globalConfiguration = [NSUserDefaults standardUserDefaults];
@@ -26,6 +33,10 @@ NSDictionary *_adapterList;
         self.manualDisconnect = NO;
     }
     return self;
+}
+
+- (void)dealloc
+{
 }
 
 - (void)sendUserNotificationWithDescription:(NSString *)desc

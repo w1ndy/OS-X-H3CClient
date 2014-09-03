@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="101000" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="StatusMenuViewController">
@@ -13,7 +12,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -25,6 +24,19 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="onToggleConnection:" target="-2" id="L5e-YA-Eg6"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Connect using" id="AeL-zh-itp">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Connect using" id="Ga1-dc-gso">
+                        <items>
+                            <menuItem title="Item" id="gD5-KA-k1A">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <action selector="onConnectUsing:" target="-2" id="Kem-qJ-uIV"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="4fT-Yn-gGm"/>
@@ -41,6 +53,11 @@
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="bwk-IM-Ez6" id="OVZ-HR-Dlz"/>
+            </connections>
+            <point key="canvasLocation" x="255.5" y="75.5"/>
         </menu>
+        <viewController id="bwk-IM-Ez6" customClass="StatusMenuViewController"/>
     </objects>
 </document>

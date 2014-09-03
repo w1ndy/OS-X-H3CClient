@@ -14,7 +14,6 @@
 @interface H3CClientAppDelegate : NSObject <NSApplicationDelegate, StatusMenuViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet NSWindow *window;
-@property (nonatomic) H3CClientBackend *backend;
 @property (nonatomic) NSTimer *timer;
 @property (nonatomic) StatusMenuViewController *menuViewController;
 

@@ -35,4 +35,6 @@ enum ConnectionState
 - (NSString*)getUserName;
 - (NSString*)getIPAddress;
 
++ (H3CClientBackend*)defaultBackend;
+
 @end

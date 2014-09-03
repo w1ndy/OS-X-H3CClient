@@ -12,15 +12,13 @@
 
 @implementation StatusMenuViewController
 
-- (id)initWithBackend:(H3CClientBackend *)backend
+- (id)init
 {
     self = [super initWithNibName:@"StatusMenu" bundle:nil];
     if (self) {
         // Initialization code here.
-        self.backend = backend;
-        
         [self loadView];
-        [self.backend addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
+        [[H3CClientBackend defaultBackend] addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
         
         self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
         self.statusItem.menu = self.statusMenu;
@@ -63,12 +61,12 @@
     }
 }
 - (IBAction)onToggleConnection:(id)sender {
-    switch(self.backend.connectionState) {
+    switch([H3CClientBackend defaultBackend].connectionState) {
         case Disconnected:
-            [self.backend connect];
+            [[H3CClientBackend defaultBackend] connect];
             break;
         case Connected:
-            [self.backend disconnect];
+            [[H3CClientBackend defaultBackend] disconnect];
             break;
         default:
             NSLog(@"error: toggle failed, bad status");
@@ -79,4 +77,25 @@
     [self.delegate showPreferences];
 }
 
+- (IBAction)onConnectUsing:(id)sender {
+    NSLog(@"connect using triggered");
+}
+
+- (void)menuNeedsUpdate:(NSMenu *)menu {
+    NSMenu *submenu = [[NSMenu alloc] init];
+    submenu.autoenablesItems = NO;
+    NSArray *profiles = [[H3CClientBackend defaultBackend].globalConfiguration arrayForKey:@"profiles"];
+    if(profiles.count == 0) {
+        NSMenuItem *noprof = [[NSMenuItem alloc] init];
+        [noprof setTitle:@"No Profile"];
+        [noprof setEnabled:NO];
+        [submenu addItem:noprof];
+    } else {
+        for(int i = 0; i < profiles.count; i++) {
+            NSDictionary *dict = [profiles objectAtIndex:i];
+            [submenu addItemWithTitle:dict[@"name"] action:@selector(onConnectUsing:) keyEquivalent:@""];
+        }
+    }
+    [menu setSubmenu:submenu forItem:[menu itemWithTitle:@"Connect using"]];
+}
 @end

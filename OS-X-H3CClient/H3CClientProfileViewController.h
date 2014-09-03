@@ -11,7 +11,6 @@
 
 @interface H3CClientProfileViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 
-@property (nonatomic) H3CClientBackend *backend;
 @property (nonatomic, weak) NSUserDefaults *config;
 @property (nonatomic) NSMutableArray *profileArray;
 @property (nonatomic) NSString *creatingProfileName;
