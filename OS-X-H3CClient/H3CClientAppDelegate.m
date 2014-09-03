@@ -13,6 +13,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    [self chmodBPF];
+    
     self.timer = nil;
     [[H3CClientBackend defaultBackend] addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
     
@@ -34,6 +36,24 @@
     
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleStderrNotification:) name: NSFileHandleReadCompletionNotification object: self.stderrPipeReadHandle];
     [self.stderrPipeReadHandle readInBackgroundAndNotify];
+}
+
+- (void)chmodBPF
+{
+    if([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/LaunchDaemons/org.wireshark.ChmodBPF.plist"]) {
+        NSLog(@"BPF helper detected.");
+        return ;
+    }
+    NSDictionary *err = [NSDictionary new];
+    NSString *script = [NSString stringWithFormat:@"do shell script \"chgrp admin /dev/bpf* && chmod g+rw /dev/bpf* && cp %@ /Library/LaunchDaemons\" with administrator privileges", [[NSBundle mainBundle] pathForResource:@"org.wireshark.ChmodBPF.plist" ofType:nil]];
+    NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
+    NSAppleEventDescriptor *evtDesc = [appleScript executeAndReturnError:&err];
+    
+    if(!evtDesc) {
+        [[NSAlert alertWithMessageText:@"Error" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"Failed to install BPF helper."] runModal];
+    } else {
+        NSLog(@"BPF helper installed successfully.");
+    }
 }
 
 - (void)handleStderrNotification:(id)notification
