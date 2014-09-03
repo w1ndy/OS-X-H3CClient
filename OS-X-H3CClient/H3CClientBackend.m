@@ -224,9 +224,13 @@ NSDictionary *_adapterList;
 - (NSString*)getIPAddress
 {
     if(self.connectionState == Connected) {
-        for(int i = 0; i < [[[NSHost currentHost] addresses] count]; i++) {
-            if([[[[NSHost currentHost] addresses] objectAtIndex:i] containsString:@":"]) continue;
-            else return [[[NSHost currentHost] addresses] objectAtIndex:i];
+        for(int i = 0, j = 0; i < [[[NSHost currentHost] addresses] count]; i++) {
+            NSString *ip = [[[NSHost currentHost] addresses] objectAtIndex:i];
+            for(j = 0; j < [ip length]; j++) {
+                if([ip characterAtIndex:j] == ':') break;
+            }
+            if(j >= [ip length])
+                return [[[NSHost currentHost] addresses] objectAtIndex:i];
         }
     }
     return @"No IPv4 address";

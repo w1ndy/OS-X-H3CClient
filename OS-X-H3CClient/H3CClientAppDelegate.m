@@ -167,6 +167,9 @@
         [[H3CClientBackend defaultBackend].globalConfiguration setBool:NO forKey:@"reconnect"];
     }
 }
+- (IBAction)visitSite:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://w1ndy.github.io/OS-X-H3CClient/"]];
+}
 
 
 @end
