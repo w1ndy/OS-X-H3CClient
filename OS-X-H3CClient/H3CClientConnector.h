@@ -22,6 +22,7 @@
 - (BOOL)verifyUserName:(NSString *)userName withId:(BYTE)pid on:(HWADDR)serverAddress;
 - (BOOL)verifyPassword:(NSString *)password withId:(BYTE)pid userName:(NSString *)userName seed:(BYTE *)seed on:(HWADDR)serverAddress;
 - (BOOL)parseTokenFrame:(TokenFrame *)frame to:(BYTE *)token;
+- (NSString*)parseFailureFrame:(FailureFrame *)frame;
 - (void)logout:(HWADDR)serverAddress;
 
 - (BOOL)nextPacket:(const PacketFrame **)ptr withTimeout:(int)second;

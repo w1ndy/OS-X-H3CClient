@@ -133,3 +133,13 @@ typedef struct
     BYTE token[32];
 } __attribute__((packed))
 TokenFrame;
+
+typedef struct
+{
+    PacketFrame header;
+    
+    BYTE errcode;
+    BYTE msglen;
+    BYTE msg[1];
+} __attribute__((packed))
+FailureFrame;

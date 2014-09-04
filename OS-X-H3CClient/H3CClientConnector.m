@@ -386,6 +386,9 @@ const HWADDR MulticastHardwareAddress = {
             return NO;
         }
         
+        puts(" >>> PACKET BEGIN <<< ");
+        for(int i = 0; i < header->len; i++) printf("%02X", data[i]);
+        puts(" >>> PACKET END <<< ");
         *ptr = (const PacketFrame *)data;
         return YES;
     }
@@ -402,6 +405,19 @@ const HWADDR MulticastHardwareAddress = {
     
     *ptr = nil;
     return YES;
+}
+
+- (NSString*)parseFailureFrame:(FailureFrame *)frame
+{
+    char *buffer;
+    buffer = (char *)malloc(frame->msglen + 1);
+    for(int i = 0; i < frame->msglen; i++) {
+        buffer[i] = frame->msg[i];
+    }
+    buffer[frame->msglen] = '\0';
+    NSString *ret = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    free(buffer);
+    return ret;
 }
 
 - (void)makeEthernetFrame:(EthernetFrame *)frame destination:(HWADDR)dest

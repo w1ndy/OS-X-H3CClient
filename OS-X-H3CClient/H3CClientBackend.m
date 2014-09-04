@@ -31,6 +31,7 @@ NSDictionary *_adapterList;
         //self.adapterList = [self getAdapterList];
         self.connector = [[H3CClientConnector alloc] init];
         self.manualDisconnect = NO;
+        self.status = @"Disconnected";
     }
     return self;
 }
@@ -78,15 +79,19 @@ NSDictionary *_adapterList;
         }
         
         self.userName = userName;
+        self.status = @"Opening adapter...";
         if(![self.connector openAdapter:adapterName]) {
             [self sendUserNotificationWithDescription:@"Failed to open network adapter."];
             self.connectionState = Disconnected;
+            self.status = @"Disconnected";
             return ;
         }
         
+        self.status = @"Looking for server...";
         if(![self.connector findServer]) {
             [self sendUserNotificationWithDescription:@"Cannot find authentication server."];
             self.connectionState = Disconnected;
+            self.status = @"Disconnected";
             return ;
         }
         
@@ -94,6 +99,7 @@ NSDictionary *_adapterList;
         while(![self startDaemonWithUserName:userName password:password]) {
             if(![self.globalConfiguration boolForKey:@"reconnect"]) {
                 [self sendUserNotificationWithDescription:@"Connection was interrupted."];
+                break;
             } else {
                 [self sendUserNotificationWithDescription:@"Connection was interrupted, reconnecting..."];
                 self.connectionState = Connecting;
@@ -111,6 +117,7 @@ NSDictionary *_adapterList;
         }
         self.manualDisconnect = NO;
         self.connectionState = Disconnected;
+        self.status = @"Disconnected";
         return ;
         
     });
@@ -141,9 +148,10 @@ NSDictionary *_adapterList;
     const PacketFrame *frame;
     HWADDR srvaddr;
     BOOL srvfound = NO;
+    NSString *message;
     BYTE token[32];
     
-    while([self.connector nextPacket:&frame withTimeout:60]) {
+    while([self.connector nextPacket:&frame withTimeout:30]) {
         if(frame == nil) continue;
         switch(frame->code) {
             case EAP_REQUEST:
@@ -153,24 +161,29 @@ NSDictionary *_adapterList;
                         if(srvfound && ![self.connector keepOnlineWithId:frame->pid userName:userName token:token on:srvaddr]) {
                             [self sendUserNotificationWithDescription:@"Failed to communicate with server."];
                             self.connectionState = Disconnecting;
+                            self.status = @"Error occured";
                         }
                         break;
                     case EAP_IDENTIFY:
                         NSLog(@"received EAP_REQUEST/EAP_IDENTIFY");
                         if(!srvfound) {
+                            self.status = @"Verifying username...";
                             memcpy(&srvaddr, &(frame->ethernet.source), sizeof(HWADDR));
                             srvfound = YES;
                         }
                         if(![self.connector verifyUserName:userName withId:frame->pid on:srvaddr]) {
                             [self sendUserNotificationWithDescription:@"Failed to communicate with server."];
                             self.connectionState = Disconnecting;
+                            self.status = @"Error occured";
                         }
                         break;
                     case EAP_MD5:
                         NSLog(@"received EAP_REQUEST/EAP_MD5");
+                        self.status = @"Verifying password...";
                         if(srvfound && ![self.connector verifyPassword:password withId:frame->pid userName:userName seed:((PasswordFrame *)frame)->password on:srvaddr]) {
                             [self sendUserNotificationWithDescription:@"Failed to communicate with server."];
                             self.connectionState = Disconnecting;
+                            self.status = @"Error occured";
                         }
                         break;
                     default:
@@ -178,15 +191,22 @@ NSDictionary *_adapterList;
                 }
                 break;
             case EAP_SUCCESS:
+                self.status = @"Online";
                 NSLog(@"received EAP_SUCCESS");
                 [self sendUserNotificationWithDescription:@"Authenticated successfully."];
                 [self.connector updateIP];
                 self.connectionState = Connected;
                 break;
             case EAP_FAILURE:
+                self.status = @"Error occured";
                 NSLog(@"received EAP_FAILURE");
-                [self sendUserNotificationWithDescription:@"Failed to authenticate."];
+                message = [self.connector parseFailureFrame:(FailureFrame *)frame];
+                NSLog(@"Reason: %@", message);
+                [self sendUserNotificationWithDescription:message];
                 self.connectionState = Disconnecting;
+                if(((FailureFrame *)frame)->errcode != 8) {
+                    self.manualDisconnect = YES; // we do not reconnect for wrong username/password.
+                }
                 break;
             case EAP_OTHER:
                 NSLog(@"received EAP_OTHER");

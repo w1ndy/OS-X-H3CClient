@@ -23,6 +23,7 @@ enum ConnectionState
 @property (nonatomic) NSDictionary *adapterList;
 @property (nonatomic) H3CClientConnector *connector;
 @property (nonatomic) NSString *userName;
+@property (nonatomic) NSString *status;
 @property (nonatomic) NSUserDefaults *globalConfiguration;
 
 @property (nonatomic) long int timeConnected;

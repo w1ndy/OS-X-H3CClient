@@ -50,12 +50,14 @@
                 self.statusItem.image = [NSImage imageNamed:NSImageNameStatusAvailable];
                 break;
             case Connecting:
-                [self.connectView setEnabled:NO];
-                [self.connectView setTitle:@"Connecting…"];
+                [self.connectView setEnabled:YES];
+                [self.connectView setTitle:@"Disconnect"];
+                self.statusItem.image = [NSImage imageNamed:NSImageNameStatusPartiallyAvailable];
                 break;
             case Disconnecting:
                 [self.connectView setEnabled:NO];
-                [self.connectView setTitle:@"Disconnecting…"];
+                [self.connectView setTitle:@"Disconnect"];
+                self.statusItem.image = [NSImage imageNamed:NSImageNameStatusPartiallyAvailable];
                 break;
         }
     }
@@ -66,10 +68,11 @@
             [[H3CClientBackend defaultBackend] connect];
             break;
         case Connected:
+        case Connecting:
             [[H3CClientBackend defaultBackend] disconnect];
             break;
         default:
-            NSLog(@"error: toggle failed, bad status");
+            NSLog(@"Already disconnecting...");
     }
 }
 
@@ -88,15 +91,28 @@
     }
 }
 
+- (void)onDisconnect:(id)sender {
+    [[H3CClientBackend defaultBackend] disconnect];
+}
+
 - (void)menuNeedsUpdate:(NSMenu *)menu {
     menu.autoenablesItems = NO;
-    NSMenuItem *item = [menu itemWithTitle:@"Connect using"];
-    if([H3CClientBackend defaultBackend].connectionState != Disconnected) {
+    NSMenuItem *item = [menu itemAtIndex:1];
+    if([H3CClientBackend defaultBackend].connectionState == Connected) {
+        item.title = [NSString stringWithFormat:@"Status: %@",[[H3CClientBackend defaultBackend] getUserName]];
         [item setEnabled:NO];
         [item setSubmenu:nil];
         return ;
     }
+    if([H3CClientBackend defaultBackend].connectionState != Disconnected) {
+        item.title = [NSString stringWithFormat:@"Status: %@",[H3CClientBackend defaultBackend].status];
+        [item setEnabled:NO];
+        [item setSubmenu:nil];
+        return ;
+    }
+    item.title = @"Connect using";
     [item setEnabled:YES];
+    [item setAction:nil];
     NSMenu *submenu = [[NSMenu alloc] init];
     submenu.autoenablesItems = NO;
     NSArray *profiles = [[H3CClientBackend defaultBackend].globalConfiguration arrayForKey:@"profiles"];
