@@ -28,5 +28,6 @@
 - (BOOL)nextPacket:(const PacketFrame **)ptr withTimeout:(int)second;
 - (void)updateIP;
 - (void)breakLoop;
+- (NSMutableDictionary*)getTrafficStat;
 
 @end

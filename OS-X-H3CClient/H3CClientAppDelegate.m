@@ -150,6 +150,8 @@
         long d = time(NULL) - [H3CClientBackend defaultBackend].timeConnected;
         self.durationStatus.stringValue = [NSString stringWithFormat:@"%ld d %ld h %ld m %ld s",(long)(d / 86400),(long)(d / 3600 % 24),(long)(d / 60 % 60),(long)(d % 60)];
     }
+    NSDictionary *stat = [[H3CClientBackend defaultBackend] getTrafficStatSinceConnected];
+    self.trafficStatus.stringValue = [NSString stringWithFormat:@"%.1f MB / %.1f MB", ([(NSNumber*)stat[@"input"] floatValue] / 1024. / 1024.), ([(NSNumber *)stat[@"output"] floatValue] / 1024. / 1024.)];
 }
 
 - (void)showPreferences

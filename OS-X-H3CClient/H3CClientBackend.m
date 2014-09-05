@@ -96,6 +96,7 @@ NSDictionary *_adapterList;
         }
         
         self.timeConnected = time(NULL);
+        self.trafficStatConnected = [self.connector getTrafficStat];
         while(![self startDaemonWithUserName:userName password:password]) {
             if(![self.globalConfiguration boolForKey:@"reconnect"]) {
                 [self sendUserNotificationWithDescription:@"Connection was interrupted."];
@@ -263,6 +264,23 @@ NSDictionary *_adapterList;
 - (void)updateIP
 {
     [self.connector updateIP];
+}
+
+- (NSDictionary*)getTrafficStatSinceConnected
+{
+    if(self.connectionState != Connected) {
+        NSMutableDictionary *dict = [NSMutableDictionary new];
+        [dict setObject:[NSNumber numberWithUnsignedInteger:0] forKey:@"input"];
+        [dict setObject:[NSNumber numberWithUnsignedInteger:0] forKey:@"output"];
+        return dict;
+    } else {
+        NSMutableDictionary *dict = [self.connector getTrafficStat];
+        unsigned input = [((NSNumber*)dict[@"input"]) intValue] - [self.trafficStatConnected[@"input"] intValue];
+        unsigned output = [((NSNumber*)dict[@"output"]) intValue] - [self.trafficStatConnected[@"output"] intValue];
+        dict[@"input"] = [NSNumber numberWithUnsignedInteger:input];
+        dict[@"output"] = [NSNumber numberWithUnsignedInteger:output];
+        return dict;
+    }
 }
 
 @end

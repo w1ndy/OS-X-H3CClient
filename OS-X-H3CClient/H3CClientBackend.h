@@ -27,6 +27,7 @@ enum ConnectionState
 @property (nonatomic) NSUserDefaults *globalConfiguration;
 
 @property (nonatomic) long int timeConnected;
+@property (nonatomic) NSDictionary *trafficStatConnected;
 @property (nonatomic) BOOL manualDisconnect;
 
 - (id)init;
@@ -37,6 +38,7 @@ enum ConnectionState
 - (NSString*)getUserName;
 - (NSString*)getIPAddress;
 - (void)updateIP;
+- (NSDictionary*)getTrafficStatSinceConnected;
 
 + (H3CClientBackend*)defaultBackend;
 

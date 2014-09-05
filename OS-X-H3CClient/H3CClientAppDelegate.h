@@ -30,6 +30,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField *usernameStatus;
 @property (nonatomic, weak) IBOutlet NSTextField *ipaddrStatus;
 @property (nonatomic, weak) IBOutlet NSTextField *durationStatus;
+@property (nonatomic, weak) IBOutlet NSTextField *trafficStatus;
 
 @property (nonatomic, weak) IBOutlet NSView *generalView;
 @property (nonatomic, weak) IBOutlet NSView *advancedView;

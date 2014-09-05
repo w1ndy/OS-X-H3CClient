@@ -13,6 +13,7 @@
 #import <sys/types.h>
 #import <sys/param.h>
 #import <sys/ioctl.h>
+#import <sys/sysctl.h>
 #import <sys/socket.h>
 #import <sys/times.h>
 #import <net/if.h>
@@ -20,6 +21,7 @@
 #import <net/if_dl.h>
 #import <net/if_arp.h>
 #import <arpa/inet.h>
+#import <net/route.h>
 #import <errno.h>
 #import <ifaddrs.h>
 
@@ -438,4 +440,43 @@ const HWADDR MulticastHardwareAddress = {
 {
     pcap_breakloop(device);
 }
+
+- (NSMutableDictionary*)getTrafficStat
+{
+    int mib[] = {
+        CTL_NET,
+        PF_ROUTE,
+        0,
+        0,
+        NET_RT_IFLIST2,
+        0
+    };
+    size_t len;
+    if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
+        return nil;
+    }
+    char *buf = (char *)malloc(len);
+    if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
+        return nil;
+    }
+    char *lim = buf + len;
+    char *next = NULL;
+    u_int64_t totalibytes = 0;
+    u_int64_t totalobytes = 0;
+    for (next = buf; next < lim; ) {
+        struct if_msghdr *ifm = (struct if_msghdr *)next;
+        next += ifm->ifm_msglen;
+        if (ifm->ifm_type == RTM_IFINFO2) {
+            struct if_msghdr2 *if2m = (struct if_msghdr2 *)ifm;
+            totalibytes += if2m->ifm_data.ifi_ibytes;
+            totalobytes += if2m->ifm_data.ifi_obytes;
+        }
+    }
+    free(buf);
+    NSMutableDictionary *ret = [NSMutableDictionary new];
+    [ret setObject:[NSNumber numberWithUnsignedInteger:totalibytes] forKey:@"input"];
+    [ret setObject:[NSNumber numberWithUnsignedInteger:totalobytes] forKey:@"output"];
+    return ret;
+}
+
 @end
