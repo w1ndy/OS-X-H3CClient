@@ -260,4 +260,9 @@ NSDictionary *_adapterList;
     return @"No IPv4 address";
 }
 
+- (void)updateIP
+{
+    [self.connector updateIP];
+}
+
 @end

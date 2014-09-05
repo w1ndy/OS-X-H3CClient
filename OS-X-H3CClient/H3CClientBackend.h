@@ -36,6 +36,7 @@ enum ConnectionState
 - (void)disconnect;
 - (NSString*)getUserName;
 - (NSString*)getIPAddress;
+- (void)updateIP;
 
 + (H3CClientBackend*)defaultBackend;
 

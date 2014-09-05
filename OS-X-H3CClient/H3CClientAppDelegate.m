@@ -191,5 +191,40 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://w1ndy.github.io/OS-X-H3CClient/"]];
 }
 
+- (IBAction)resetAllAdapters:(id)sender
+{
+    NSMutableString *command = [[NSMutableString alloc] init];
+    NSLog(@"%@",[H3CClientBackend defaultBackend].adapterList.allValues);
+    for(NSString *adapter in [H3CClientBackend defaultBackend].adapterList.allValues) {
+        if(command.length == 0) {
+            [command appendFormat:@"ifconfig %@ down && ifconfig %@ up", adapter, adapter];
+        } else {
+            [command appendFormat:@" && ifconfig %@ down && ifconfig %@ up", adapter, adapter];
+        }
+    }
+    if(command.length == 0) {
+        [[NSAlert alertWithMessageText:@"Error" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"No adapter found."] beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp){}];
+        return ;
+    }
+    NSDictionary *err = [NSDictionary new];
+    NSString *script = [NSString stringWithFormat:@"do shell script \"%@\" with administrator privileges", command];
+    NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
+    NSAppleEventDescriptor *evtDesc = [appleScript executeAndReturnError:&err];
+    
+    if(!evtDesc) {
+        [[NSAlert alertWithMessageText:@"Error" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"Failed to reset adapters."] beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp) {}];
+    } else {
+        [[NSAlert alertWithMessageText:@"Info" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"All adapters have been reset."] beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp) {}];
+    }
+}
 
+- (IBAction)refreshIPAddress:(id)sender
+{
+    [[H3CClientBackend defaultBackend] updateIP];
+    [self updateStatusPane];
+    [[NSAlert alertWithMessageText:@"Info" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"IP successfully refreshed."] beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp){
+        return ;
+    }];
+    return ;
+}
 @end

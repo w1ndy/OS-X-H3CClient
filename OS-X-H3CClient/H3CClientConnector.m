@@ -386,9 +386,6 @@ const HWADDR MulticastHardwareAddress = {
             return NO;
         }
         
-        puts(" >>> PACKET BEGIN <<< ");
-        for(int i = 0; i < header->len; i++) printf("%02X", data[i]);
-        puts(" >>> PACKET END <<< ");
         *ptr = (const PacketFrame *)data;
         return YES;
     }

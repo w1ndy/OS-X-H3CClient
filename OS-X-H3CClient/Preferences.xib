@@ -32,11 +32,11 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="Zxs-5p-73z" customClass="LaunchAtLoginController"/>
         <view id="uQ4-xY-UbW">
-            <rect key="frame" x="0.0" y="0.0" width="381" height="252"/>
+            <rect key="frame" x="0.0" y="0.0" width="381" height="276"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Tc9-sX-tgN">
-                    <rect key="frame" x="18" y="196" width="244" height="18"/>
+                    <rect key="frame" x="18" y="220" width="244" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="240" id="q0b-6s-5Nl"/>
                     </constraints>
@@ -49,7 +49,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="GCo-4m-U2o">
-                    <rect key="frame" x="18" y="176" width="181" height="18"/>
+                    <rect key="frame" x="18" y="200" width="181" height="18"/>
                     <buttonCell key="cell" type="check" title="Reconnect when dropped" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ReO-Td-mxO">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -59,7 +59,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="XXJ-a5-mZB">
-                    <rect key="frame" x="18" y="216" width="117" height="18"/>
+                    <rect key="frame" x="18" y="240" width="117" height="18"/>
                     <buttonCell key="cell" type="check" title="Launch at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="pLM-FW-bPg">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -69,7 +69,7 @@
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" title="Connection Status:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="nlo-rx-Ph1">
-                    <rect key="frame" x="17" y="16" width="347" height="143"/>
+                    <rect key="frame" x="17" y="43" width="347" height="143"/>
                     <view key="contentView">
                         <rect key="frame" x="1" y="1" width="345" height="127"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -141,44 +141,68 @@
                         </subviews>
                     </view>
                     <constraints>
-                        <constraint firstItem="Tw9-Jj-TQf" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="24R-k0-2p6"/>
+                        <constraint firstItem="wHx-eD-GUl" firstAttribute="top" secondItem="nlo-rx-Ph1" secondAttribute="top" constant="27" id="0BP-x3-UMM"/>
                         <constraint firstItem="6KS-yD-Ube" firstAttribute="leading" secondItem="Mhv-Da-aBQ" secondAttribute="leading" id="3v6-CW-6uB"/>
-                        <constraint firstItem="GZP-xU-IJ0" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="5ms-Rz-jfD"/>
+                        <constraint firstAttribute="bottom" secondItem="OXg-1h-Vej" secondAttribute="bottom" constant="20" id="44o-88-Ji8"/>
                         <constraint firstItem="GZP-xU-IJ0" firstAttribute="baseline" secondItem="Mhv-Da-aBQ" secondAttribute="baseline" id="87J-5s-rpQ"/>
+                        <constraint firstItem="Mhv-Da-aBQ" firstAttribute="centerX" secondItem="nlo-rx-Ph1" secondAttribute="centerX" id="91P-AS-hej"/>
                         <constraint firstItem="Mhv-Da-aBQ" firstAttribute="leading" secondItem="WCK-3C-Nus" secondAttribute="leading" id="9v7-pa-cTE"/>
                         <constraint firstItem="Tw9-Jj-TQf" firstAttribute="top" secondItem="wHx-eD-GUl" secondAttribute="bottom" constant="8" symbolic="YES" id="BDJ-VK-DAR"/>
-                        <constraint firstItem="Mhv-Da-aBQ" firstAttribute="centerX" secondItem="nlo-rx-Ph1" secondAttribute="centerX" id="DM8-Go-FHO"/>
                         <constraint firstItem="OXg-1h-Vej" firstAttribute="top" secondItem="GZP-xU-IJ0" secondAttribute="bottom" constant="8" symbolic="YES" id="ITK-KU-wPh"/>
-                        <constraint firstItem="wHx-eD-GUl" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="JZU-vh-vFu"/>
                         <constraint firstItem="u00-T8-R7g" firstAttribute="baseline" secondItem="Tw9-Jj-TQf" secondAttribute="baseline" id="Nhp-Ji-9ES"/>
                         <constraint firstItem="u00-T8-R7g" firstAttribute="leading" secondItem="Tw9-Jj-TQf" secondAttribute="trailing" constant="54" id="YPm-Jw-0Km"/>
                         <constraint firstItem="Mhv-Da-aBQ" firstAttribute="leading" secondItem="GZP-xU-IJ0" secondAttribute="trailing" constant="39" id="Yjb-I1-ET0"/>
                         <constraint firstItem="GZP-xU-IJ0" firstAttribute="leading" secondItem="OXg-1h-Vej" secondAttribute="leading" id="amJ-TT-8Zj"/>
-                        <constraint firstAttribute="bottom" secondItem="OXg-1h-Vej" secondAttribute="bottom" constant="20" id="dAL-x8-Khw"/>
                         <constraint firstItem="GZP-xU-IJ0" firstAttribute="leading" secondItem="Tw9-Jj-TQf" secondAttribute="leading" id="ddv-oN-5TC"/>
                         <constraint firstItem="OXg-1h-Vej" firstAttribute="baseline" secondItem="WCK-3C-Nus" secondAttribute="baseline" id="doe-qL-hRC"/>
-                        <constraint firstItem="OXg-1h-Vej" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="eY3-yU-otZ"/>
+                        <constraint firstItem="GZP-xU-IJ0" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="gDY-SB-6mc"/>
                         <constraint firstItem="wHx-eD-GUl" firstAttribute="leading" secondItem="Tw9-Jj-TQf" secondAttribute="leading" id="hY1-Fy-kgf"/>
                         <constraint firstItem="GZP-xU-IJ0" firstAttribute="top" secondItem="Tw9-Jj-TQf" secondAttribute="bottom" constant="8" symbolic="YES" id="iv0-yg-qJE"/>
                         <constraint firstItem="wHx-eD-GUl" firstAttribute="baseline" secondItem="6KS-yD-Ube" secondAttribute="baseline" id="kDA-HR-iTw"/>
-                        <constraint firstItem="wHx-eD-GUl" firstAttribute="top" secondItem="nlo-rx-Ph1" secondAttribute="top" constant="27" id="lkh-mX-ldD"/>
+                        <constraint firstItem="OXg-1h-Vej" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="oRo-TL-C05"/>
+                        <constraint firstItem="wHx-eD-GUl" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="uy6-Zp-YEg"/>
+                        <constraint firstItem="Tw9-Jj-TQf" firstAttribute="leading" secondItem="nlo-rx-Ph1" secondAttribute="leading" constant="24" id="xRH-Hk-hn5"/>
                     </constraints>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </box>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U1h-tE-dAw">
+                    <rect key="frame" x="53" y="8" width="159" height="32"/>
+                    <buttonCell key="cell" type="push" title="Refresh IP Address" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kvx-cH-f4m">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="refreshIPAddress:" target="Voe-Tx-rLC" id="x2Y-Vq-LSG"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Usw-5h-GKU">
+                    <rect key="frame" x="212" y="8" width="155" height="32"/>
+                    <buttonCell key="cell" type="push" title="Reset All Adapters" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4KR-yy-GHa">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="resetAllAdapters:" target="Voe-Tx-rLC" id="LOB-bz-YEt"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="GCo-4m-U2o" firstAttribute="leading" secondItem="Tc9-sX-tgN" secondAttribute="leading" id="0a4-wT-X3V"/>
+                <constraint firstItem="nlo-rx-Ph1" firstAttribute="top" secondItem="GCo-4m-U2o" secondAttribute="bottom" constant="16" id="LKu-bj-THB"/>
                 <constraint firstItem="GCo-4m-U2o" firstAttribute="top" secondItem="Tc9-sX-tgN" secondAttribute="bottom" constant="6" symbolic="YES" id="NuU-cT-iq1"/>
                 <constraint firstItem="Tc9-sX-tgN" firstAttribute="top" secondItem="XXJ-a5-mZB" secondAttribute="bottom" constant="6" symbolic="YES" id="RAP-OT-VPv"/>
-                <constraint firstAttribute="bottom" secondItem="nlo-rx-Ph1" secondAttribute="bottom" constant="20" symbolic="YES" id="dZR-Rm-UCN"/>
+                <constraint firstItem="U1h-tE-dAw" firstAttribute="top" secondItem="nlo-rx-Ph1" secondAttribute="bottom" constant="11" id="VPM-3s-TlS"/>
+                <constraint firstItem="Usw-5h-GKU" firstAttribute="baseline" secondItem="U1h-tE-dAw" secondAttribute="baseline" id="bQP-Vd-v9t"/>
                 <constraint firstItem="Tc9-sX-tgN" firstAttribute="leading" secondItem="XXJ-a5-mZB" secondAttribute="leading" id="fyg-PH-C0P"/>
-                <constraint firstItem="nlo-rx-Ph1" firstAttribute="leading" secondItem="GCo-4m-U2o" secondAttribute="leading" id="nWc-hH-ocU"/>
-                <constraint firstAttribute="trailing" secondItem="nlo-rx-Ph1" secondAttribute="trailing" constant="20" symbolic="YES" id="nza-Ol-ceZ"/>
+                <constraint firstAttribute="trailing" secondItem="nlo-rx-Ph1" secondAttribute="trailing" constant="20" symbolic="YES" id="g4N-mC-9av"/>
+                <constraint firstItem="Usw-5h-GKU" firstAttribute="trailing" secondItem="nlo-rx-Ph1" secondAttribute="trailing" id="pYg-nr-Xfs"/>
                 <constraint firstItem="XXJ-a5-mZB" firstAttribute="top" secondItem="uQ4-xY-UbW" secondAttribute="top" constant="20" symbolic="YES" id="r9r-0y-bmy"/>
+                <constraint firstItem="nlo-rx-Ph1" firstAttribute="leading" secondItem="GCo-4m-U2o" secondAttribute="leading" id="tUq-7a-Kqo"/>
                 <constraint firstItem="XXJ-a5-mZB" firstAttribute="leading" secondItem="uQ4-xY-UbW" secondAttribute="leading" constant="20" symbolic="YES" id="tcA-Ff-9Cg"/>
+                <constraint firstItem="Usw-5h-GKU" firstAttribute="leading" secondItem="U1h-tE-dAw" secondAttribute="trailing" constant="12" symbolic="YES" id="xTI-Bt-FsR"/>
             </constraints>
-            <point key="canvasLocation" x="396.5" y="288"/>
+            <point key="canvasLocation" x="396.5" y="300"/>
         </view>
         <view id="cSg-91-MqT">
             <rect key="frame" x="0.0" y="0.0" width="381" height="297"/>
@@ -236,10 +260,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="316" height="327"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="386" height="327"/>
+                                            <size key="minSize" width="401" height="327"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                             <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="386" height="327"/>
+                                            <size key="minSize" width="401" height="327"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                         </textView>
                                     </subviews>
