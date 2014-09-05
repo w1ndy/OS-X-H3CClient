@@ -205,7 +205,7 @@ NSDictionary *_adapterList;
                 NSLog(@"Reason: %@", message);
                 [self sendUserNotificationWithDescription:message];
                 self.connectionState = Disconnecting;
-                if(((FailureFrame *)frame)->errcode != 8) {
+                if(((FailureFrame *)frame)->errcode != 8 && message.length >= 5) {
                     self.manualDisconnect = YES; // we do not reconnect for wrong username/password.
                 }
                 break;
