@@ -7,4 +7,4 @@ Stable and working version of H3CClientX can be found at [homepage](http://cppme
 
 FYI, this project has been discontinued, since major devs have moved to another campus where H3C protocol is no longer used. However you are welcomed to feedback any issues on current version anytime via GitHub or email (mystery.wd#gmail.com).
 
-For students from other university who's having difficulty in authentication: You can manually compile a newer version of H3CClientX from this repository, since some fixes are not included in the latest installer. See [#1](https://github.com/w1ndy/OS-X-H3CClient/issues/1).
+For students from other universities having difficulty in authentication: You can manually compile a newer version of H3CClientX from this repository, since some fixes are not included in the latest installer. See [#1](https://github.com/w1ndy/OS-X-H3CClient/issues/1).
