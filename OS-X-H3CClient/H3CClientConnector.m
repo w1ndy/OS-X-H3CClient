@@ -31,6 +31,7 @@
 
 pcap_t *device;
 HWADDR hwaddr;
+IPADDR ipaddr;
 
 const HWADDR MulticastHardwareAddress = {
     .value = {0x01, 0x80, 0xc2, 0x00, 0x00, 0x03}
@@ -38,6 +39,18 @@ const HWADDR MulticastHardwareAddress = {
 
 const HWADDR BroadcastHardwareAddress = {
     .value = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff}
+};
+
+// FIXME: generate encrypted version string on the fly
+
+const BYTE H3CClientEncryptedVersion[] = {
+    0x48, 0x31, 0x51, 0x75,
+    0x5a, 0x51, 0x59, 0x67,
+    0x4c, 0x57, 0x78, 0x74,
+    0x46, 0x6b, 0x6b, 0x6d,
+    0x4f, 0x30, 0x42, 0x53,
+    0x5a, 0x57, 0x6f, 0x4a,
+    0x51, 0x4c, 0x41, 0x3d
 };
 
 @implementation H3CClientConnector
@@ -65,14 +78,19 @@ const HWADDR BroadcastHardwareAddress = {
     BOOL found = NO;
 
 	if (0 == getifaddrs(&if_addrs)) {
-		for (if_addr = if_addrs; if_addr != NULL && !found; if_addr = if_addr->ifa_next) {
+		for (if_addr = if_addrs; if_addr != NULL; if_addr = if_addr->ifa_next) {
             if(strcmp(if_addr->ifa_name, [interfaceName UTF8String]) == 0) {
-                if (if_addr->ifa_addr != NULL && if_addr->ifa_addr->sa_family == AF_LINK) {
-                    struct sockaddr_dl* sdl = (struct sockaddr_dl *)if_addr->ifa_addr;
-                    if (6 == sdl->sdl_alen) {
-                        for(int i = 0; i < 6; i++)
-                            hwaddr.value[i] = ((unsigned char *)LLADDR(sdl))[i];
-                        found = YES;
+                if (if_addr->ifa_addr != NULL) {
+                    if (if_addr->ifa_addr->sa_family == AF_LINK) {
+                        struct sockaddr_dl* sdl = (struct sockaddr_dl *)if_addr->ifa_addr;
+                        if (6 == sdl->sdl_alen) {
+                            for(int i = 0; i < 6; i++)
+                                hwaddr.value[i] = ((unsigned char *)LLADDR(sdl))[i];
+                            found = YES;
+                        }
+                    } else if (if_addr->ifa_addr->sa_family == AF_INET) {
+                        struct sockaddr_in* si = (struct sockaddr_in *)if_addr->ifa_addr;
+                        memcpy(ipaddr, si->sin_addr, 4);
                     }
 				}
             }
@@ -234,7 +252,7 @@ const HWADDR BroadcastHardwareAddress = {
     UsernameFrame frame;
     size_t length = [userName length];
     length = (length > MAX_LENGTH) ? MAX_LENGTH : length;
-    size_t pktsize = length + 0x0b;
+    size_t pktsize = length + 43;
 
     if(!device) {
         NSLog(@"no adapter found.");
@@ -248,11 +266,15 @@ const HWADDR BroadcastHardwareAddress = {
     frame.header.code = EAP_RESPONSE;
     frame.header.pid = pid;
     frame.header.eaptype = EAP_IDENTIFY;
-    frame.padding = htons(USERNAME_PADDING);
+    frame.ip_padding = htons(IP_PADDING);
+    memcpy(frame.ipaddr, ipaddr, 4);
+    frame.ver_padding = htons(VERSION_PADDING);
+    memcpy(frame.version, H3CClientEncryptedVersion, 28);
+    frame.user_padding = htons(USERNAME_PADDING);
     memcpy(frame.username, [userName UTF8String], length);
 
     NSLog(@"verifying username...");
-    if(pcap_sendpacket(device, (BYTE *)&frame, 60) != 0) {
+    if(pcap_sendpacket(device, (BYTE *)&frame, 61 + [userName length]) != 0) {
         NSLog(@"failed to send packet: %s", strerror(errno));
         return NO;
     }
@@ -295,7 +317,7 @@ const HWADDR BroadcastHardwareAddress = {
     memcpy(frame.username, [userName UTF8String], length);
 
     NSLog(@"verifying password...");
-    if(pcap_sendpacket(device, (BYTE *)&frame, 60) != 0) {
+    if(pcap_sendpacket(device, (BYTE *)&frame, 40 + [userName length]) != 0) {
         NSLog(@"failed to send packet: %s", strerror(errno));
         return NO;
     }
