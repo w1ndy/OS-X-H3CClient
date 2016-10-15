@@ -248,14 +248,21 @@ NSDictionary *_adapterList;
 
 - (NSString*)getIPAddress
 {
+    static NSString *cachedAddress = nil;
+
     if(self.connectionState == Connected) {
+        if (cachedAddress != nil)
+            return cachedAddress;
         NSArray *addrs = [[NSHost currentHost] addresses];
         for (NSString *addr in addrs) {
             if (![addr hasPrefix:@"127"] && [[addr componentsSeparatedByString:@"."] count] == 4) {
+                cachedAddress = addr;
                 return addr;
             }
         }
     }
+
+    cachedAddress = nil;
     return @"No IPv4 address";
 }
 
