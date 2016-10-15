@@ -12,7 +12,9 @@
 #define    TOKEN_PREDECESSOR   0x1620
 #define    TOKEN_SUCCESSOR     0x1504
 
-#define    USERNAME_PADDING    0x1504
+#define    USERNAME_PADDING    0x2020
+#define    IP_PADDING          0x1504
+#define    VERSION_PADDING     0x0607
 #define    PASSWORD_PADDING    0x10
 
 #define    MAX_LENGTH          64
@@ -48,6 +50,12 @@ HWADDR;
 
 typedef struct
 {
+    BYTE value[4];
+} __attribute__((packed))
+IPADDR;
+
+typedef struct
+{
     HWADDR  dest;
     HWADDR  source;
     USHORT  type;
@@ -58,15 +66,15 @@ EthernetFrame;
 typedef struct
 {
     EthernetFrame ethernet;
-    
+
     BYTE    version;
     BYTE    type;
     USHORT  len1;
-    
+
     BYTE    code;
     BYTE    pid;
     USHORT  len2;
-    
+
     BYTE    eaptype;
 } __attribute__((packed))
 PacketFrame;
@@ -81,7 +89,7 @@ DiscoveryFrame, LogoutFrame;
 typedef struct
 {
     PacketFrame header;
-    
+
     BYTE version[50];
 } __attribute__((packed))
 VersionFrame;
@@ -90,9 +98,12 @@ VersionFrame;
 typedef struct
 {
     PacketFrame header;
-    
-    USHORT padding;
+
+    USHORT ip_padding;
     BYTE ipaddr[4];
+    USHORT ver_padding;
+    BYTE version[28];
+    USHORT user_padding;
     BYTE username[MAX_LENGTH + 1];
 } __attribute__((packed))
 UsernameFrame;
@@ -101,7 +112,7 @@ UsernameFrame;
 typedef struct
 {
     PacketFrame header;
-    
+
     BYTE padding;
     BYTE password[16];
     BYTE username[MAX_LENGTH + 1];
@@ -112,7 +123,7 @@ PasswordFrame;
 typedef struct
 {
     PacketFrame header;
-    
+
     BYTE useproxy;
     USHORT pred;
     //BYTE reserved1[2]; //0x16 0x20
@@ -128,7 +139,7 @@ HeartbeatFrame;
 typedef struct
 {
     PacketFrame header;
-    
+
     BYTE identifier[4]; //0x23 0x44 0x23 0x31
     BYTE token[32];
 } __attribute__((packed))
@@ -137,7 +148,7 @@ TokenFrame;
 typedef struct
 {
     PacketFrame header;
-    
+
     BYTE errcode;
     BYTE msglen;
     BYTE msg[1];
