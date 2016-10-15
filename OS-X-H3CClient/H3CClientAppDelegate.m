@@ -14,26 +14,26 @@
 {
     // Insert code here to initialize your application
     [self chmodBPF];
-    
+
     self.timer = nil;
     [[H3CClientBackend defaultBackend] addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:nil];
-    
+
     self.menuViewController = [[StatusMenuViewController alloc] init];
     self.menuViewController.delegate = self;
-    
+
     if([(NSArray *)[[H3CClientBackend defaultBackend].globalConfiguration objectForKey:@"profiles"] count] == 0) {
         [[H3CClientBackend defaultBackend].globalConfiguration setInteger:-1 forKey:@"default"];
     }
     if([[H3CClientBackend defaultBackend].globalConfiguration boolForKey:@"autoconnect"]) {
         [[H3CClientBackend defaultBackend] connect];
     }
-    
+
     self.applicationDescView.stringValue = [NSString stringWithFormat:@"H3CClientX v%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    
+
     self.stderrPipe = [NSPipe pipe];
     self.stderrPipeReadHandle = [self.stderrPipe fileHandleForReading];
     dup2([[self.stderrPipe fileHandleForWriting] fileDescriptor], fileno(stderr));
-    
+
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleStderrNotification:) name: NSFileHandleReadCompletionNotification object: self.stderrPipeReadHandle];
     [self.stderrPipeReadHandle readInBackgroundAndNotify];
 }
@@ -48,7 +48,7 @@
     NSString *script = [NSString stringWithFormat:@"do shell script \"chgrp admin /dev/bpf* && chmod g+rw /dev/bpf* && cp %@ /Library/LaunchDaemons\" with administrator privileges", [[NSBundle mainBundle] pathForResource:@"org.wireshark.ChmodBPF.plist" ofType:nil]];
     NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
     NSAppleEventDescriptor *evtDesc = [appleScript executeAndReturnError:&err];
-    
+
     if(!evtDesc) {
         [[NSAlert alertWithMessageText:@"Error" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"Failed to install BPF helper."] runModal];
     } else {
@@ -126,8 +126,12 @@
         case Connecting:
             self.connectedStatus.stringValue = @"Connecting";
     }
+    NSLog(@"Retrieving user name...");
     self.usernameStatus.stringValue = [[H3CClientBackend defaultBackend] getUserName];
+    NSLog(@"User name retrieved.");
+    NSLog(@"Retrieving IP address...");
     self.ipaddrStatus.stringValue = [[H3CClientBackend defaultBackend] getIPAddress];
+    NSLog(@"IP Address retrieved.");
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
@@ -135,6 +139,7 @@
     if(self.timer != nil) return ;
     self.timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(updateConnectedTime:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+    NSLog(@"Preference panel become active.");
 }
 
 - (void)applicationDidResignActive:(NSNotification *)notification
@@ -142,6 +147,7 @@
     if(self.timer == nil) return ;
     [self.timer invalidate];
     self.timer = nil;
+    NSLog(@"Preference panel become inactive.");
 }
 
 - (void)updateConnectedTime:(id)timer
@@ -157,18 +163,18 @@
 - (void)showPreferences
 {
     BOOL isAutoConnect = [[H3CClientBackend defaultBackend].globalConfiguration boolForKey:@"autoconnect"];
-    
+
     [self updateStatusPane];
     if([[H3CClientBackend defaultBackend].globalConfiguration boolForKey:@"reconnect"])
         self.reconnectView.state = NSOnState;
     else
         self.reconnectView.state = NSOffState;
-    
+
     if(isAutoConnect)
         self.autoconnectView.state = NSOnState;
     else
         self.autoconnectView.state = NSOffState;
-    
+
     [self animatePreferencesWindowWithView:self.generalView];
     self.toolbarView.selectedItemIdentifier = @"General";
     [self.window makeKeyAndOrderFront:self];
@@ -212,7 +218,7 @@
     NSString *script = [NSString stringWithFormat:@"do shell script \"%@\" with administrator privileges", command];
     NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
     NSAppleEventDescriptor *evtDesc = [appleScript executeAndReturnError:&err];
-    
+
     if(!evtDesc) {
         [[NSAlert alertWithMessageText:@"Error" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"Failed to reset adapters."] beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse resp) {}];
     } else {
