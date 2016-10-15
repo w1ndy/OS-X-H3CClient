@@ -90,7 +90,7 @@ const BYTE H3CClientEncryptedVersion[] = {
                         }
                     } else if (if_addr->ifa_addr->sa_family == AF_INET) {
                         struct sockaddr_in* si = (struct sockaddr_in *)if_addr->ifa_addr;
-                        memcpy(ipaddr, si->sin_addr, 4);
+                        memcpy((void *)ipaddr, (void *)si->sin_addr, 4);
                     }
                 }
             }
