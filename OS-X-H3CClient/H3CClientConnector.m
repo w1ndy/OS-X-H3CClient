@@ -77,8 +77,8 @@ const BYTE H3CClientEncryptedVersion[] = {
     struct ifaddrs *if_addrs = NULL, *if_addr = NULL;
     BOOL found = NO;
 
-	if (0 == getifaddrs(&if_addrs)) {
-		for (if_addr = if_addrs; if_addr != NULL; if_addr = if_addr->ifa_next) {
+    if (0 == getifaddrs(&if_addrs)) {
+        for (if_addr = if_addrs; if_addr != NULL; if_addr = if_addr->ifa_next) {
             if(strcmp(if_addr->ifa_name, [interfaceName UTF8String]) == 0) {
                 if (if_addr->ifa_addr != NULL) {
                     if (if_addr->ifa_addr->sa_family == AF_LINK) {
@@ -92,13 +92,13 @@ const BYTE H3CClientEncryptedVersion[] = {
                         struct sockaddr_in* si = (struct sockaddr_in *)if_addr->ifa_addr;
                         memcpy(ipaddr, si->sin_addr, 4);
                     }
-				}
+                }
             }
         }
-		freeifaddrs(if_addrs);
+        freeifaddrs(if_addrs);
     } else {
         NSLog(@"getifaddrs() failed: %s", strerror(errno));
-	}
+    }
 
     if(!found) {
         NSLog(@"adapter not found");
@@ -106,21 +106,21 @@ const BYTE H3CClientEncryptedVersion[] = {
     }
 
     bpf_u_int32 netmask = 0;
-	char pcap_filter[100];	//filter space
-	struct bpf_program pcap_fp;	//hold the compiled filter.
-	char errbuf[PCAP_ERRBUF_SIZE] = "";
+    char pcap_filter[100];  //filter space
+    struct bpf_program pcap_fp; //hold the compiled filter.
+    char errbuf[PCAP_ERRBUF_SIZE] = "";
 
-	//open adapter
+    //open adapter
     NSLog(@"opening adapter %@...", interfaceName);
-	if (!(device = pcap_open_live([interfaceName UTF8String],	// name of the device
-                                256,	// portion of the packet to capture, max 65536
-                                0,	// promiscuous mode closed
-                                100,	// read timeout
-                                errbuf)))	// error buffer
-	{
+    if (!(device = pcap_open_live([interfaceName UTF8String],   // name of the device
+                                256,    // portion of the packet to capture, max 65536
+                                0,  // promiscuous mode closed
+                                100,    // read timeout
+                                errbuf)))   // error buffer
+    {
         NSLog(@"pcap_open_live() error: %s", errbuf);
-	    return NO;
-	}
+        return NO;
+    }
 
     if (pcap_setnonblock(device, 1, errbuf) == -1) {
         NSLog(@"pcap_setnonblock() error: %s", errbuf);
@@ -128,20 +128,20 @@ const BYTE H3CClientEncryptedVersion[] = {
         return NO;
     }
 
-	//set filter to receive frame of 802.1X only
-	sprintf(pcap_filter, "ether dst %02X:%02X:%02X:%02X:%02X:%02X and ether proto 0x888e", hwaddr.value[0], hwaddr.value[1], hwaddr.value[2], hwaddr.value[3], hwaddr.value[4], hwaddr.value[5]);
+    //set filter to receive frame of 802.1X only
+    sprintf(pcap_filter, "ether dst %02X:%02X:%02X:%02X:%02X:%02X and ether proto 0x888e", hwaddr.value[0], hwaddr.value[1], hwaddr.value[2], hwaddr.value[3], hwaddr.value[4], hwaddr.value[5]);
     NSLog(@"setting packet filter %s...", pcap_filter);
 
-	if (pcap_compile(device, &pcap_fp, pcap_filter, 0, netmask) == -1) {
+    if (pcap_compile(device, &pcap_fp, pcap_filter, 0, netmask) == -1) {
         NSLog(@"pcap_compile() failed");
         pcap_close(device);
-	    return NO;
+        return NO;
     }
 
-	if (pcap_setfilter(device, &pcap_fp) == -1) {
+    if (pcap_setfilter(device, &pcap_fp) == -1) {
         NSLog(@"pcap_setfilter() failed");
         pcap_close(device);
-	    return NO;
+        return NO;
     }
 
     return YES;
@@ -228,7 +228,7 @@ const BYTE H3CClientEncryptedVersion[] = {
 
     memset(&frame, 0, sizeof(frame));
     [self makeEthernetFrame:(EthernetFrame *)&frame destination:serverAddress];
-	frame.header.len1 = frame.header.len2 = htons(pktsize);
+    frame.header.len1 = frame.header.len2 = htons(pktsize);
     frame.header.version = PACKET_VERSION;
     frame.header.code = EAP_RESPONSE;
     frame.header.pid = pid;
@@ -327,60 +327,60 @@ const BYTE H3CClientEncryptedVersion[] = {
 - (void)calcAscii:(BYTE *)buf
 {
     unsigned short Res;
-	unsigned int dEBX,dEBP;
-	unsigned int dEDX = 0x10;
-	unsigned int mSalt[4] = {0x56657824,0x56745632,0x97809879,0x65767878};
+    unsigned int dEBX,dEBP;
+    unsigned int dEDX = 0x10;
+    unsigned int mSalt[4] = {0x56657824,0x56745632,0x97809879,0x65767878};
 
-	unsigned int dECX = *((unsigned int*)buf);
-	unsigned int dEAX = *((unsigned int*)(buf + 4));
+    unsigned int dECX = *((unsigned int*)buf);
+    unsigned int dEAX = *((unsigned int*)(buf + 4));
 
-	dEDX *= 0x9E3779B9;
+    dEDX *= 0x9E3779B9;
 
-	while(dEDX != 0)
-	{
-		dEBX = dEBP = dECX;
-		dEBX >>= 5;
-		dEBP <<= 4;
-		dEBX ^= dEBP;
-		dEBP = dEDX;
-		dEBP >>= 0x0B;
-		dEBP &= 3;
-		dEBX += mSalt[dEBP];
-		dEBP = dEDX;
-		dEBP ^= dECX;
-		dEDX += 0x61C88647;
-		dEBX += dEBP;
-		dEAX -= dEBX;
-		dEBX = dEAX;
-		dEBP = dEAX;
-		dEBX >>= 5;
-		dEBP <<= 4;
-		dEBX ^= dEBP;
-		dEBP = dEDX;
-		dEBP &= 3;
-		dEBX += mSalt[dEBP];
-		dEBP = dEDX;
-		dEBP ^= dEAX;
-		dEBX += dEBP;
-		dECX -= dEBX;
-	}
+    while(dEDX != 0)
+    {
+        dEBX = dEBP = dECX;
+        dEBX >>= 5;
+        dEBP <<= 4;
+        dEBX ^= dEBP;
+        dEBP = dEDX;
+        dEBP >>= 0x0B;
+        dEBP &= 3;
+        dEBX += mSalt[dEBP];
+        dEBP = dEDX;
+        dEBP ^= dECX;
+        dEDX += 0x61C88647;
+        dEBX += dEBP;
+        dEAX -= dEBX;
+        dEBX = dEAX;
+        dEBP = dEAX;
+        dEBX >>= 5;
+        dEBP <<= 4;
+        dEBX ^= dEBP;
+        dEBP = dEDX;
+        dEBP &= 3;
+        dEBX += mSalt[dEBP];
+        dEBP = dEDX;
+        dEBP ^= dEAX;
+        dEBX += dEBP;
+        dECX -= dEBX;
+    }
 
 
-	Res = dECX & 0xffff;
-	*buf = Res & 0xff;
-	*(buf+1) = (Res & 0xff00) >> 8;
+    Res = dECX & 0xffff;
+    *buf = Res & 0xff;
+    *(buf+1) = (Res & 0xff00) >> 8;
 
-	Res = dECX & 0xffff0000 >> 16;
-	*(buf+2) = Res & 0xff;
-	*(buf+3) = (Res & 0xff00) >> 8;
+    Res = dECX & 0xffff0000 >> 16;
+    *(buf+2) = Res & 0xff;
+    *(buf+3) = (Res & 0xff00) >> 8;
 
-	Res = dEAX & 0xffff;
-	*(buf+4) = Res & 0xff;
-	*(buf+5) = (Res & 0xff00) >> 8;
+    Res = dEAX & 0xffff;
+    *(buf+4) = Res & 0xff;
+    *(buf+5) = (Res & 0xff00) >> 8;
 
-	Res = dEAX & 0xffff0000 >> 16;
-	*(buf+6) = Res & 0xff;
-	*(buf+7) = (Res & 0xff00) >> 8;
+    Res = dEAX & 0xffff0000 >> 16;
+    *(buf+6) = Res & 0xff;
+    *(buf+7) = (Res & 0xff00) >> 8;
 }
 
 - (BOOL)parseTokenFrame:(TokenFrame *)frame to:(BYTE *)token
@@ -404,8 +404,8 @@ const BYTE H3CClientEncryptedVersion[] = {
 
 - (BOOL)nextPacket:(const PacketFrame **)ptr withTimeout:(int)second
 {
-	struct pcap_pkthdr *header;
-	const BYTE *data;
+    struct pcap_pkthdr *header;
+    const BYTE *data;
     fd_set fds;
     struct timeval tv;
     int r;
