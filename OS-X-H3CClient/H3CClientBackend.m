@@ -77,7 +77,7 @@ NSDictionary *_adapterList;
             self.connectionState = Disconnected;
             return ;
         }
-        
+
         self.userName = userName;
         self.status = @"Opening adapter...";
         if(![self.connector openAdapter:adapterName]) {
@@ -86,7 +86,7 @@ NSDictionary *_adapterList;
             self.status = @"Disconnected";
             return ;
         }
-        
+
         self.status = @"Looking for server...";
         if(![self.connector findServer]) {
             [self sendUserNotificationWithDescription:@"Cannot find authentication server."];
@@ -94,7 +94,7 @@ NSDictionary *_adapterList;
             self.status = @"Disconnected";
             return ;
         }
-        
+
         self.timeConnected = time(NULL);
         self.trafficStatConnected = [self.connector getTrafficStat];
         while(![self startDaemonWithUserName:userName password:password]) {
@@ -104,12 +104,12 @@ NSDictionary *_adapterList;
             } else {
                 [self sendUserNotificationWithDescription:@"Connection was interrupted, reconnecting..."];
                 self.connectionState = Connecting;
-                
+
                 if(![self.connector openAdapter:adapterName]) {
                     [self sendUserNotificationWithDescription:@"Failed to open network adapter."];
                     break;
                 }
-                
+
                 if(![self.connector findServer]) {
                     [self sendUserNotificationWithDescription:@"Cannot find authentication server."];
                     break;
@@ -120,7 +120,7 @@ NSDictionary *_adapterList;
         self.connectionState = Disconnected;
         self.status = @"Disconnected";
         return ;
-        
+
     });
 }
 
@@ -151,7 +151,7 @@ NSDictionary *_adapterList;
     BOOL srvfound = NO;
     NSString *message;
     BYTE token[32];
-    
+
     while([self.connector nextPacket:&frame withTimeout:30]) {
         if(frame == nil) continue;
         switch(frame->code) {
@@ -249,13 +249,11 @@ NSDictionary *_adapterList;
 - (NSString*)getIPAddress
 {
     if(self.connectionState == Connected) {
-        for(int i = 0, j = 0; i < [[[NSHost currentHost] addresses] count]; i++) {
-            NSString *ip = [[[NSHost currentHost] addresses] objectAtIndex:i];
-            for(j = 0; j < [ip length]; j++) {
-                if([ip characterAtIndex:j] == ':') break;
+        NSArray *addrs = [[NSHost currentHost] addresses];
+        for (NSString *addr in addrs) {
+            if (![addr hasPrefix:@"127"] && [[addr componentsSeparatedByString:@"."] count] == 4) {
+                return addr;
             }
-            if(j >= [ip length])
-                return [[[NSHost currentHost] addresses] objectAtIndex:i];
         }
     }
     return @"No IPv4 address";
