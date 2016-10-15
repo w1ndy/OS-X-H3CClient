@@ -267,7 +267,7 @@ const BYTE H3CClientEncryptedVersion[] = {
     frame.header.pid = pid;
     frame.header.eaptype = EAP_IDENTIFY;
     frame.ip_padding = htons(IP_PADDING);
-    memcpy(frame.ipaddr, ipaddr, 4);
+    memcpy(frame.ipaddr, &ipaddr, 4);
     frame.ver_padding = htons(VERSION_PADDING);
     memcpy(frame.version, H3CClientEncryptedVersion, 28);
     frame.user_padding = htons(USERNAME_PADDING);
