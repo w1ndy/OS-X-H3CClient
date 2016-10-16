@@ -451,12 +451,17 @@ const BYTE H3CClientEncryptedVersion[] = {
 - (NSString*)parseFailureFrame:(FailureFrame *)frame
 {
     char *buffer;
-    buffer = (char *)malloc(frame->msglen + 1);
-    for(int i = 0; i < frame->msglen; i++) {
+    int len = frame->msglen - 4;
+    buffer = (char *)malloc(len + 1);
+    for(int i = 0; i < len; i++) {
         buffer[i] = frame->msg[i];
     }
-    buffer[frame->msglen] = '\0';
-    NSString *ret = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    buffer[len] = '\0';
+    NSString *ret = [NSString stringWithCString:buffer encoding:NSASCIIStringEncoding];
+    if (ret == nil) {
+        // Try again with UTF8 encoding
+        ret = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    }
     free(buffer);
     return ret;
 }
